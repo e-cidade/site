@@ -10,5 +10,4 @@ fi
 if [ ! -d "node_modules" ]; then
     npm install
 fi
-# npm run watch
-php -S localhost:80
+npm run watch

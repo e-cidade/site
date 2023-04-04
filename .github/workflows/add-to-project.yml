@@ -1,0 +1,10 @@
+name: Add to project
+on:
+  issues:
+    types: [opened]
+  pull_request:
+    types: [opened]
+jobs:
+  add-to-project:
+    uses: tighten/jigsaw/.github/workflows/add-to-project.yml@main
+    secrets: inherit
