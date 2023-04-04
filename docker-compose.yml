@@ -1,0 +1,17 @@
+services:
+  php:
+    build:
+      context: .docker/php
+      args:
+        version_php: ${VERSION_PHP}
+        version_node: ${VERSION_NODE}
+        host_uid: ${UID}
+        host_gid: ${GID}
+    ports:
+      - 127.0.0.1:${HTTP_PORT}:3000
+    volumes:
+      - .:/jigsaw
+      - ~/.composer:/root/.composer
+    environment:
+      - TZ
+      - XDEBUG_CONFIG
