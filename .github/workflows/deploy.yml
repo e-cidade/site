@@ -31,8 +31,6 @@ jobs:
         uses: actions/setup-node@e33196f7422957bea03ed53f6fbb155025ffc7b8 # v3
         with:
           node-version: ${{ steps.versions.outputs.nodeVersion }}
-      - name: Install node dependencies
-        run: npm install -g gulp
       - name: Set up php 8.2
         uses: shivammathur/setup-php@v2
         with:
