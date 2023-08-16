@@ -21,10 +21,16 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      - name: Setup Node
-        uses: actions/setup-node@v1
+      - name: Read package.json node and npm engines version
+        uses: skjnldsv/read-package-engines-version-actions@8205673bab74a63eb9b8093402fd9e0e018663a1 # v2.2
+        id: versions
         with:
-          node-version: '13'
+          fallbackNode: '^20'
+          fallbackNpm: '^9'
+      - name: Set up node ${{ steps.versions.outputs.nodeVersion }}
+        uses: actions/setup-node@e33196f7422957bea03ed53f6fbb155025ffc7b8 # v3
+        with:
+          node-version: ${{ steps.versions.outputs.nodeVersion }}
       - name: Install node dependencies
         run: npm install -g gulp
       - name: Set up php 8.2
