@@ -1,7 +1,7 @@
 ---
 extends: _layouts.category
-title: Feature
-description: All posts that are about new features.
+title: Olá mundo
+description: Todos os posts de olá mundo
 ---
 
 These posts are about new features provided to you in the Jigsaw blog starter template.
