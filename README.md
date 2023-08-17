@@ -1,4 +1,4 @@
-# [e-Cidade](https://ecidade.softwarepublico.org) site
+# [e-Cidade](https://site-ecidade.librecode.coop) site
 
 Repositório do site do e-Cidade
 

@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'baseUrl' => 'https://ecidade.softwarepublico.org',
+    'baseUrl' => 'https://site-ecidade.librecode.coop',
     'production' => true,
 ];
