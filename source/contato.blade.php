@@ -1,17 +1,17 @@
 ---
-title: Contact
+title: Contato
 description: Get in touch with us
 ---
 @extends('_layouts.main')
 
 @section('body')
-<h1>Contact</h1>
+<h1>Contato</h1>
 
 <p class="mb-8">
     Static sites are unable to handle form submissions. However, there are third-party services, like Tighten’s <a href="https://fieldgoal.io" title="FieldGoal">FieldGoal</a>, which can accept the form submission, email you the result, and redirect back to a thank you page.
 </p>
 
-<form action="/contact" class="mb-12">
+<form action="/contato" class="mb-12">
     <div class="flex flex-wrap mb-6 -mx-3">
         <div class="w-full md:w-1/2 mb-6 md:mb-0 px-3">
             <label class="block mb-2 text-gray-800 text-sm font-semibold" for="contact-name">

@@ -12,15 +12,15 @@
             </p>
 
             <h2 class="text-3xl mt-0">
-                <a href="{{ $featuredPost->getUrl() }}" title="Read {{ $featuredPost->title }}" class="text-gray-900 font-extrabold">
+                <a href="{{ $featuredPost->getUrl() }}" title="Ler {{ $featuredPost->title }}" class="text-gray-900 font-extrabold">
                     {{ $featuredPost->title }}
                 </a>
             </h2>
 
             <p class="mt-0 mb-4">{!! $featuredPost->getExcerpt() !!}</p>
 
-            <a href="{{ $featuredPost->getUrl() }}" title="Read - {{ $featuredPost->title }}" class="uppercase tracking-wide mb-4">
-                Read
+            <a href="{{ $featuredPost->getUrl() }}" title="Ler - {{ $featuredPost->title }}" class="uppercase tracking-wide mb-4">
+                Ler
             </a>
         </div>
 

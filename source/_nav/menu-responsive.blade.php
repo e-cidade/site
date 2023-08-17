@@ -9,17 +9,17 @@
         </li>
         <li class="pl-4">
             <a
-                title="{{ $page->siteName }} About"
-                href="/about"
-                class="block mt-0 mb-4 text-sm no-underline {{ $page->isActive('/about') ? 'active text-blue-500' : 'text-gray-800 hover:text-blue-500' }}"
-            >About</a>
+                title="{{ $page->siteName }} Sobre"
+                href="/sobre"
+                class="block mt-0 mb-4 text-sm no-underline {{ $page->isActive('/sobre') ? 'active text-blue-500' : 'text-gray-800 hover:text-blue-500' }}"
+            >Sobre</a>
         </li>
         <li class="pl-4">
             <a
-                title="{{ $page->siteName }} Contact"
-                href="/contact"
-                class="block mt-0 mb-4 text-sm no-underline {{ $page->isActive('/contact') ? 'active text-blue-500' : 'text-gray-800 hover:text-blue-500' }}"
-            >Contact</a>
+                title="{{ $page->siteName }} Contato"
+                href="/contato"
+                class="block mt-0 mb-4 text-sm no-underline {{ $page->isActive('/contato') ? 'active text-blue-500' : 'text-gray-800 hover:text-blue-500' }}"
+            >Contato</a>
         </li>
     </ul>
 </nav>
