@@ -1,11 +1,11 @@
 ---
-title: About
+title: Sobre
 description: A little bit about the site
 ---
 @extends('_layouts.main')
 
 @section('body')
-    <h1>About</h1>
+    <h1>Sobre</h1>
 
     <img src="/assets/img/about.png"
         alt="About image"

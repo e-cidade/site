@@ -16,11 +16,11 @@ return [
             'sort' => '-date',
             'path' => 'blog/{filename}',
         ],
-        'categories' => [
-            'path' => '/blog/categories/{filename}',
+        'categorias' => [
+            'path' => '/blog/categorias/{filename}',
             'posts' => function ($page, $allPosts) {
                 return $allPosts->filter(function ($post) use ($page) {
-                    return $post->categories ? in_array($page->getFilename(), $post->categories, true) : false;
+                    return $post->categorias ? in_array($page->getFilename(), $post->categorias, true) : false;
                 });
             },
         ],

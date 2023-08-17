@@ -13,10 +13,10 @@
 
     <p class="text-gray-700 text-xl md:mt-0">{{ $page->author }}  •  {{ date('F j, Y', $page->date) }}</p>
 
-    @if ($page->categories)
-        @foreach ($page->categories as $i => $category)
+    @if ($page->categorias)
+        @foreach ($page->categorias as $i => $category)
             <a
-                href="{{ '/blog/categories/' . $category }}"
+                href="{{ '/blog/categorias/' . $category }}"
                 title="View posts in {{ $category }}"
                 class="inline-block bg-gray-300 hover:bg-blue-200 leading-loose tracking-wide text-gray-800 uppercase text-xs font-semibold rounded mr-4 px-3 pt-px"
             >{{ $category }}</a>
