@@ -14,6 +14,4 @@
             <hr class="w-full border-b mt-2 mb-6">
         @endif
     @endforeach
-
-    @include('_components.newsletter-signup')
 @stop
