@@ -1,6 +1,6 @@
 ---
 title: Blog
-description: The list of blog posts for the site
+description: Listagem de postagens do site
 pagination:
     collection: posts
     perPage: 4
