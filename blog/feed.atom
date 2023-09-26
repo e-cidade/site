@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>e-Cidade</title>
+    <link href="https://site-ecidade.librecode.coop/blog" />
+    <link type="application/atom+xml" rel="self" href="https://site-ecidade.librecode.coop/blog/feed.atom" />
+    <updated>2023-09-26T22:21:55+00:00</updated>
+    <id>https://site-ecidade.librecode.coop/blog/feed.atom</id>
+    <author>
+        <name>LibreCode coop</name>
+    </author>
+                <entry>
+    <id>https://site-ecidade.librecode.coop/blog/ola-mundo</id>
+    <link type="text/html" rel="alternate" href="https://site-ecidade.librecode.coop/blog/ola-mundo" />
+    <title>Olá mundo</title>
+    <published>2023-08-16T00:00:00+00:00</published>
+    <updated>2023-08-16T00:00:00+00:00</updated>
+    <author>
+        <name>LibreCode coop</name>
+    </author>
+    <summary type="html">Este é apenas um olá mundo...</summary>
+    <content type="html"><![CDATA[
+        <p>Este é apenas um olá mundo</p>
+    ]]></content>
+</entry>
+            <entry>
+    <id>https://site-ecidade.librecode.coop/blog/outro-ola-mundo</id>
+    <link type="text/html" rel="alternate" href="https://site-ecidade.librecode.coop/blog/outro-ola-mundo" />
+    <title>Este é mais um olá mundo</title>
+    <published>2022-07-24T00:00:00+00:00</published>
+    <updated>2022-07-24T00:00:00+00:00</updated>
+    <author>
+        <name>LibreCode coop</name>
+    </author>
+    <summary type="html">Aqui vai o corpo da página de Olá Mundo...</summary>
+    <content type="html"><![CDATA[
+        <p>Aqui vai o corpo da página de Olá Mundo</p>
+    ]]></content>
+</entry>
+            <entry>
+    <id>https://site-ecidade.librecode.coop/blog/primeiro-ola-mundo</id>
+    <link type="text/html" rel="alternate" href="https://site-ecidade.librecode.coop/blog/primeiro-ola-mundo" />
+    <title>O primeiro Olá Mundo</title>
+    <published>2022-07-20T00:00:00+00:00</published>
+    <updated>2022-07-20T00:00:00+00:00</updated>
+    <author>
+        <name>LibreCode coop</name>
+    </author>
+    <summary type="html">Este é o primeiro post de Olá Mundo...</summary>
+    <content type="html"><![CDATA[
+        <p>Este é o primeiro post de Olá Mundo</p>
+    ]]></content>
+</entry>
+    </feed>
