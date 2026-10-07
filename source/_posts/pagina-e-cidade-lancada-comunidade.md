@@ -6,6 +6,10 @@ description: Comunidade lança página para centralizar informações, conteúdo
 date: 2025-06-13
 author: Comunidade e-Cidade
 category: Notícias
+content_source: "github"
+external_id: "github-issue-94"
+github_issue: 94
+editor_url: "https://github.com/e-cidade/site/issues/94"
 cover_image: /assets/images/migrated/pagina-comunidade.png
 cover_alt: Divulgação da página comunitária do e-Cidade
 source_url: https://artecult.com/pagina-do-e-cidade-lancada-pela-comunidade/

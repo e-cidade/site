@@ -14,7 +14,7 @@ final class NewsIssueContract
 {
     public const DEFAULT_AUTHOR = 'Comunidade e-Cidade';
 
-    /** @return array{issue:int,title:string,summary:string,published_at:string,author:string,content:string,cover:?string,cover_alt:?string,source_label:?string,source_url:?string} */
+    /** @return array{issue:int,title:string,summary:string,published_at:string,author:string,content:string,cover:?string,cover_alt:?string,source_label:?string,source_url:?string,preferred_slug:?string} */
     public function parse(int $issueNumber, string $title, string $body): array
     {
         $title = trim($title);
@@ -37,6 +37,11 @@ final class NewsIssueContract
         $coverAlt = $this->optional($sections, 'Texto alternativo da imagem');
         $sourceLabel = $this->optional($sections, 'Fonte original');
         $sourceUrl = $this->optional($sections, 'URL da fonte');
+        $preferredSlug = null;
+
+        if (preg_match('/<!--\s*e-cidade-slug:([a-z0-9]+(?:-[a-z0-9]+)*)\s*-->/', $body, $match) === 1) {
+            $preferredSlug = $match[1];
+        }
 
         if ($cover !== null && $coverAlt === null) {
             throw new InvalidArgumentException('Cover image requires alternative text.');
@@ -61,6 +66,7 @@ final class NewsIssueContract
             'cover_alt' => $coverAlt,
             'source_label' => $sourceLabel,
             'source_url' => $sourceUrl,
+            'preferred_slug' => $preferredSlug,
         ];
     }
 

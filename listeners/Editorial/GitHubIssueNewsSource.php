@@ -25,7 +25,7 @@ final class GitHubIssueNewsSource
         $data = $this->contract->parse($issueNumber, $title, $body);
         $slug = $existingSlug !== null && trim($existingSlug) !== ''
             ? trim($existingSlug)
-            : $this->slugger->slug($data['title']);
+            : ($data['preferred_slug'] ?? $this->slugger->slug($data['title']));
 
         $entry = new NewsEntry(
             source: 'github',

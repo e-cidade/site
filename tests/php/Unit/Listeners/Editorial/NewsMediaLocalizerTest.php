@@ -45,6 +45,35 @@ final class NewsMediaLocalizerTest extends TestCase
         self::assertCount(2, glob($this->mediaDirectory . '/321/*.png') ?: []);
     }
 
+    public function testPreservesAlreadyVersionedHistoricalCover(): void
+    {
+        $fetcher = new FakeNewsMediaFetcher();
+        $localizer = new NewsMediaLocalizer($this->mediaDirectory, '/assets/images/news', $fetcher);
+
+        $localized = $localizer->localize($this->entry(
+            cover: '/assets/images/migrated/historical.png',
+            body: 'Texto.',
+        ));
+
+        self::assertSame('/assets/images/migrated/historical.png', $localized->cover);
+        self::assertSame([], $fetcher->calls);
+    }
+
+    public function testAllowsLegacyWordPressMediaForMigration(): void
+    {
+        $fetcher = new FakeNewsMediaFetcher();
+        $localizer = new NewsMediaLocalizer($this->mediaDirectory, '/assets/images/news', $fetcher);
+
+        $localized = $localizer->localize($this->entry(
+            cover: 'https://ecidade.softwarepublico.org/wp-content/uploads/capa.png',
+            body: '<img src="https://ecidade.softwarepublico.org/wp-content/uploads/corpo.png" alt="Exemplo">',
+        ));
+
+        self::assertSame('/assets/images/news/321/cover.png', $localized->cover);
+        self::assertStringContainsString('/assets/images/news/321/image-', $localized->body);
+        self::assertCount(2, $fetcher->calls);
+    }
+
     public function testSameRemoteImageIsDownloadedOnlyOncePerRun(): void
     {
         $fetcher = new FakeNewsMediaFetcher();

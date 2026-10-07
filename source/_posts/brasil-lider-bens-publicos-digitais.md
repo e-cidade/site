@@ -6,6 +6,10 @@ description: Reflexão sobre a experiência brasileira em software público e se
 date: 2025-06-23
 author: Comunidade e-Cidade
 category: Notícias
+content_source: "github"
+external_id: "github-issue-89"
+github_issue: 89
+editor_url: "https://github.com/e-cidade/site/issues/89"
 cover_image: /assets/images/migrated/bens-publicos-digitais.png
 cover_alt: Divulgação dos 20 anos do Software Público Brasileiro
 source_url: https://artecult.com/brasil-ainda-pode-ser-lider-mundial-em-bens-publicos-digitais/

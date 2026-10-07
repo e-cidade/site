@@ -6,6 +6,10 @@ description: Ambiente de demonstração permite conhecer na prática módulos e 
 date: 2026-01-27
 author: Comunidade e-Cidade
 category: Notícias
+content_source: "github"
+external_id: "github-issue-96"
+github_issue: 96
+editor_url: "https://github.com/e-cidade/site/issues/96"
 cover_image: /assets/images/migrated/ambiente-demonstracao.png
 cover_alt: Apresentação do ambiente de demonstração do e-Cidade
 ---
