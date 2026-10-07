@@ -17,11 +17,11 @@ RUN apt-get update \
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
 COPY --from=node /usr/local/bin/node /usr/local/bin/node
-COPY --from=node /usr/local/bin/npm /usr/local/bin/npm
-COPY --from=node /usr/local/bin/npx /usr/local/bin/npx
 COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
 
-RUN php --version \
+RUN ln -s ../lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
+    && ln -s ../lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx \
+    && php --version \
     && composer --version \
     && node --version \
     && npm --version
