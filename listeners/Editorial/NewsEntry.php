@@ -32,4 +32,28 @@ final readonly class NewsEntry
         public ?string $sourceLabel = null,
         public ?string $editorUrl = null,
     ) {}
+
+    public function withLocalizedMedia(string $body, ?string $cover): self
+    {
+        return new self(
+            source: $this->source,
+            externalId: $this->externalId,
+            issueNumber: $this->issueNumber,
+            title: $this->title,
+            slug: $this->slug,
+            description: $this->description,
+            publishedAt: $this->publishedAt,
+            updatedAt: $this->updatedAt,
+            author: $this->author,
+            category: $this->category,
+            body: $body,
+            tags: $this->tags,
+            cover: $cover,
+            coverAlt: $cover !== null ? $this->coverAlt : null,
+            coverCaption: $this->coverCaption,
+            sourceUrl: $this->sourceUrl,
+            sourceLabel: $this->sourceLabel,
+            editorUrl: $this->editorUrl,
+        );
+    }
 }

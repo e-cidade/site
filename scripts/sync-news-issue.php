@@ -8,6 +8,7 @@ declare(strict_types=1);
 require __DIR__ . '/../vendor/autoload.php';
 
 use App\Listeners\Editorial\NewsIssueSynchronizer;
+use App\Listeners\Editorial\NewsMediaLocalizer;
 
 $eventPath = $argv[1] ?? getenv('GITHUB_EVENT_PATH') ?: '';
 if ($eventPath === '' || ! is_file($eventPath)) {
@@ -39,7 +40,10 @@ if (! $isNews) {
 }
 
 $result = (new NewsIssueSynchronizer(
-    __DIR__ . '/../source/_posts',
+    postsDirectory: __DIR__ . '/../source/_posts',
+    mediaLocalizer: new NewsMediaLocalizer(
+        __DIR__ . '/../source/assets/images/news',
+    ),
 ))->synchronize((int) $number, $title, $body, $url);
 
 echo "is_news=true\n";

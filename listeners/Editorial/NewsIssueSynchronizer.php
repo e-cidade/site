@@ -13,6 +13,7 @@ final class NewsIssueSynchronizer
         private readonly string $postsDirectory,
         private readonly GitHubIssueNewsSource $source = new GitHubIssueNewsSource(),
         private readonly NewsMarkdownWriter $writer = new NewsMarkdownWriter(),
+        private readonly ?NewsMediaLocalizer $mediaLocalizer = null,
     ) {}
 
     /**
@@ -38,6 +39,10 @@ final class NewsIssueSynchronizer
             $issueUrl,
             $existingSlug,
         );
+
+        if ($this->mediaLocalizer !== null) {
+            $entry = $this->mediaLocalizer->localize($entry);
+        }
 
         $targetPath = $this->postsDirectory . '/' . $entry->slug . '.md';
         $rendered = $this->writer->render($entry);
