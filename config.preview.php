@@ -14,4 +14,5 @@ if ($previewBaseUrl === false || $previewBaseUrl === '') {
 return [
     'baseUrl' => rtrim($previewBaseUrl, '/'),
     'production' => true,
+    'indexable' => false,
 ];
