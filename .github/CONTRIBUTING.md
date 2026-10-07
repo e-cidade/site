@@ -20,6 +20,20 @@ Antes de começar uma mudança relevante, procure uma issue existente. Quando o 
 
 Pull requests que alteram a interface recebem um preview automático para revisão.
 
+## Publicando uma notícia
+
+Notícias são escritas em **Markdown**. Não é necessário editar HTML, CSS, JavaScript ou templates.
+
+O guia para autores está em [docs/publicar-noticia.md](../docs/publicar-noticia.md). Para uma nova notícia, normalmente basta:
+
+1. adicionar a imagem em `source/assets/images/news/`, quando houver;
+2. criar um arquivo `.md` em `source/_posts/`;
+3. preencher título, resumo e data;
+4. escrever o texto usando Markdown comum;
+5. abrir o pull request e conferir o preview.
+
+O layout, a categoria e o autor padrão são definidos pela collection `posts` e não precisam ser repetidos em cada notícia.
+
 ## Adicionando um prestador de serviços
 
 A página de prestadores é gerada pela collection `providers`. Para incluir uma empresa, não edite o template HTML.
