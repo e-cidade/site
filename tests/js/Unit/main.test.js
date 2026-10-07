@@ -3,7 +3,7 @@
 
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { initNavigation } from '../source/_assets/js/main.js';
+import { initNavigation } from '../../../../source/_assets/js/main.js';
 
 test('navigation initializes and toggles accessibility state', () => {
     let handler;

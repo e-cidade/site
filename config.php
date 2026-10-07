@@ -13,6 +13,7 @@ return [
     'siteName' => 'e-Cidade',
     'siteDescription' => 'Software livre para gestão pública municipal integrada, desenvolvido de forma colaborativa pelo ecossistema e-Cidade.',
     'siteAuthor' => 'Comunidade e-Cidade',
+    'logoUrl' => 'https://avatars.githubusercontent.com/u/7452853?s=200&v=4',
     'communityUrl' => 'https://github.com/e-cidade/e-cidade',
     'telegramUrl' => 'https://t.me/eCidadeCE',
     'forumUrl' => 'https://ecidades.popsolutions.co',

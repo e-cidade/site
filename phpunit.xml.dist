@@ -10,7 +10,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
          cacheDirectory=".phpunit.cache">
     <testsuites>
         <testsuite name="site">
-            <directory>tests</directory>
+            <directory>tests/php</directory>
         </testsuite>
     </testsuites>
 </phpunit>

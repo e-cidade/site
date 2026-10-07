@@ -3,35 +3,15 @@
 version: 2
 updates:
   - package-ecosystem: composer
-    directory: /
+    directories:
+      - /
+      - /vendor-bin/*
     schedule:
       interval: weekly
       day: monday
       time: "09:00"
       timezone: America/Sao_Paulo
     open-pull-requests-limit: 10
-    labels:
-      - dependencies
-
-  - package-ecosystem: composer
-    directory: /vendor-bin/phpunit
-    schedule:
-      interval: weekly
-      day: monday
-      time: "09:05"
-      timezone: America/Sao_Paulo
-    open-pull-requests-limit: 5
-    labels:
-      - dependencies
-
-  - package-ecosystem: composer
-    directory: /vendor-bin/php-cs-fixer
-    schedule:
-      interval: weekly
-      day: monday
-      time: "09:10"
-      timezone: America/Sao_Paulo
-    open-pull-requests-limit: 5
     labels:
       - dependencies
 

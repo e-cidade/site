@@ -5,7 +5,7 @@ declare(strict_types=1);
 // SPDX-FileCopyrightText: 2026 e-Cidade community
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-namespace Tests\Unit;
+namespace Tests\Unit\Listeners;
 
 use App\Listeners\GenerateSitemap;
 use PHPUnit\Framework\Attributes\DataProvider;
