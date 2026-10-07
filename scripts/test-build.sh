@@ -20,7 +20,12 @@ for page in "${required_pages[@]}"; do
 done
 
 test -f "${build_dir}/assets/images/migrated/aula-inaugural.png"
-test -f "${build_dir}/sitemap.xml"
+test -f "${build_dir}/robots.txt"
+if [[ "${build_dir}" == "build_preview" ]]; then
+  test ! -f "${build_dir}/sitemap.xml"
+else
+  test -f "${build_dir}/sitemap.xml"
+fi
 find "${build_dir}/assets/build" -type f -name '*.css' -print -quit | grep -q .
 find "${build_dir}/assets/build" -type f -name '*.js' -print -quit | grep -q .
 
