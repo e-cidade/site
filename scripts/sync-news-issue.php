@@ -28,11 +28,10 @@ $title = is_string($issue['title'] ?? null) ? $issue['title'] : '';
 $body = is_string($issue['body'] ?? null) ? $issue['body'] : '';
 $url = is_string($issue['html_url'] ?? null) ? $issue['html_url'] : '';
 
-$requiredSections = ['### Resumo', '### Data da publicação', '### Texto da notícia'];
-$isNews = $number !== false
-    && $title !== ''
-    && $url !== ''
-    && array_all($requiredSections, static fn (string $section): bool => str_contains($body, $section));
+$isNews = $number !== false && $title !== '' && $url !== '';
+foreach (['### Resumo', '### Data da publicação', '### Texto da notícia'] as $section) {
+    $isNews = $isNews && str_contains($body, $section);
+}
 
 if (! $isNews) {
     echo "is_news=false\nchanged=false\n";
