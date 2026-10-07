@@ -1,0 +1,60 @@
+# SPDX-FileCopyrightText: 2026 e-Cidade community
+# SPDX-License-Identifier: AGPL-3.0-or-later
+name: Sync WordPress news
+
+on:
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: sync-wordpress-news
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
+        with:
+          coverage: none
+      - run: composer install --no-interaction --no-progress --prefer-dist
+      - name: Synchronize public WordPress posts
+        env:
+          WORDPRESS_SOURCE_URL: https://ecidade.softwarepublico.org
+        run: php scripts/sync-wordpress-news.php
+      - name: Create or update synchronization pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BRANCH: automation/wordpress-news-sync
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if git diff --quiet -- source/_posts source/assets/images/migrated; then
+            echo "No WordPress changes detected."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B "$BRANCH"
+          git add source/_posts source/assets/images/migrated
+          git commit --signoff -m "content: sync WordPress news"
+          git push --force origin "$BRANCH"
+
+          pr_number="$(gh pr list --head "$BRANCH" --base main --state open --json number --jq '.[0].number // empty')"
+          if [[ -z "$pr_number" ]]; then
+            gh pr create \
+              --base main \
+              --head "$BRANCH" \
+              --title "content: sync WordPress news" \
+              --body $'## Summary\n\nSynchronizes newly published or subsequently updated news from the public e-Cidade WordPress REST API.\n\n- uses only public WordPress endpoints; no credentials are required;\n- preserves manually migrated posts that do not carry `wordpress_id`;\n- downloads featured and in-content images into the site repository;\n- leaves review and merge as an explicit editorial step.\n\nGenerated automatically by the `Sync WordPress news` workflow.'
+          fi
