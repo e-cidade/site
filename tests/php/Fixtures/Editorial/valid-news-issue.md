@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: 2026 e-Cidade community
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
 ### Resumo
 
 Município adota o e-Cidade para modernizar sua gestão.
