@@ -45,7 +45,9 @@ jobs:
           path: build_preview/
           run-id: ${{ github.event.workflow_run.id }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: rossjrw/pr-preview-action@ffa7509e91a3ec8dfc2e5536c4d5c1acdf7a6de9 # v1.8.1
+      - name: Deploy PR preview
+        id: preview
+        uses: rossjrw/pr-preview-action@ffa7509e91a3ec8dfc2e5536c4d5c1acdf7a6de9 # v1.8.1
         with:
           action: deploy
           source-dir: ./build_preview/
@@ -53,6 +55,20 @@ jobs:
           preview-branch: gh-pages
           pages-base-url: site-ecidade.librecode.coop
           wait-for-pages-deployment: false
+          comment: false
+          deploy-commit-message: Deploy preview for PR ${{ steps.pr.outputs.number }} 🛫
+
+      - name: Publish preview link on PR
+        uses: marocchino/sticky-pull-request-comment@67d0dec7b07ed060a405f9b2a64b8ab319fdd7db # v2.9.2
+        with:
+          number: ${{ steps.pr.outputs.number }}
+          header: pr-preview
+          message: |
+            ## PR preview
+
+            Preview disponível em: ${{ steps.preview.outputs.preview-url }}
+
+            O preview é atualizado a cada push no PR e removido quando o PR é fechado.
 
   remove:
     if: github.event_name == 'pull_request_target'
