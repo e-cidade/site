@@ -10,3 +10,4 @@ require_once dirname(__DIR__, 2) . '/src/Seo/PageUrlResolver.php';
 require_once dirname(__DIR__, 2) . '/src/Seo/SocialImageResolver.php';
 require_once dirname(__DIR__, 2) . '/src/Seo/StructuredDataBuilder.php';
 require_once dirname(__DIR__, 2) . '/src/Seo/SeoMetadataBuilder.php';
+require_once dirname(__DIR__, 2) . '/listeners/GenerateRobots.php';
