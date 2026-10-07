@@ -9,6 +9,8 @@ on:
 
 permissions:
   contents: write
+  issues: write
+  pull-requests: read
 
 concurrency:
   group: github-pages-production
@@ -39,3 +41,37 @@ jobs:
           folder: build_production
           clean-exclude: pr-preview
           force: false
+
+      - name: Finalize published news issue
+        if: github.event_name == 'push'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -eu
+
+          pr_number="$(gh api "repos/${GITHUB_REPOSITORY}/commits/${GITHUB_SHA}/pulls"             --jq '[.[] | select(.head.ref | startswith("content/news-"))][0].number // empty')"
+          head_ref="$(gh api "repos/${GITHUB_REPOSITORY}/commits/${GITHUB_SHA}/pulls"             --jq '[.[] | select(.head.ref | startswith("content/news-"))][0].head.ref // empty')"
+
+          if [ -z "$pr_number" ] || [ -z "$head_ref" ]; then
+            echo "No news editorial pull request associated with this deployment."
+            exit 0
+          fi
+
+          issue_number="${head_ref#content/news-}"
+          publication_url="$(php scripts/resolve-news-publication.php "$issue_number")"
+          marker="<!-- e-cidade-news-publication:${GITHUB_SHA} -->"
+          pr_url="https://github.com/${GITHUB_REPOSITORY}/pull/${pr_number}"
+
+          if ! gh issue view "$issue_number" --json comments --jq '.comments[].body' | grep -Fq "$marker"; then
+            gh issue comment "$issue_number" --body "$marker
+          ✅ Notícia publicada com sucesso.
+
+          URL: $publication_url
+          Pull Request: $pr_url
+          Commit publicado: \`${GITHUB_SHA}\`"
+          fi
+
+          state="$(gh issue view "$issue_number" --json state --jq '.state')"
+          if [ "$state" = "OPEN" ]; then
+            gh issue close "$issue_number" --reason completed
+          fi

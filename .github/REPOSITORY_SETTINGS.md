@@ -5,8 +5,6 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
 # Repository settings
 
-This repository is the source and delivery pipeline for the e-Cidade community website.
-
 Recommended GitHub settings:
 
 - description: Site comunitário do e-Cidade — software livre para gestão pública municipal integrada.
@@ -14,10 +12,16 @@ Recommended GitHub settings:
 - topics: e-cidade, software-publico, software-livre, gestao-municipal, governo-digital, jigsaw, php, static-site
 - Issues: enabled for site-specific work.
 - Projects: disabled; project management belongs in the broader community governance space.
-- Wiki: disabled; maintained documentation belongs in versioned repositories.
-- Discussions: disabled here; community discussions remain centralized in e-cidade/e-cidade.
-- Pages / deployments: enabled because this repository publishes the website and pull request previews.
-- Delete head branches after merge: enabled.
-- Allow update branch: enabled.
 
-GitHub Releases and Packages are not part of this site's delivery model. No workflow should publish releases or packages from this repository.
+## Pull request governance
+
+For `main`, keep pull requests as the publication boundary:
+
+- require a pull request before merge;
+- require at least one approving review;
+- dismiss stale approvals when new commits are pushed;
+- require the relevant CI and preview checks to pass;
+- keep merge commits enabled so the branch commit history is preserved;
+- do not require squash merge for editorial or technical pull requests.
+
+For generated news PRs, the PR starts as draft. A maintainer marks it ready for review, a human approves the exact generated snapshot, and merge authorizes publication.
