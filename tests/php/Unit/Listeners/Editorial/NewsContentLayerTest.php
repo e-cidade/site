@@ -84,6 +84,28 @@ final class NewsContentLayerTest extends TestCase
         self::assertStringContainsString('## Próximos passos', $first);
     }
 
+    public function testValidatorRejectsGitHubEntryWithoutIssueIdentity(): void
+    {
+        $entry = new NewsEntry(
+            source: 'github',
+            externalId: 'github-issue-missing',
+            issueNumber: null,
+            title: 'Notícia',
+            slug: 'noticia',
+            description: 'Resumo',
+            publishedAt: '2026-10-07',
+            updatedAt: null,
+            author: 'Comunidade e-Cidade',
+            category: 'Notícias',
+            body: 'Conteúdo',
+        );
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('GitHub news requires a valid issue number.');
+
+        (new NewsEntryValidator())->validate($entry);
+    }
+
     public function testValidatorRejectsInvalidCanonicalEntry(): void
     {
         $entry = new NewsEntry(

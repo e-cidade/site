@@ -14,6 +14,7 @@ final class NewsEntryValidator
 {
     public function validate(NewsEntry $entry): void
     {
+        $this->required($entry->source, 'Source');
         $this->required($entry->externalId, 'External ID');
         $this->required($entry->title, 'Title');
         $this->required($entry->slug, 'Slug');
@@ -22,6 +23,10 @@ final class NewsEntryValidator
         $this->required($entry->category, 'Category');
         $this->required($entry->body, 'Body');
 
+        if ($entry->source === 'github' && ($entry->issueNumber === null || $entry->issueNumber < 1)) {
+            throw new InvalidArgumentException('GitHub news requires a valid issue number.');
+        }
+
         if (preg_match('/^[a-z0-9]+(?:-[a-z0-9]+)*$/', $entry->slug) !== 1) {
             throw new InvalidArgumentException('Slug must contain only lowercase letters, numbers and hyphens.');
         }
@@ -29,6 +34,14 @@ final class NewsEntryValidator
         $date = DateTimeImmutable::createFromFormat('!Y-m-d', $entry->publishedAt);
         if ($date === false || $date->format('Y-m-d') !== $entry->publishedAt) {
             throw new InvalidArgumentException('Published date must use YYYY-MM-DD.');
+        }
+
+        if ($entry->updatedAt !== null) {
+            try {
+                new DateTimeImmutable($entry->updatedAt);
+            } catch (\Exception $exception) {
+                throw new InvalidArgumentException('Updated date is invalid.', previous: $exception);
+            }
         }
 
         if (($entry->cover === null) !== ($entry->coverAlt === null)) {
@@ -45,6 +58,12 @@ final class NewsEntryValidator
 
         if ($entry->editorUrl !== null && filter_var($entry->editorUrl, FILTER_VALIDATE_URL) === false) {
             throw new InvalidArgumentException('Editor URL is invalid.');
+        }
+
+        foreach ($entry->tags as $tag) {
+            if (trim($tag) === '') {
+                throw new InvalidArgumentException('Tags must not contain empty values.');
+            }
         }
     }
 
