@@ -24,7 +24,7 @@
 
     <title>{{ $page->title ? $page->title . ' | ' : '' }}{{ $page->siteName }}</title>
 
-    <link rel="icon" href="{{ $page->baseUrl }}/favicon.ico">
+    <link rel="icon" type="image/png" href="{{ $page->baseUrl }}/favicon.ico">
     @viteRefresh()
     <link rel="stylesheet" href="{{ vite('source/_assets/scss/main.scss') }}">
 </head>
