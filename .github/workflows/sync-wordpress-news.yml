@@ -1,6 +1,7 @@
 # SPDX-FileCopyrightText: 2026 e-Cidade community
 # SPDX-License-Identifier: AGPL-3.0-or-later
-name: Sync WordPress news
+
+name: Import WordPress news into Issues
 
 on:
   schedule:
@@ -8,53 +9,81 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
-  pull-requests: write
+  actions: write
+  contents: read
+  issues: write
 
 concurrency:
-  group: sync-wordpress-news
+  group: import-wordpress-news
   cancel-in-progress: false
 
 jobs:
-  sync:
+  import:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          fetch-depth: 0
       - uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
         with:
           coverage: none
       - run: composer install --no-interaction --no-progress --prefer-dist
-      - name: Synchronize public WordPress posts
+
+      - name: Export public WordPress posts
         env:
           WORDPRESS_SOURCE_URL: https://ecidade.softwarepublico.org
-        run: php scripts/sync-wordpress-news.php
-      - name: Create or update synchronization pull request
+        run: php scripts/export-wordpress-news-issues.php > "$RUNNER_TEMP/wordpress-news.json"
+
+      - name: Create or update editorial Issues
         env:
           GH_TOKEN: ${{ github.token }}
-          BRANCH: automation/wordpress-news-sync
         shell: bash
         run: |
           set -euo pipefail
+          jq -c '.[]' "$RUNNER_TEMP/wordpress-news.json" | while IFS= read -r record; do
+            wp_id="$(jq -r '.wordpress_id' <<< "$record")"
+            title="$(jq -r '.title' <<< "$record")"
+            desired_hash="$(jq -r '.hash' <<< "$record")"
+            body_file="$RUNNER_TEMP/wordpress-${wp_id}.md"
+            jq -r '.body' <<< "$record" > "$body_file"
 
-          if git diff --quiet -- source/_posts source/assets/images/migrated; then
-            echo "No WordPress changes detected."
-            exit 0
-          fi
+            issues_json="$RUNNER_TEMP/issues.json"
+            gh api --paginate --slurp "repos/$GITHUB_REPOSITORY/issues?state=all&per_page=100" > "$issues_json"
 
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git checkout -B "$BRANCH"
-          git add source/_posts source/assets/images/migrated
-          git commit --signoff -m "content: sync WordPress news"
-          git push --force origin "$BRANCH"
+            issue_number="$(jq -r --arg marker "<!-- e-cidade-wordpress-id:${wp_id} -->"               '[.[][] | select(.pull_request == null) | select((.body // "") | contains($marker))][0].number // empty'               "$issues_json")"
 
-          pr_number="$(gh pr list --head "$BRANCH" --base main --state open --json number --jq '.[0].number // empty')"
-          if [[ -z "$pr_number" ]]; then
-            gh pr create \
-              --base main \
-              --head "$BRANCH" \
-              --title "content: sync WordPress news" \
-              --body $'## Summary\n\nSynchronizes newly published or subsequently updated news from the public e-Cidade WordPress REST API.\n\n- uses only public WordPress endpoints; no credentials are required;\n- preserves manually migrated posts that do not carry `wordpress_id`;\n- downloads featured and in-content images into the site repository;\n- leaves review and merge as an explicit editorial step.\n\nGenerated automatically by the `Sync WordPress news` workflow.'
-          fi
+            if [ -z "$issue_number" ]; then
+              issue_number="$(jq -r --arg title "$title"                 '[.[][] | select(.pull_request == null) | select(.title == $title) | select((.body // "") | contains("<!-- e-cidade-migrated-post:"))][0].number // empty'                 "$issues_json")"
+            fi
+
+            if [ -n "$issue_number" ]; then
+              current_json="$(gh issue view "$issue_number" --json body,state,title)"
+              current_body="$(jq -r '.body' <<< "$current_json")"
+              current_hash="$(sed -n 's/.*e-cidade-wordpress-hash:\([a-f0-9]*\).*/\1/p' <<< "$current_body" | head -n 1)"
+
+              if [ -z "$current_hash" ] && grep -Fq '<!-- e-cidade-migrated-post:' <<< "$current_body"; then
+                {
+                  printf '<!-- e-cidade-wordpress-id:%s -->\n' "$wp_id"
+                  printf '<!-- e-cidade-wordpress-hash:%s -->\n' "$desired_hash"
+                  printf '%s\n' "$current_body"
+                } > "$body_file"
+                gh issue edit "$issue_number" --body-file "$body_file"
+                echo "Mapped historical issue #$issue_number to WordPress post $wp_id without republishing."
+                continue
+              fi
+
+              if [ "$current_hash" = "$desired_hash" ] && [ "$(jq -r '.title' <<< "$current_json")" = "$title" ]; then
+                echo "WordPress post $wp_id already matches issue #$issue_number."
+                continue
+              fi
+
+              gh issue edit "$issue_number" --title "$title" --body-file "$body_file"
+              if [ "$(jq -r '.state' <<< "$current_json")" = "CLOSED" ]; then
+                gh issue reopen "$issue_number"
+              fi
+            else
+              issue_url="$(gh issue create --title "$title" --body-file "$body_file")"
+              issue_number="${issue_url##*/}"
+            fi
+
+            gh workflow run sync-news-issue.yml -f issue_number="$issue_number"
+            echo "Queued editorial synchronization for WordPress post $wp_id via issue #$issue_number."
+          done

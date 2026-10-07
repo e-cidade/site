@@ -17,7 +17,7 @@ Este repositório contém o site comunitário do e-Cidade, construído com Jigsa
 - JavaScript: `source/_assets/js/`;
 - mídia editorial: `source/assets/images/migrated/`.
 
-## URLs
+Notícias novas e atualizações editoriais têm a GitHub Issue como unidade de autoria. O Markdown em `source/_posts` é o snapshot versionado de publicação e não deve criar uma segunda fonte editorial manual.\n\n## URLs
 
 - URL institucional: `https://ecidade.softwarepublico.org/`;
 - publicação atual do novo site: `https://site-ecidade.librecode.coop/`;
