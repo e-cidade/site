@@ -19,7 +19,7 @@ final class NewsIssueContract
     {
         $title = trim($title);
         if ($title === '') {
-            throw new InvalidArgumentException('News issue title is required.');
+            throw new InvalidArgumentException('O título da notícia é obrigatório.');
         }
 
         $sections = $this->sections($body);
@@ -29,7 +29,7 @@ final class NewsIssueContract
 
         $date = DateTimeImmutable::createFromFormat('!Y-m-d', $publishedAt);
         if ($date === false || $date->format('Y-m-d') !== $publishedAt) {
-            throw new InvalidArgumentException('Publication date must use YYYY-MM-DD.');
+            throw new InvalidArgumentException('A data da publicação deve usar o formato AAAA-MM-DD.');
         }
 
         $author = $this->optional($sections, 'Autor') ?? self::DEFAULT_AUTHOR;
@@ -44,15 +44,15 @@ final class NewsIssueContract
         }
 
         if ($cover !== null && $coverAlt === null) {
-            throw new InvalidArgumentException('Cover image requires alternative text.');
+            throw new InvalidArgumentException('A imagem de capa exige texto alternativo.');
         }
 
         if (($sourceLabel === null) !== ($sourceUrl === null)) {
-            throw new InvalidArgumentException('Original source name and URL must be provided together.');
+            throw new InvalidArgumentException('O nome e a URL da fonte original devem ser informados juntos.');
         }
 
         if ($sourceUrl !== null && filter_var($sourceUrl, FILTER_VALIDATE_URL) === false) {
-            throw new InvalidArgumentException('Original source URL is invalid.');
+            throw new InvalidArgumentException('A URL da fonte original é inválida.');
         }
 
         return [
@@ -88,7 +88,7 @@ final class NewsIssueContract
     {
         $value = $this->optional($sections, $name);
         if ($value === null) {
-            throw new InvalidArgumentException(sprintf('Required news field "%s" is missing.', $name));
+            throw new InvalidArgumentException(sprintf('O campo obrigatório "%s" está ausente.', $name));
         }
 
         return $value;

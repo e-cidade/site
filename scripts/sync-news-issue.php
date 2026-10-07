@@ -9,6 +9,7 @@ require __DIR__ . '/../vendor/autoload.php';
 
 use App\Listeners\Editorial\NewsIssueSynchronizer;
 use App\Listeners\Editorial\NewsMediaLocalizer;
+use InvalidArgumentException;
 
 $eventPath = $argv[1] ?? getenv('GITHUB_EVENT_PATH') ?: '';
 if ($eventPath === '' || ! is_file($eventPath)) {
@@ -29,9 +30,11 @@ $title = is_string($issue['title'] ?? null) ? $issue['title'] : '';
 $body = is_string($issue['body'] ?? null) ? $issue['body'] : '';
 $url = is_string($issue['html_url'] ?? null) ? $issue['html_url'] : '';
 
-$isNews = $number !== false && $title !== '' && $url !== '';
-foreach (['### Resumo', '### Data da publicação', '### Texto da notícia'] as $section) {
-    $isNews = $isNews && str_contains($body, $section);
+$isNews = getenv('NEWS_ISSUE') === 'true' || ($number !== false && $title !== '' && $url !== '');
+if (getenv('NEWS_ISSUE') !== 'true') {
+    foreach (['### Resumo', '### Data da publicação', '### Texto da notícia'] as $section) {
+        $isNews = $isNews && str_contains($body, $section);
+    }
 }
 
 if (! $isNews) {
@@ -39,14 +42,24 @@ if (! $isNews) {
     exit(0);
 }
 
-$result = (new NewsIssueSynchronizer(
-    postsDirectory: __DIR__ . '/../source/_posts',
-    mediaLocalizer: new NewsMediaLocalizer(
-        __DIR__ . '/../source/assets/images/news',
-    ),
-))->synchronize((int) $number, $title, $body, $url);
+try {
+    $result = (new NewsIssueSynchronizer(
+        postsDirectory: __DIR__ . '/../source/_posts',
+        mediaLocalizer: new NewsMediaLocalizer(
+            __DIR__ . '/../source/assets/images/news',
+        ),
+    ))->synchronize((int) $number, $title, $body, $url);
+} catch (InvalidArgumentException $exception) {
+    $message = str_replace(["\r", "\n"], ' ', $exception->getMessage());
+    echo "is_news=true\n";
+    echo "valid=false\n";
+    echo "changed=false\n";
+    echo 'validation_error=' . $message . "\n";
+    exit(0);
+}
 
 echo "is_news=true\n";
+echo "valid=true\n";
 echo 'changed=' . ($result['changed'] ? 'true' : 'false') . "\n";
 echo 'created=' . ($result['created'] ? 'true' : 'false') . "\n";
 echo 'path=' . $result['path'] . "\n";
