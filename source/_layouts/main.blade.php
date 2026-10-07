@@ -58,6 +58,7 @@
                 <a href="{{ $page->baseUrl }}/sobre">Sobre</a>
                 <a href="{{ $page->baseUrl }}/noticias">Notícias</a>
                 <a href="{{ $page->baseUrl }}/codigo-fonte">Código-fonte</a>
+                <a href="{{ $page->siteRepositoryUrl }}" target="_blank" rel="noopener noreferrer">Repositório do site</a>
             </nav>
         </div>
         <div class="shell footer-meta">
