@@ -40,6 +40,14 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Setup PHP
+        uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
+        with:
+          coverage: none
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --no-progress --prefer-dist
+
       - name: Resolve issue payload
         id: issue
         env:
