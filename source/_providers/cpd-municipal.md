@@ -7,3 +7,7 @@ logo_alt: Logo da CPD Municipal
 group: credenciada
 order: 40
 ---
+<!--
+SPDX-FileCopyrightText: 2026 e-Cidade community
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->

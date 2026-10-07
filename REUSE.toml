@@ -28,3 +28,11 @@ path = [
 precedence = "aggregate"
 SPDX-FileCopyrightText = "2026 e-Cidade community"
 SPDX-License-Identifier = "AGPL-3.0-or-later"
+
+[[annotations]]
+path = [
+    "source/assets/images/providers/**"
+]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "respective provider organizations"
+SPDX-License-Identifier = "LicenseRef-Provider-Logos"
