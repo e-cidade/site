@@ -20,6 +20,9 @@ for page in "${required_pages[@]}"; do
 done
 
 test -f "${build_dir}/assets/images/migrated/aula-inaugural.png"
+test -f "${build_dir}/favicon.ico"
+grep -Fq 'rel="icon" type="image/png"' "${build_dir}/index.html"
+grep -Fq 'class="post-card__media"' "${build_dir}/noticias/index.html"
 test -f "${build_dir}/sitemap.xml"
 find "${build_dir}/assets/build" -type f -name '*.css' -print -quit | grep -q .
 find "${build_dir}/assets/build" -type f -name '*.js' -print -quit | grep -q .
