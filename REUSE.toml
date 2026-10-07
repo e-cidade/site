@@ -10,6 +10,10 @@ path = [
     "composer.lock",
     "package.json",
     "package-lock.json",
+    "vendor-bin/phpunit/composer.json",
+    "vendor-bin/phpunit/composer.lock",
+    "vendor-bin/php-cs-fixer/composer.json",
+    "vendor-bin/php-cs-fixer/composer.lock",
     "source/CNAME"
 ]
 precedence = "aggregate"
