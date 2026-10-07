@@ -27,7 +27,7 @@ return [
     ],
 
     'getDate' => function ($page) {
-        return DateTime::createFromFormat('U', $page->date);
+        return DateTime::createFromFormat('U', (string) $page->date);
     },
 
     'getExcerpt' => function ($page, $length = 220) {
