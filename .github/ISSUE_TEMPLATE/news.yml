@@ -48,11 +48,12 @@ body:
     validations:
       required: true
 
-  - type: upload
+  - type: textarea
     id: cover
     attributes:
       label: Imagem de capa
-      description: Opcional. Envie a imagem principal da notícia.
+      description: Opcional. Cole, arraste ou selecione a imagem principal da notícia neste campo.
+      placeholder: Arraste ou cole a imagem aqui.
 
   - type: input
     id: cover_alt
