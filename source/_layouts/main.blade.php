@@ -12,7 +12,7 @@
     <link rel="icon" type="image/png" href="{{ $page->logoUrl }}">
     <link rel="apple-touch-icon" href="{{ $page->logoUrl }}">
     @viteRefresh()
-    <link rel="stylesheet" href="{{ vite('source/_assets/scss/main.scss') }}">
+    <link rel="stylesheet" href="{{ $page->baseUrl }}{{ vite('source/_assets/scss/main.scss') }}">
 </head>
 <body>
     <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
@@ -66,6 +66,6 @@
         </div>
     </footer>
 
-    <script type="module" src="{{ vite('source/_assets/js/main.js') }}"></script>
+    <script type="module" src="{{ $page->baseUrl }}{{ vite('source/_assets/js/main.js') }}"></script>
 </body>
 </html>

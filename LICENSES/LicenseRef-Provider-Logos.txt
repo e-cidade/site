@@ -1,0 +1,12 @@
+Provider logos and trademarks
+
+The files covered by this license reference are logos, trademarks, service marks,
+or other identifying brand assets of the respective provider organizations.
+
+They are included in this repository solely to identify organizations listed on
+the e-Cidade providers page. No copyright or trademark license is granted by
+their inclusion here beyond the rights, if any, supplied by the respective
+rights holders or applicable law.
+
+Redistribution or modification of these assets may be subject to the rights and
+brand policies of the respective organizations.

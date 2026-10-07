@@ -22,20 +22,18 @@ description: Empresas credenciadas e outras empresas que atuam com o e-Cidade.
         </div>
         <p class="section-intro">As empresas credenciadas participam do desenvolvimento colaborativo da solução, aportando novos códigos e conteúdos e atuando na comunidade.</p>
         <div class="provider-grid">
-            <a class="provider-card" href="https://www.contassconsultoria.com.br"><strong>Contass Sistemas Públicos</strong><span>contassconsultoria.com.br →</span></a>
-            <a class="provider-card" href="https://www.dbseller.com.br/"><strong>DBSeller Sistemas Integrados</strong><span>dbseller.com.br →</span></a>
-            <a class="provider-card" href="https://librecode.coop"><strong>LibreCode</strong><span>librecode.coop →</span></a>
-            <a class="provider-card" href="https://www.cpd-municipal.com.br"><strong>CPD Municipal</strong><span>cpd-municipal.com.br →</span></a>
-            <a class="provider-card" href="https://www.navarrotecnologia.com.br"><strong>Navarro Tecnologia</strong><span>navarrotecnologia.com.br →</span></a>
+            @foreach ($providers->where('group', 'credenciada') as $provider)
+                @include('_components.provider-card', ['provider' => $provider])
+            @endforeach
         </div>
 
         <div class="section-heading section-heading--spaced">
             <div><p class="eyebrow">Ecossistema ampliado</p><h2>Outras empresas</h2></div>
         </div>
         <div class="provider-grid">
-            <a class="provider-card" href="https://www.softcast.com.br/"><strong>Softcast</strong><span>softcast.com.br →</span></a>
-            <a class="provider-card" href="https://www.cpuhouse.com.br/"><strong>CPU House</strong><span>cpuhouse.com.br →</span></a>
-            <a class="provider-card" href="https://app.cajutec.com.br/"><strong>Caju.tec</strong><span>app.cajutec.com.br →</span></a>
+            @foreach ($providers->where('group', 'outra') as $provider)
+                @include('_components.provider-card', ['provider' => $provider])
+            @endforeach
         </div>
     </div>
 </section>

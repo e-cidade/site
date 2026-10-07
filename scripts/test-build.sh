@@ -36,4 +36,11 @@ fi
 
 if [[ -n "${EXPECTED_BASE_URL:-}" ]]; then
   grep -Fq "${EXPECTED_BASE_URL}" "${build_dir}/index.html"
+  grep -Eq 'href="[^"]*/pr-preview/pr-[0-9]+/assets/build/[^"]+\.css"' "${build_dir}/index.html"
+  grep -Eq 'src="[^"]*/pr-preview/pr-[0-9]+/assets/build/[^"]+\.js"' "${build_dir}/index.html"
+
+  if grep -Eq '(href|src)="/assets/build/' "${build_dir}/index.html"; then
+    echo "Preview build contains root-absolute Vite asset URLs." >&2
+    exit 1
+  fi
 fi

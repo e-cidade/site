@@ -20,6 +20,24 @@ Antes de começar uma mudança relevante, procure uma issue existente. Quando o 
 
 Pull requests que alteram a interface recebem um preview automático para revisão.
 
+## Adicionando um prestador de serviços
+
+A página de prestadores é gerada pela collection `providers`. Para incluir uma empresa, não edite o template HTML.
+
+1. Adicione a logo em `source/assets/images/providers/`.
+2. Crie um arquivo Markdown em `source/_providers/`, usando um dos arquivos existentes como exemplo.
+3. Preencha os campos:
+   - `name`: nome exibido;
+   - `website`: URL completa;
+   - `website_label`: endereço curto exibido no card;
+   - `logo`: caminho público da imagem, começando por `/assets/images/providers/`;
+   - `logo_alt`: texto alternativo da logo;
+   - `group`: `credenciada` ou `outra`;
+   - `order`: ordem numérica dentro da seção.
+4. Abra o pull request com apenas o arquivo da collection e a logo.
+
+O template `source/prestadores-de-servico.blade.php` lê a collection automaticamente.
+
 ## Padrões técnicos
 
 As regras de arquitetura, testes, qualidade, SPDX/REUSE, toolchain, Docker e assinatura de commits estão em [AGENTS.md](../AGENTS.md).
