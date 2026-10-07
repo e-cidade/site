@@ -1,18 +1,21 @@
 # SPDX-FileCopyrightText: 2026 e-Cidade community
 # SPDX-License-Identifier: AGPL-3.0-or-later
-name: Build
+name: PR Preview Build
 
 on:
   pull_request:
-  push:
     branches: [main]
+    types: [opened, reopened, synchronize]
 
 permissions:
   contents: read
 
 concurrency:
-  group: build-${{ github.ref }}
+  group: preview-build-${{ github.event.pull_request.number }}
   cancel-in-progress: true
+
+env:
+  PREVIEW_BASE_URL: https://site-ecidade.librecode.coop/pr-preview/pr-${{ github.event.pull_request.number }}
 
 jobs:
   build:
@@ -31,5 +34,14 @@ jobs:
           cache: npm
       - run: composer install --no-interaction --no-progress --prefer-dist
       - run: npm ci --no-audit --no-fund
-      - run: composer build
-      - run: composer test:build
+      - run: npm run preview
+      - name: Test preview build
+        env:
+          SITE_BUILD_DIR: build_preview
+          EXPECTED_BASE_URL: ${{ env.PREVIEW_BASE_URL }}
+        run: composer test:build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: preview-build
+          path: build_preview/
+          retention-days: 1
