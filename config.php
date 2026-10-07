@@ -22,7 +22,10 @@ return [
 
     'collections' => [
         'posts' => [
+            'extends' => '_layouts.post',
+            'section' => 'content',
             'author' => 'Comunidade e-Cidade',
+            'category' => 'Notícias',
             'sort' => '-date',
             'path' => '{filename}',
         ],
