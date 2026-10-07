@@ -12,6 +12,7 @@ expected_node="$(node -p "require('./package.json').volta.node")"
 actual_node="$(node -p "process.versions.node")"
 
 docker_php="$(sed -nE 's/^FROM php:([0-9]+\.[0-9]+\.[0-9]+)-cli-bookworm@sha256:[0-9a-f]{64}$/\1/p' .docker/php/Dockerfile)"
+docker_node="$(sed -nE 's/^FROM node:([0-9]+\.[0-9]+\.[0-9]+)-bookworm-slim@sha256:[0-9a-f]{64} AS node$/\1/p' .docker/php/Dockerfile)"
 
 test "$actual_php" = "$expected_php" || {
     echo "PHP runtime mismatch: expected $expected_php, got $actual_php" >&2
@@ -28,17 +29,12 @@ test "$docker_php" = "$expected_php" || {
     exit 1
 }
 
-grep -Eq '^FROM php:[0-9]+\.[0-9]+\.[0-9]+-cli-bookworm@sha256:[0-9a-f]{64}$' .docker/php/Dockerfile || {
-    echo "Docker base image must use an exact PHP tag pinned by sha256 digest." >&2
+test "$docker_node" = "$expected_node" || {
+    echo "Docker Node mismatch: package.json=$expected_node Dockerfile=$docker_node" >&2
     exit 1
 }
 
-grep -Fq 'releases/download/2.12.0/install-php-extensions' .docker/php/Dockerfile || {
-    echo "docker-php-extension-installer must use an explicit release." >&2
-    exit 1
-}
-
-grep -Fq 'ADD --checksum=sha256:3f49c71fa66c79b8b2b96bc0ce92885dafd7946f3b5a46f545b390d6f1617e2c' .docker/php/Dockerfile || {
-    echo "docker-php-extension-installer must be checksum-pinned." >&2
+grep -Eq '^FROM composer:[0-9]+\.[0-9]+\.[0-9]+@sha256:[0-9a-f]{64} AS composer$' .docker/php/Dockerfile || {
+    echo "Docker Composer image must use an exact tag pinned by sha256 digest." >&2
     exit 1
 }
