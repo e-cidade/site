@@ -6,58 +6,43 @@ return [
     'baseUrl' => '',
     'production' => false,
     'siteName' => 'e-Cidade',
-    'siteDescription' => 'O e-cidade destina-se a informatizar a gestão dos Municípios Brasileiros de forma integrada. Esta informatização contempla a integração entre os entes municipais: Prefeitura Municipal, Câmara Municipal, Autarquias, Fundações e outros.',
-    'siteAuthor' => 'LibreCode coop',
+    'siteDescription' => 'Software livre para gestão pública municipal integrada, desenvolvido de forma colaborativa pelo ecossistema e-Cidade.',
+    'siteAuthor' => 'Comunidade e-Cidade',
+    'communityUrl' => 'https://github.com/e-cidade/e-cidade',
+    'telegramUrl' => 'https://t.me/eCidadeCE',
+    'forumUrl' => 'https://ecidades.popsolutions.co',
+    'spbUrl' => 'https://softwarepublico.gov.br/social/e-cidade/',
 
-    // collections
     'collections' => [
         'posts' => [
-            'author' => 'LibreCode coop', // Default author, if not provided in a post
+            'author' => 'Comunidade e-Cidade',
             'sort' => '-date',
-            'path' => 'blog/{filename}',
-        ],
-        'categorias' => [
-            'path' => '/blog/categorias/{filename}',
-            'posts' => function ($page, $allPosts) {
-                return $allPosts->filter(function ($post) use ($page) {
-                    return $post->categorias ? in_array($page->getFilename(), $post->categorias, true) : false;
-                });
-            },
+            'path' => 'noticias/{filename}',
         ],
     ],
 
-    // helpers
     'getDate' => function ($page) {
-        return Datetime::createFromFormat('U', $page->date);
+        return DateTime::createFromFormat('U', $page->date);
     },
-    'getExcerpt' => function ($page, $length = 255) {
+
+    'getExcerpt' => function ($page, $length = 220) {
         if ($page->excerpt) {
             return $page->excerpt;
         }
 
         $content = preg_split('/<!-- more -->/m', $page->getContent(), 2);
-        $cleaned = trim(
-            strip_tags(
-                preg_replace(['/<pre>[\w\W]*?<\/pre>/', '/<h\d>[\w\W]*?<\/h\d>/'], '', $content[0]),
-                '<code>'
-            )
-        );
-
-        if (count($content) > 1) {
+        $cleaned = trim(strip_tags($content[0]));
+        if (mb_strlen($cleaned) <= $length) {
             return $cleaned;
         }
 
-        $truncated = substr($cleaned, 0, $length);
-
-        if (substr_count($truncated, '<code>') > substr_count($truncated, '</code>')) {
-            $truncated .= '</code>';
-        }
-
-        return strlen($cleaned) > $length
-            ? preg_replace('/\s+?(\S+)?$/', '', $truncated) . '...'
-            : $cleaned;
+        return rtrim(mb_substr($cleaned, 0, $length)) . '…';
     },
+
     'isActive' => function ($page, $path) {
-        return Str::endsWith(trimPath($page->getPath()), trimPath($path));
+        $current = trim(trimPath($page->getPath()), '/');
+        $target = trim(trimPath($path), '/');
+
+        return $current === $target || ($target !== '' && Str::startsWith($current, $target . '/'));
     },
 ];

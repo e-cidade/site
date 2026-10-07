@@ -1,19 +1,46 @@
 ---
 title: Sobre
-description: A little bit about the site
+description: Conheça o e-Cidade, seus requisitos, sua história e o papel do Comitê Gestor.
 ---
 @extends('_layouts.main')
 
 @section('body')
-    <h1>Sobre</h1>
+<section class="page-hero">
+    <div class="shell shell--narrow">
+        <p class="eyebrow">Sobre o projeto</p>
+        <h1>Software livre para informatizar a gestão municipal de forma integrada.</h1>
+        <p>O e-Cidade contempla a integração entre Prefeitura Municipal, Câmara Municipal, autarquias, fundações e outros entes municipais.</p>
+    </div>
+</section>
 
-    <img src="/assets/img/about.png"
-        alt="About image"
-        class="flex rounded-full h-64 w-64 bg-contain mx-auto md:float-right my-6 md:ml-10">
+<section class="section">
+    <div class="shell content-grid">
+        <div class="prose">
+            <h2>O software</h2>
+            <p>O e-Cidade destina-se a informatizar a gestão dos Municípios Brasileiros de forma integrada. Esta informatização contempla a integração entre os entes municipais: Prefeitura Municipal, Câmara Municipal, Autarquias, Fundações e outros.</p>
+            <p>A economia de recursos é somente uma das vantagens na adoção do e-Cidade, além da liberdade de escolha dos fornecedores e garantia de continuidade do sistema.</p>
 
-    <p class="mb-6">This is where you can give a little more information about yourself or site. If you'd like to change the structure of this page.</p>
+            <h2>Requisitos mínimos</h2>
+            <ul>
+                <li>Apache</li>
+                <li>Firefox</li>
+                <li>PHP 7.4.x</li>
+                <li>PostgreSQL 12.x</li>
+                <li>Ubuntu Linux 20.04.x</li>
+                <li>Java para recursos de Business Intelligence</li>
+            </ul>
 
-    <p class="mb-6">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum officia dolorem accusantium veniam quae, possimus, temporibus explicabo magni voluptas. fugit natus deserunt atque veniam possimus earum harum itaque est!</p>
-
-    <p class="mb-6">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum officia dolorem accusantium veniam quae, possimus, temporibus explicabo magni voluptas. fugit natus deserunt atque veniam!</p>
+            <h2>O Comitê Gestor</h2>
+            <p>O Comitê Gestor do software público e-Cidade é responsável pela governança, coordenação e tomada de decisões estratégicas relacionadas à gestão e evolução do sistema.</p>
+            <p>Entre suas funções estão o planejamento estratégico, a gestão de atualizações, a promoção da transparência, a articulação entre usuários e desenvolvedores e o fomento ao uso e à capacitação.</p>
+            <p>O objetivo é assegurar que o e-Cidade permaneça eficiente, atualizado e acessível, fortalecendo a comunidade e um modelo de colaboração e compartilhamento de conhecimentos típico de softwares públicos e de código aberto.</p>
+        </div>
+        <aside class="aside-card">
+            <p class="eyebrow">Histórico</p>
+            <h3>Apresentação na Latinoware 2021</h3>
+            <p>Uma apresentação pública registra parte da trajetória e do contexto do projeto.</p>
+            <a class="text-link" href="https://www.youtube.com/results?search_query=e-cidade+Latinoware+2021">Procurar apresentação →</a>
+        </aside>
+    </div>
+</section>
 @endsection

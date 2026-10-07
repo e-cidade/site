@@ -1,72 +1,81 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <meta name="description" content="{{ $page->description ?? $page->siteDescription }}">
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{{ $page->description ?? $page->siteDescription }}">
+    <meta name="author" content="{{ $page->siteAuthor }}">
+    <meta name="robots" content="index,follow">
+    <link rel="canonical" href="{{ $page->getUrl() }}">
 
-        <meta property="og:title" content="{{ $page->title ? $page->title . ' | ' : '' }}{{ $page->siteName }}"/>
-        <meta property="og:type" content="{{ $page->type ?? 'website' }}" />
-        <meta property="og:url" content="{{ $page->getUrl() }}"/>
-        <meta property="og:description" content="{{ $page->description ?? $page->siteDescription }}" />
+    <meta property="og:type" content="{{ $page->type ?? 'website' }}">
+    <meta property="og:site_name" content="{{ $page->siteName }}">
+    <meta property="og:title" content="{{ $page->title ? $page->title . ' | ' : '' }}{{ $page->siteName }}">
+    <meta property="og:description" content="{{ $page->description ?? $page->siteDescription }}">
+    <meta property="og:url" content="{{ $page->getUrl() }}">
+    <meta property="og:image" content="{{ rtrim($page->baseUrl, '/') }}/assets/img/logo-large.svg">
 
-        <title>{{ $page->title ?  $page->title . ' | ' : '' }}{{ $page->siteName }}</title>
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{{ $page->title ? $page->title . ' | ' : '' }}{{ $page->siteName }}">
+    <meta name="twitter:description" content="{{ $page->description ?? $page->siteDescription }}">
 
-        <link rel="home" href="{{ $page->baseUrl }}">
-        <link rel="icon" href="/favicon.ico">
-        <link href="/blog/feed.atom" type="application/atom+xml" rel="alternate" title="{{ $page->siteName }} Atom Feed">
+    <title>{{ $page->title ? $page->title . ' | ' : '' }}{{ $page->siteName }}</title>
 
-        @if ($page->production)
-            <!-- Insert analytics code here -->
-        @endif
+    <link rel="icon" href="{{ $page->baseUrl }}/favicon.ico">
+    <link rel="stylesheet" href="{{ mix('css/main.css', 'assets/build') }}">
+</head>
+<body>
+    <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 
-        <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,300i,400,400i,700,700i,800,800i" rel="stylesheet">
-        <link rel="stylesheet" href="{{ mix('css/main.css', 'assets/build') }}">
-    </head>
+    <header class="site-header">
+        <div class="shell header-inner">
+            <a class="brand" href="{{ $page->baseUrl }}/" aria-label="e-Cidade — início">
+                <img src="{{ $page->baseUrl }}/assets/img/logo-large.svg" alt="e-Cidade">
+            </a>
 
-    <body class="flex flex-col justify-between min-h-screen bg-gray-100 text-gray-800 leading-normal font-sans">
-        <header class="flex items-center shadow bg-white border-b h-24 py-4" role="banner">
-            <div class="container flex items-center max-w-8xl mx-auto px-4 lg:px-8">
-                <div class="flex items-center">
-                    <a href="/" title="{{ $page->siteName }} home" class="inline-flex items-center">
-                        <img class="h-8 md:h-10 mr-3" src="/assets/img/logo.png" alt="{{ $page->siteName }} logo" />
+            <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="main-nav">
+                Menu
+            </button>
 
-                        <h1 class="text-lg md:text-2xl text-blue-800 font-semibold hover:text-blue-600 my-0">{{ $page->siteName }}</h1>
-                    </a>
-                </div>
+            <nav id="main-nav" class="main-nav" aria-label="Navegação principal">
+                <a href="{{ $page->baseUrl }}/sobre" class="{{ $page->isActive('/sobre') ? 'active' : '' }}">Sobre</a>
+                <a href="{{ $page->baseUrl }}/noticias" class="{{ $page->isActive('/noticias') ? 'active' : '' }}">Notícias</a>
+                <a href="{{ $page->baseUrl }}/codigo-fonte" class="{{ $page->isActive('/codigo-fonte') ? 'active' : '' }}">Código-fonte</a>
+                <a href="{{ $page->baseUrl }}/manuais-e-documentacoes" class="{{ $page->isActive('/manuais-e-documentacoes') ? 'active' : '' }}">Documentação</a>
+                <a href="{{ $page->baseUrl }}/prestadores-de-servico" class="{{ $page->isActive('/prestadores-de-servico') ? 'active' : '' }}">Prestadores</a>
+            </nav>
+        </div>
+    </header>
 
-                <div id="vue-search" class="flex flex-1 justify-end items-center">
-                    <search></search>
+    <main id="conteudo">
+        @yield('body')
+    </main>
 
-                    @include('_nav.menu')
-
-                    @include('_nav.menu-toggle')
-                </div>
+    <footer class="site-footer">
+        <div class="shell footer-grid">
+            <div>
+                <img class="footer-logo" src="{{ $page->baseUrl }}/assets/img/logo-large.svg" alt="e-Cidade">
+                <p>Software livre para gestão pública municipal integrada.</p>
             </div>
-        </header>
+            <nav aria-label="Links da comunidade">
+                <strong>Comunidade</strong>
+                <a href="{{ $page->communityUrl }}">GitHub</a>
+                <a href="{{ $page->telegramUrl }}">Telegram</a>
+                <a href="{{ $page->forumUrl }}">Fórum</a>
+            </nav>
+            <nav aria-label="Links do site">
+                <strong>Projeto</strong>
+                <a href="{{ $page->baseUrl }}/sobre">Sobre</a>
+                <a href="{{ $page->baseUrl }}/noticias">Notícias</a>
+                <a href="{{ $page->baseUrl }}/codigo-fonte">Código-fonte</a>
+            </nav>
+        </div>
+        <div class="shell footer-meta">
+            <span>Conteúdo mantido pela comunidade e-Cidade.</span>
+            <span>Software livre, colaboração e governo digital.</span>
+        </div>
+    </footer>
 
-        @include('_nav.menu-responsive')
-
-        <main role="main" class="flex-auto w-full container max-w-4xl mx-auto py-16 px-6">
-            @yield('body')
-        </main>
-
-        <footer class="bg-white text-center text-sm mt-12 py-4" role="contentinfo">
-            <ul class="flex flex-col md:flex-row justify-center list-none">
-                <li class="md:mr-2">
-                    &copy; <a href="https://librecode.coop" title="LibreCode">LibreCode</a> {{ date('Y') }}.
-                </li>
-
-                <li>
-                    Built with <a href="http://jigsaw.tighten.co" title="Jigsaw by Tighten">Jigsaw</a>
-                    and <a href="https://tailwindcss.com" title="Tailwind CSS, a utility-first CSS framework">Tailwind CSS</a>.
-                </li>
-            </ul>
-        </footer>
-
-        <script src="{{ mix('js/main.js', 'assets/build') }}"></script>
-
-        @stack('scripts')
-    </body>
+    <script src="{{ mix('js/main.js', 'assets/build') }}"></script>
+</body>
 </html>

@@ -1,15 +1,16 @@
+---
+title: Página não encontrada
+description: A página solicitada não foi encontrada.
+---
 @extends('_layouts.main')
 
 @section('body')
-    <div class="flex flex-col items-center text-gray-700 mt-32">
-        <h1 class="text-6xl font-light leading-none mb-2">404</h1>
-
-        <h2 class="text-3xl">Page not found.</h2>
-
-        <hr class="block w-full max-w-sm mx-auto border my-8">
-
-        <p class="text-xl">
-            Need to update this page? See the <a title="404 Page Documentation" href="https://jigsaw.tighten.co/docs/custom-404-page/">Jigsaw documentation</a>.
-        </p>
+<section class="page-hero">
+    <div class="shell shell--narrow">
+        <p class="eyebrow">Erro 404</p>
+        <h1>Esta página não existe.</h1>
+        <p>O endereço pode ter mudado durante a migração do site. Use a navegação principal ou volte à página inicial.</p>
+        <a class="button button--primary" href="{{ $page->baseUrl }}/">Voltar ao início</a>
     </div>
+</section>
 @endsection

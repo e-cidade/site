@@ -5,43 +5,39 @@
 @endphp
 
 @section('body')
-    @if ($page->cover_image)
-        <img src="{{ $page->cover_image }}" alt="{{ $page->title }} cover image" class="mb-2">
-    @endif
+<article class="article shell shell--narrow">
+    <a class="eyebrow link-back" href="{{ $page->baseUrl }}/noticias">← Notícias</a>
+    <header class="article-header">
+        <p class="eyebrow">{{ $page->category ?? 'Notícias' }}</p>
+        <h1>{{ $page->title }}</h1>
+        <p class="article-meta">
+            <time datetime="{{ $page->getDate()->format('Y-m-d') }}">{{ $page->getDate()->format('d/m/Y') }}</time>
+            <span aria-hidden="true">•</span>
+            <span>{{ $page->author }}</span>
+        </p>
+    </header>
 
-    <h1 class="leading-none mb-2">{{ $page->title }}</h1>
-
-    <p class="text-gray-700 text-xl md:mt-0">{{ $page->author }}  •  {{ date('F j, Y', $page->date) }}</p>
-
-    @if ($page->categorias)
-        @foreach ($page->categorias as $i => $category)
-            <a
-                href="{{ '/blog/categorias/' . $category }}"
-                title="View posts in {{ $category }}"
-                class="inline-block bg-gray-300 hover:bg-blue-200 leading-loose tracking-wide text-gray-800 uppercase text-xs font-semibold rounded mr-4 px-3 pt-px"
-            >{{ $category }}</a>
-        @endforeach
-    @endif
-
-    <div class="border-b border-blue-200 mb-10 pb-4" v-pre>
+    <div class="prose">
         @yield('content')
     </div>
 
-    <nav class="flex justify-between text-sm md:text-base">
+    @if ($page->source_url)
+        <p class="source-note">Fonte original: <a href="{{ $page->source_url }}">{{ $page->source_label ?? $page->source_url }}</a></p>
+    @endif
+
+    <nav class="post-nav" aria-label="Navegação entre notícias">
         <div>
             @if ($next = $page->getNext())
-                <a href="{{ $next->getUrl() }}" title="Older Post: {{ $next->title }}">
-                    &LeftArrow; {{ $next->title }}
-                </a>
+                <span>Anterior</span>
+                <a href="{{ $next->getUrl() }}">{{ $next->title }}</a>
             @endif
         </div>
-
         <div>
             @if ($previous = $page->getPrevious())
-                <a href="{{ $previous->getUrl() }}" title="Newer Post: {{ $previous->title }}">
-                    {{ $previous->title }} &RightArrow;
-                </a>
+                <span>Próxima</span>
+                <a href="{{ $previous->getUrl() }}">{{ $previous->title }}</a>
             @endif
         </div>
     </nav>
+</article>
 @endsection
