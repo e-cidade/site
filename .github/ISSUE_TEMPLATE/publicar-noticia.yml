@@ -1,0 +1,78 @@
+# SPDX-FileCopyrightText: 2026 e-Cidade community
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+name: Sugerir notícia
+description: Envie uma notícia sem precisar editar arquivos ou conhecer a estrutura do site.
+title: "[Notícia] "
+labels:
+  - notícia
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use este formulário quando você quiser sugerir uma notícia e preferir não editar Markdown no repositório. A equipe de manutenção pode transformar o conteúdo aprovado em uma publicação.
+
+  - type: input
+    id: title
+    attributes:
+      label: Título
+      description: Use um título curto e específico.
+      placeholder: Prefeitura de Exemplo passa a utilizar o e-Cidade
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Resumo
+      description: Explique em uma ou duas frases o que aconteceu e por que isso é relevante.
+    validations:
+      required: true
+
+  - type: input
+    id: date
+    attributes:
+      label: Data da notícia
+      description: Use o formato AAAA-MM-DD.
+      placeholder: 2026-10-07
+    validations:
+      required: true
+
+  - type: textarea
+    id: body
+    attributes:
+      label: Texto da notícia
+      description: Você pode escrever normalmente ou usar Markdown simples para subtítulos, links e listas.
+      placeholder: |
+        Primeiro parágrafo da notícia.
+
+        ## Contexto
+
+        Demais informações...
+    validations:
+      required: true
+
+  - type: input
+    id: source_url
+    attributes:
+      label: Fonte original
+      description: URL da publicação original, quando existir.
+      placeholder: https://exemplo.org/noticia
+
+  - type: input
+    id: source_label
+    attributes:
+      label: Nome da fonte
+      placeholder: Prefeitura de Exemplo
+
+  - type: textarea
+    id: image
+    attributes:
+      label: Imagem
+      description: Arraste uma imagem para este campo ou informe um link. Inclua também uma frase descrevendo a imagem para acessibilidade.
+
+  - type: input
+    id: author
+    attributes:
+      label: Autor
+      description: Deixe em branco para usar Comunidade e-Cidade.
