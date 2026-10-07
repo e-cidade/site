@@ -29,7 +29,7 @@ npm run dev
 A integração contínua é segmentada por responsabilidade:
 
 - Composer: validação e auditoria de dependências PHP;
-- PHP: lint e PHPUnit;
+- PHP: lint, PHPUnit e PHP-CS-Fixer, com PHPUnit e PHP-CS-Fixer isolados em `vendor-bin/`;
 - JavaScript: Prettier e testes nativos do Node.js;
 - SCSS: compilação isolada com Sass;
 - ShellCheck: validação dos scripts shell;
@@ -40,6 +40,7 @@ Para executar localmente:
 
 ```bash
 composer lint
+composer cs:check
 composer test
 npm run lint:js
 npm run test:js

@@ -28,3 +28,5 @@ jobs:
       - run: composer validate --strict
       - run: composer install --no-interaction --no-progress --prefer-dist
       - run: composer audit
+      - run: composer --working-dir=vendor-bin/phpunit audit
+      - run: composer --working-dir=vendor-bin/php-cs-fixer audit

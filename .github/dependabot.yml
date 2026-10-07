@@ -13,12 +13,34 @@ updates:
     labels:
       - dependencies
 
+  - package-ecosystem: composer
+    directory: /vendor-bin/phpunit
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:05"
+      timezone: America/Sao_Paulo
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+
+  - package-ecosystem: composer
+    directory: /vendor-bin/php-cs-fixer
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:10"
+      timezone: America/Sao_Paulo
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+
   - package-ecosystem: npm
     directory: /
     schedule:
       interval: weekly
       day: monday
-      time: "09:10"
+      time: "09:15"
       timezone: America/Sao_Paulo
     open-pull-requests-limit: 10
     labels:
