@@ -26,6 +26,9 @@ return [
             'sort' => '-date',
             'path' => '{filename}',
         ],
+        'providers' => [
+            'sort' => 'order',
+        ],
     ],
 
     'getDate' => function ($page) {
