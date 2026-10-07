@@ -32,6 +32,15 @@ final class NewsIssueContractTest extends TestCase
         self::assertSame('https://exemplo.gov.br/noticia', $result['source_url']);
     }
 
+    public function testReadsPreferredSlugFromLegacyImportMarker(): void
+    {
+        $body = "<!-- e-cidade-slug:slug-legado -->\n\n" . $this->fixture('valid-news-issue.md');
+
+        $result = (new NewsIssueContract())->parse(126, 'Título alterado', $body);
+
+        self::assertSame('slug-legado', $result['preferred_slug']);
+    }
+
     public function testRejectsInvalidIssueFormData(): void
     {
         $this->expectException(InvalidArgumentException::class);

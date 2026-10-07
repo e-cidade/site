@@ -18,6 +18,7 @@ final class NewsMediaLocalizer
         'github.com',
         'user-images.githubusercontent.com',
         'private-user-images.githubusercontent.com',
+        'ecidade.softwarepublico.org',
     ];
 
     /** @var array<string, string> */
@@ -40,8 +41,13 @@ final class NewsMediaLocalizer
 
         $cover = null;
         if ($entry->cover !== null) {
-            $coverUrl = $this->extractUrl($entry->cover);
-            $cover = $this->localizeUrl($coverUrl, $issueDirectory, (string) $entry->issueNumber, 'cover');
+            $coverValue = trim($entry->cover);
+            if (str_starts_with($coverValue, '/assets/images/')) {
+                $cover = $coverValue;
+            } else {
+                $coverUrl = $this->extractUrl($coverValue);
+                $cover = $this->localizeUrl($coverUrl, $issueDirectory, (string) $entry->issueNumber, 'cover');
+            }
         }
 
         $body = preg_replace_callback(
