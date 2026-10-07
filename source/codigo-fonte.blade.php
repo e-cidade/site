@@ -2,6 +2,8 @@
 title: Código-fonte
 description: Onde encontrar o código e as diferentes linhas de desenvolvimento do e-Cidade.
 ---
+{{-- SPDX-FileCopyrightText: 2026 e-Cidade community --}}
+{{-- SPDX-License-Identifier: AGPL-3.0-or-later --}}
 @extends('_layouts.main')
 
 @section('body')
