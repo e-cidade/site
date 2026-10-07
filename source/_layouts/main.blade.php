@@ -51,7 +51,6 @@
                 <strong>Comunidade</strong>
                 <a href="{{ $page->communityUrl }}">GitHub</a>
                 <a href="{{ $page->telegramUrl }}">Telegram</a>
-                <a href="{{ $page->forumUrl }}">Fórum</a>
             </nav>
             <nav aria-label="Links do site">
                 <strong>Projeto</strong>

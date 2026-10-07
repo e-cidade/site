@@ -68,7 +68,6 @@ description: Software livre para gestão pública municipal integrada, construí
         </div>
         <div class="community-links">
             <a class="community-link" href="{{ $page->communityUrl }}"><strong>GitHub</strong><span>Código, projetos e governança →</span></a>
-            <a class="community-link" href="{{ $page->forumUrl }}"><strong>Fórum</strong><span>Dúvidas e conhecimento compartilhado →</span></a>
             <a class="community-link" href="{{ $page->telegramUrl }}"><strong>Telegram</strong><span>Conversa em tempo real com a comunidade →</span></a>
         </div>
     </div>
