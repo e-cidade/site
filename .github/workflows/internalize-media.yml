@@ -1,0 +1,92 @@
+name: Internalize legacy media
+
+on:
+  push:
+    branches: [feat/migrate-wordpress-content]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/migrate-wordpress-content
+
+      - name: Download legacy media
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p source/assets/images/migrated
+
+          curl -fsSL --retry 3 'https://ecidade.softwarepublico.org/wp-content/uploads/2026/08/image.png' -o source/assets/images/migrated/aula-inaugural.png
+          curl -fsSL --retry 3 'https://ecidade.softwarepublico.org/wp-content/uploads/2026/08/WhatsApp-Image-2026-07-29-at-10.45.15.jpeg' -o source/assets/images/migrated/aula-inaugural-turma.jpeg
+
+          curl -fsSL --retry 3 'https://ecidade.softwarepublico.org/wp-content/uploads/2026/05/image.png' -o source/assets/images/migrated/governanca-academia.png
+          curl -fsSL --retry 3 'https://ecidade.softwarepublico.org/wp-content/uploads/2026/05/image-4.png' -o source/assets/images/migrated/igor-oliveira.png
+          curl -fsSL --retry 3 'https://ecidade.softwarepublico.org/wp-content/uploads/2026/05/image-3.png' -o source/assets/images/migrated/evandro-schaulet.png
+
+          curl -fsSL --retry 3 'https://ecidade.softwarepublico.org/wp-content/uploads/2026/01/image.png' -o source/assets/images/migrated/ambiente-demonstracao.png
+          curl -fsSL --retry 3 'https://ecidade.softwarepublico.org/wp-content/uploads/2025/11/image-1024x683.png' -o source/assets/images/migrated/centro-bens-publicos-digitais.png
+
+          curl -fsSL --retry 3 'https://ecidade.softwarepublico.org/wp-content/uploads/2025/07/image.png' -o source/assets/images/migrated/sertao-digital.png
+          curl -fsSL --retry 3 'https://ecidade.softwarepublico.org/wp-content/uploads/2025/07/5132042390788492879-1.jpg' -o source/assets/images/migrated/sertao-digital-registro.jpg
+
+          curl -fsSL --retry 3 'https://ecidade.softwarepublico.org/wp-content/uploads/2025/06/image.png' -o source/assets/images/migrated/bens-publicos-digitais.png
+          curl -fsSL --retry 3 'https://artecult.com/wp-content/uploads/2025/06/WhatsApp-Image-2025-06-12-at-11.45.33.jpeg' -o source/assets/images/migrated/mexico-software-publico.jpeg
+
+          curl -fsSL --retry 3 'https://ecidade.softwarepublico.org/wp-content/uploads/2025/06/Design-sem-nome-10.png' -o source/assets/images/migrated/pagina-comunidade.png
+          curl -fsSL --retry 3 'https://artecult.com/wp-content/uploads/2025/05/unnamed-1.jpg' -o source/assets/images/migrated/pagina-comunidade-registro.jpg
+
+          curl -fsSL --retry 3 'https://artecult.com/wp-content/uploads/2025/04/Design-sem-nome-7-600x222.png' -o source/assets/images/migrated/governanca-em-rede.png
+          curl -fsSL --retry 3 'https://artecult.com/wp-content/uploads/2025/04/5132042390788492879-500x485.jpg' -o source/assets/images/migrated/wellington-carvalho.jpg
+          curl -fsSL --retry 3 'https://artecult.com/wp-content/uploads/2025/04/5161630699663502933.jpg' -o source/assets/images/migrated/cristiano-furtado.jpg
+
+      - name: Replace remote media references
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+
+          replacements = {
+              'https://ecidade.softwarepublico.org/wp-content/uploads/2026/08/image.png': '/assets/images/migrated/aula-inaugural.png',
+              'https://ecidade.softwarepublico.org/wp-content/uploads/2026/08/WhatsApp-Image-2026-07-29-at-10.45.15.jpeg': '/assets/images/migrated/aula-inaugural-turma.jpeg',
+              'https://ecidade.softwarepublico.org/wp-content/uploads/2026/05/image.png': '/assets/images/migrated/governanca-academia.png',
+              'https://ecidade.softwarepublico.org/wp-content/uploads/2026/05/image-4.png': '/assets/images/migrated/igor-oliveira.png',
+              'https://ecidade.softwarepublico.org/wp-content/uploads/2026/05/image-3.png': '/assets/images/migrated/evandro-schaulet.png',
+              'https://ecidade.softwarepublico.org/wp-content/uploads/2026/01/image.png': '/assets/images/migrated/ambiente-demonstracao.png',
+              'https://ecidade.softwarepublico.org/wp-content/uploads/2025/11/image-1024x683.png': '/assets/images/migrated/centro-bens-publicos-digitais.png',
+              'https://ecidade.softwarepublico.org/wp-content/uploads/2025/07/image.png': '/assets/images/migrated/sertao-digital.png',
+              'https://ecidade.softwarepublico.org/wp-content/uploads/2025/07/5132042390788492879-1.jpg': '/assets/images/migrated/sertao-digital-registro.jpg',
+              'https://ecidade.softwarepublico.org/wp-content/uploads/2025/06/image.png': '/assets/images/migrated/bens-publicos-digitais.png',
+              'https://artecult.com/wp-content/uploads/2025/06/WhatsApp-Image-2025-06-12-at-11.45.33.jpeg': '/assets/images/migrated/mexico-software-publico.jpeg',
+              'https://ecidade.softwarepublico.org/wp-content/uploads/2025/06/Design-sem-nome-10.png': '/assets/images/migrated/pagina-comunidade.png',
+              'https://artecult.com/wp-content/uploads/2025/05/unnamed-1.jpg': '/assets/images/migrated/pagina-comunidade-registro.jpg',
+              'https://artecult.com/wp-content/uploads/2025/04/Design-sem-nome-7-600x222.png': '/assets/images/migrated/governanca-em-rede.png',
+              'https://artecult.com/wp-content/uploads/2025/04/5132042390788492879-500x485.jpg': '/assets/images/migrated/wellington-carvalho.jpg',
+              'https://artecult.com/wp-content/uploads/2025/04/5161630699663502933.jpg': '/assets/images/migrated/cristiano-furtado.jpg',
+          }
+
+          for path in Path('source/_posts').glob('*.md'):
+              text = path.read_text()
+              for old, new in replacements.items():
+                  text = text.replace(old, new)
+              path.write_text(text)
+          PY
+
+      - name: Commit migrated media
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add source/assets/images/migrated source/_posts
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m 'chore: internalize WordPress media'
+          git push origin HEAD:feat/migrate-wordpress-content
