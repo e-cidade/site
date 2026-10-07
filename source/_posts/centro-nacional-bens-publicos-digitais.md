@@ -6,7 +6,7 @@ description: UFPR articula o primeiro Centro Nacional de Bens Públicos Digitais
 date: 2025-11-14
 author: Comunidade e-Cidade
 category: Notícias
-cover_image: https://ecidade.softwarepublico.org/wp-content/uploads/2025/11/image-1024x683.png
+cover_image: /assets/images/migrated/centro-bens-publicos-digitais.png
 cover_alt: Imagem de divulgação do Centro Nacional de Bens Públicos Digitais
 source_url: https://www.c3sl.ufpr.br/2025/10/14/inedito-no-brasil-centro-de-bens-publicos-digitais-sera-lancado-em-novembro/
 source_label: C3SL / UFPR

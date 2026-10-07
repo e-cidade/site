@@ -6,7 +6,7 @@ description: Curso de capacitação reúne empresas, comunidade e estudantes do 
 date: 2026-08-27
 author: Comunidade e-Cidade
 category: Notícias
-cover_image: https://ecidade.softwarepublico.org/wp-content/uploads/2026/08/image.png
+cover_image: /assets/images/migrated/aula-inaugural.png
 cover_alt: Alunos do Instituto Federal da Bahia em aula sobre o e-Cidade
 source_url: https://artecult.com/aula-inaugural-do-e-cidade-faz-historia/
 source_label: ArteCult
@@ -20,7 +20,7 @@ Segundo o professor Wanderlei Silva, da CPD Municipal, o encontro apresentou a o
 
 O professor contou com o apoio de Wellington Carvalho, do Sertão Digital, e Gabriel Senna, da DBSeller, que também participam da formação.
 
-![Participantes acompanhando a capacitação do e-Cidade](https://ecidade.softwarepublico.org/wp-content/uploads/2026/08/WhatsApp-Image-2026-07-29-at-10.45.15.jpeg)
+![Participantes acompanhando a capacitação do e-Cidade](/assets/images/migrated/aula-inaugural-turma.jpeg)
 
 Gabriel Senna destacou que a apresentação da arquitetura ajudou os alunos a compreender o ecossistema do GRP. A explicação percorreu o modelo cliente-servidor, tecnologias abertas como Linux, PostgreSQL, Apache e PHP e a evolução do frontend, de HTML, CSS, JavaScript e AJAX para ferramentas como Vue.js e Laravel. Também foram revisados HTTP, XML, APIs RESTful e SOAP.
 

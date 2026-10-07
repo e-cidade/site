@@ -6,7 +6,7 @@ description: Ambiente de demonstração permite conhecer na prática módulos e 
 date: 2026-01-27
 author: Comunidade e-Cidade
 category: Notícias
-cover_image: https://ecidade.softwarepublico.org/wp-content/uploads/2026/01/image.png
+cover_image: /assets/images/migrated/ambiente-demonstracao.png
 cover_alt: Apresentação do ambiente de demonstração do e-Cidade
 ---
 

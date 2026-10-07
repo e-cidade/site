@@ -6,7 +6,7 @@ description: Comunidade escolhe representantes para ampliar participação no Co
 date: 2025-06-01
 author: Comunidade e-Cidade
 category: Notícias
-cover_image: https://artecult.com/wp-content/uploads/2025/04/Design-sem-nome-7-600x222.png
+cover_image: /assets/images/migrated/governanca-em-rede.png
 cover_alt: Divulgação sobre governança em rede do e-Cidade
 source_url: https://artecult.com/o-software-e-cidade-aprimora-seu-modelo-de-governanca-em-rede/
 source_label: ArteCult
@@ -18,11 +18,11 @@ Até então, o Comitê Gestor era formado por cinco empresas desenvolvedoras e p
 
 A ampliação buscou aproximar a comunidade da tomada de decisões, da identificação de melhorias e inovações e das necessidades dos usuários.
 
-![Wellington Carvalho](https://artecult.com/wp-content/uploads/2025/04/5132042390788492879-500x485.jpg)
+![Wellington Carvalho](/assets/images/migrated/wellington-carvalho.jpg)
 
 Wellington Carvalho relacionou sua participação ao interesse por Governo Digital e ao Projeto Sertão Digital. A proposta era utilizar o e-Cidade como base para digitalizar a gestão municipal e, ao mesmo tempo, fortalecer a ferramenta com melhorias, formação de profissionais especializados e novas oportunidades no ecossistema.
 
-![Cristiano Furtado](https://artecult.com/wp-content/uploads/2025/04/5161630699663502933.jpg)
+![Cristiano Furtado](/assets/images/migrated/cristiano-furtado.jpg)
 
 Cristiano Furtado destacou o potencial de integração do projeto e a intenção de aproximar membros da comunidade por meio de comunicação, lives e eventos.
 

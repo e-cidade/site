@@ -6,7 +6,7 @@ description: Comitê Gestor amplia participação com representantes da academia
 date: 2026-05-27
 author: Comunidade e-Cidade
 category: Notícias
-cover_image: https://ecidade.softwarepublico.org/wp-content/uploads/2026/05/image.png
+cover_image: /assets/images/migrated/governanca-academia.png
 cover_alt: Ilustração sobre governança participativa do e-Cidade
 ---
 
@@ -14,13 +14,13 @@ A experiência do software público e-Cidade avançou com a decisão de incorpor
 
 O anúncio foi associado à preparação de um novo ambiente colaborativo voltado à inovação e ao desenvolvimento conjunto. Em 2024, um repositório da comunidade havia sido disponibilizado sob a liderança de uma das empresas integrantes do Comitê.
 
-![Igor Oliveira, da Contass](https://ecidade.softwarepublico.org/wp-content/uploads/2026/05/image-4.png)
+![Igor Oliveira, da Contass](/assets/images/migrated/igor-oliveira.png)
 
 Igor Oliveira, diretor de tecnologia da [Contass](https://www.contassconsultoria.com.br), avaliou que a entrada da academia fortalece a tomada de decisões com conhecimento técnico e científico, amplia a visão crítica e aproxima o Comitê de práticas de ensino, pesquisa e extensão. Para ele, a integração também reforça o compromisso com soluções alinhadas às necessidades do e-Cidade e da comunidade.
 
 Com a mudança, o Comitê passou a reunir as cinco empresas que atuavam desde sua criação, dois representantes da comunidade eleitos em 2024 e dois representantes da academia.
 
-![Evandro Schaulet, da DBSeller](https://ecidade.softwarepublico.org/wp-content/uploads/2026/05/image-3.png)
+![Evandro Schaulet, da DBSeller](/assets/images/migrated/evandro-schaulet.png)
 
 Evandro Schaulet, diretor da [DBSeller](https://www.dbseller.com.br/), destacou que a participação de professores pode qualificar iniciativas e a evolução do e-Cidade. O envolvimento de alunos em projetos também abre espaço para inovação, desenvolvimento e uso do próprio sistema como apoio em cursos voltados à gestão pública.
 

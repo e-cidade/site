@@ -6,7 +6,7 @@ description: Reflexão sobre a experiência brasileira em software público e se
 date: 2025-06-23
 author: Comunidade e-Cidade
 category: Notícias
-cover_image: https://ecidade.softwarepublico.org/wp-content/uploads/2025/06/image.png
+cover_image: /assets/images/migrated/bens-publicos-digitais.png
 cover_alt: Divulgação dos 20 anos do Software Público Brasileiro
 source_url: https://artecult.com/brasil-ainda-pode-ser-lider-mundial-em-bens-publicos-digitais/
 source_label: ArteCult
@@ -22,7 +22,7 @@ O terceiro foi a maturidade do modelo, demonstrada por casos de uso de diferente
 
 A maturidade das soluções também foi relacionada à aceleração da transformação digital dos municípios, modernização da gestão, digitalização de serviços e criação de oportunidades econômicas.
 
-![Equipe do governo do México relacionada à experiência brasileira de software público](https://artecult.com/wp-content/uploads/2025/06/WhatsApp-Image-2025-06-12-at-11.45.33.jpeg)
+![Equipe do governo do México relacionada à experiência brasileira de software público](/assets/images/migrated/mexico-software-publico.jpeg)
 
 Um registro de 2014 mostra o governo do México organizando uma equipe para trabalhar com o modelo criado no Brasil. A publicação usa esse histórico para defender que o país ainda tem condições de exercer liderança no debate de bens públicos digitais, desde que consiga articular suas soluções e comunidades.
 

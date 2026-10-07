@@ -6,7 +6,7 @@ description: Comunidade lança página para centralizar informações, conteúdo
 date: 2025-06-13
 author: Comunidade e-Cidade
 category: Notícias
-cover_image: https://ecidade.softwarepublico.org/wp-content/uploads/2025/06/Design-sem-nome-10.png
+cover_image: /assets/images/migrated/pagina-comunidade.png
 cover_alt: Divulgação da página comunitária do e-Cidade
 source_url: https://artecult.com/pagina-do-e-cidade-lancada-pela-comunidade/
 source_label: ArteCult
@@ -18,7 +18,7 @@ A proposta era reunir notícias e novidades do e-Cidade, informações técnicas
 
 Igor Oliveira, responsável pelo desenvolvimento da página, explicou que durante muito tempo quem precisava de informações sobre o e-Cidade enfrentava dificuldade para localizar um ponto central com conteúdo confiável, atualizado e acessível. O novo site foi concebido para funcionar como essa referência.
 
-![Registro relacionado ao lançamento da página comunitária](https://artecult.com/wp-content/uploads/2025/05/unnamed-1.jpg)
+![Registro relacionado ao lançamento da página comunitária](/assets/images/migrated/pagina-comunidade-registro.jpg)
 
 Também foi criado um espaço dedicado aos prestadores de serviços, destacando empresas que colaboram com o desenvolvimento do código e com a comunidade, além de outras organizações que atuam com o e-Cidade.
 

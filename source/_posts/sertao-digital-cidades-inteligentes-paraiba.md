@@ -6,13 +6,13 @@ description: Municípios paraibanos articulam transformação digital, capacita�
 date: 2025-07-29
 author: Comunidade e-Cidade
 category: Notícias
-cover_image: https://ecidade.softwarepublico.org/wp-content/uploads/2025/07/image.png
+cover_image: /assets/images/migrated/sertao-digital.png
 cover_alt: Divulgação do projeto Sertão Digital
 ---
 
 Os municípios paraibanos de Marizópolis, Cajazeiras, Sousa, São João do Rio do Peixe e São José de Piranhas passaram a buscar soluções inovadoras de gestão pública com o objetivo de se tornarem referência regional em Cidades Inteligentes.
 
-![Registro relacionado ao projeto Sertão Digital](https://ecidade.softwarepublico.org/wp-content/uploads/2025/07/5132042390788492879-1.jpg)
+![Registro relacionado ao projeto Sertão Digital](/assets/images/migrated/sertao-digital-registro.jpg)
 
 Desde 2024, Wellington Carvalho, idealizador do Projeto Sertão Digital, vem articulando com lideranças municipais a modernização de setores da administração pública, a transformação digital e a capacitação de técnicos e desenvolvedores.
 
