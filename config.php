@@ -16,6 +16,7 @@ return [
     'siteAuthor' => 'Comunidade e-Cidade',
     'logoUrl' => 'https://avatars.githubusercontent.com/u/7452853?s=200&v=4',
     'communityUrl' => 'https://github.com/e-cidade/e-cidade',
+    'siteRepositoryUrl' => 'https://github.com/e-cidade/site',
     'telegramUrl' => 'https://t.me/eCidadeCE',
     'forumUrl' => 'https://ecidades.popsolutions.co',
     'spbUrl' => 'https://softwarepublico.gov.br/social/e-cidade/',
