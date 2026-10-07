@@ -28,6 +28,7 @@ jobs:
           php-version: '8.2'
           coverage: none
       - run: composer install --no-interaction --no-progress --prefer-dist
+      - run: npm ci --no-audit --no-fund
       - run: composer prod
       - name: Deploy to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v4
