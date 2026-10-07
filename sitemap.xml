@@ -2,112 +2,104 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
  <url>
   <loc>https://site-ecidade.librecode.coop/CNAME</loc>
-  <lastmod>2026-10-07T18:15:24+00:00</lastmod>
-  <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://site-ecidade.librecode.coop/aula-inaugural-do-e-cidade-faz-historia</loc>
-  <lastmod>2026-10-07T18:15:24+00:00</lastmod>
-  <changefreq>daily</changefreq>
+  <lastmod>2026-08-27T00:00:00+00:00</lastmod>
+  <image:image>
+   <image:loc>https://site-ecidade.librecode.coop/assets/images/migrated/aula-inaugural.png</image:loc>
+  </image:image>
  </url>
  <url>
   <loc>https://site-ecidade.librecode.coop/brasil-lider-bens-publicos-digitais</loc>
-  <lastmod>2026-10-07T18:15:24+00:00</lastmod>
-  <changefreq>daily</changefreq>
+  <lastmod>2025-06-23T00:00:00+00:00</lastmod>
+  <image:image>
+   <image:loc>https://site-ecidade.librecode.coop/assets/images/migrated/bens-publicos-digitais.png</image:loc>
+  </image:image>
  </url>
  <url>
   <loc>https://site-ecidade.librecode.coop/centro-nacional-bens-publicos-digitais</loc>
-  <lastmod>2026-10-07T18:15:24+00:00</lastmod>
-  <changefreq>daily</changefreq>
+  <lastmod>2025-11-14T00:00:00+00:00</lastmod>
+  <image:image>
+   <image:loc>https://site-ecidade.librecode.coop/assets/images/migrated/centro-bens-publicos-digitais.png</image:loc>
+  </image:image>
  </url>
  <url>
   <loc>https://site-ecidade.librecode.coop/e-cidade-amplia-governanca-academia</loc>
-  <lastmod>2026-10-07T18:15:24+00:00</lastmod>
-  <changefreq>daily</changefreq>
+  <lastmod>2026-05-27T00:00:00+00:00</lastmod>
+  <image:image>
+   <image:loc>https://site-ecidade.librecode.coop/assets/images/migrated/governanca-academia.png</image:loc>
+  </image:image>
  </url>
  <url>
   <loc>https://site-ecidade.librecode.coop/e-cidade-aprimora-governanca-em-rede</loc>
-  <lastmod>2026-10-07T18:15:24+00:00</lastmod>
-  <changefreq>daily</changefreq>
+  <lastmod>2025-06-01T00:00:00+00:00</lastmod>
+  <image:image>
+   <image:loc>https://site-ecidade.librecode.coop/assets/images/migrated/governanca-em-rede.png</image:loc>
+  </image:image>
  </url>
  <url>
   <loc>https://site-ecidade.librecode.coop/integracao-libresign-e-cidade</loc>
-  <lastmod>2026-10-07T18:15:24+00:00</lastmod>
-  <changefreq>daily</changefreq>
+  <lastmod>2025-01-21T00:00:00+00:00</lastmod>
  </url>
  <url>
   <loc>https://site-ecidade.librecode.coop/pagina-e-cidade-lancada-comunidade</loc>
-  <lastmod>2026-10-07T18:15:24+00:00</lastmod>
-  <changefreq>daily</changefreq>
+  <lastmod>2025-06-13T00:00:00+00:00</lastmod>
+  <image:image>
+   <image:loc>https://site-ecidade.librecode.coop/assets/images/migrated/pagina-comunidade.png</image:loc>
+  </image:image>
  </url>
  <url>
   <loc>https://site-ecidade.librecode.coop/sertao-digital-cidades-inteligentes-paraiba</loc>
-  <lastmod>2026-10-07T18:15:24+00:00</lastmod>
-  <changefreq>daily</changefreq>
+  <lastmod>2025-07-29T00:00:00+00:00</lastmod>
+  <image:image>
+   <image:loc>https://site-ecidade.librecode.coop/assets/images/migrated/sertao-digital.png</image:loc>
+  </image:image>
  </url>
  <url>
   <loc>https://site-ecidade.librecode.coop/software-e-cidade-ganha-ambiente-de-demonstracao</loc>
-  <lastmod>2026-10-07T18:15:24+00:00</lastmod>
-  <changefreq>daily</changefreq>
+  <lastmod>2026-01-27T00:00:00+00:00</lastmod>
+  <image:image>
+   <image:loc>https://site-ecidade.librecode.coop/assets/images/migrated/ambiente-demonstracao.png</image:loc>
+  </image:image>
  </url>
  <url>
   <loc>https://site-ecidade.librecode.coop/codigo-fonte</loc>
-  <lastmod>2026-10-07T18:15:24+00:00</lastmod>
-  <changefreq>daily</changefreq>
  </url>
  <url>
-  <loc>https://site-ecidade.librecode.coop</loc>
-  <lastmod>2026-10-07T18:15:24+00:00</lastmod>
-  <changefreq>daily</changefreq>
+  <loc>https://site-ecidade.librecode.coop/favicon</loc>
+ </url>
+ <url>
+  <loc>https://site-ecidade.librecode.coop/</loc>
  </url>
  <url>
   <loc>https://site-ecidade.librecode.coop/inedito-no-brasil-centro-de-bens-publicos-digitais-sera-lancado-em-novembro</loc>
-  <lastmod>2026-10-07T18:15:24+00:00</lastmod>
-  <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://site-ecidade.librecode.coop/manuais-e-documentacoes</loc>
-  <lastmod>2026-10-07T18:15:24+00:00</lastmod>
-  <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://site-ecidade.librecode.coop/manuais/manual-do-financeiro</loc>
-  <lastmod>2026-10-07T18:15:24+00:00</lastmod>
-  <changefreq>daily</changefreq>
- </url>
- <url>
-  <loc>https://site-ecidade.librecode.coop/noticias</loc>
-  <lastmod>2026-10-07T18:15:24+00:00</lastmod>
-  <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://site-ecidade.librecode.coop/noticias/2</loc>
-  <lastmod>2026-10-07T18:15:24+00:00</lastmod>
-  <changefreq>daily</changefreq>
+ </url>
+ <url>
+  <loc>https://site-ecidade.librecode.coop/noticias/2</loc>
  </url>
  <url>
   <loc>https://site-ecidade.librecode.coop/o-software-e-cidade-aprimora-seu-modelo-de-governanca-em-rede</loc>
-  <lastmod>2026-10-07T18:15:24+00:00</lastmod>
-  <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://site-ecidade.librecode.coop/ola-mundo-11</loc>
-  <lastmod>2026-10-07T18:15:24+00:00</lastmod>
-  <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://site-ecidade.librecode.coop/ola-mundo</loc>
-  <lastmod>2026-10-07T18:15:24+00:00</lastmod>
-  <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://site-ecidade.librecode.coop/prestadores-de-servico</loc>
-  <lastmod>2026-10-07T18:15:24+00:00</lastmod>
-  <changefreq>daily</changefreq>
  </url>
  <url>
   <loc>https://site-ecidade.librecode.coop/sobre</loc>
-  <lastmod>2026-10-07T18:15:24+00:00</lastmod>
-  <changefreq>daily</changefreq>
  </url>
 </urlset>

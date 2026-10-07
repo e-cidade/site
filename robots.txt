@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://site-ecidade.librecode.coop/sitemap.xml
