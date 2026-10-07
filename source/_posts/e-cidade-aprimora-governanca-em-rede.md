@@ -11,6 +11,11 @@ cover_alt: Divulgação sobre governança em rede do e-Cidade
 source_url: https://artecult.com/o-software-e-cidade-aprimora-seu-modelo-de-governanca-em-rede/
 source_label: ArteCult
 ---
+<!--
+SPDX-FileCopyrightText: 2026 e-Cidade community
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
 
 Em março de 2025, a comunidade do software público e-Cidade escolheu dois representantes para ingressarem no Comitê Gestor, estrutura de governança em rede criada em 2021. Wellington Carvalho e Cristiano Furtado foram indicados por membros da comunidade em processo aberto no grupo do Telegram.
 

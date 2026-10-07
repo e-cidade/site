@@ -1,17 +1,5 @@
-:root {
-    --ink: #17211b;
-    --muted: #5f6d65;
-    --paper: #f7f8f4;
-    --surface: #ffffff;
-    --line: #dfe5df;
-    --brand: #146b43;
-    --brand-dark: #0c4a2d;
-    --accent: #e3f3e8;
-    --warm: #f0efe7;
-    --radius: 20px;
-    --shadow: 0 18px 50px rgba(23, 33, 27, .08);
-    --shell: 1180px;
-}
+/* SPDX-FileCopyrightText: 2026 e-Cidade community */
+/* SPDX-License-Identifier: AGPL-3.0-or-later */
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
@@ -58,7 +46,7 @@ a:hover { color: var(--brand); }
     justify-content: space-between;
     gap: 2rem;
 }
-.brand img { display: block; width: 154px; max-height: 48px; }
+.brand img { display: block; width: 48px; height: 48px; border-radius: 10px; object-fit: cover; }
 .main-nav { display: flex; align-items: center; gap: 1.25rem; }
 .main-nav a {
     padding: .55rem 0;
@@ -334,7 +322,7 @@ a:hover { color: var(--brand); }
     grid-template-columns: 1.5fr 1fr 1fr;
     gap: 2rem;
 }
-.footer-logo { width: 160px; filter: brightness(0) invert(1); }
+.footer-logo { width: 72px; height: 72px; border-radius: 12px; object-fit: cover; }
 .site-footer p { color: #aebbb3; max-width: 32ch; }
 .site-footer nav { display: flex; flex-direction: column; gap: .45rem; }
 .site-footer strong { color: white; margin-bottom: .35rem; }
@@ -381,7 +369,7 @@ a:hover { color: var(--brand); }
     .shell { width: min(calc(100% - 1.25rem), var(--shell)); }
     .header-inner { min-height: 72px; }
     .main-nav { top: 72px; }
-    .brand img { width: 132px; }
+    .brand img { width: 44px; height: 44px; }
     .feature-grid,
     .post-grid,
     .provider-grid,

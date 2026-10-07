@@ -1,3 +1,6 @@
+{{-- SPDX-FileCopyrightText: 2026 e-Cidade community --}}
+{{-- SPDX-License-Identifier: AGPL-3.0-or-later --}}
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -13,7 +16,7 @@
     <meta property="og:title" content="{{ $page->title ? $page->title . ' | ' : '' }}{{ $page->siteName }}">
     <meta property="og:description" content="{{ $page->description ?? $page->siteDescription }}">
     <meta property="og:url" content="{{ $page->getUrl() }}">
-    <meta property="og:image" content="{{ rtrim($page->baseUrl, '/') }}/assets/img/logo-large.svg">
+    <meta property="og:image" content="{{ $page->logoUrl }}">
 
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="{{ $page->title ? $page->title . ' | ' : '' }}{{ $page->siteName }}">
@@ -23,7 +26,7 @@
 
     <link rel="icon" href="{{ $page->baseUrl }}/favicon.ico">
     @viteRefresh()
-    <link rel="stylesheet" href="{{ vite('source/_assets/css/main.css') }}">
+    <link rel="stylesheet" href="{{ vite('source/_assets/scss/main.scss') }}">
 </head>
 <body>
     <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
@@ -31,7 +34,7 @@
     <header class="site-header">
         <div class="shell header-inner">
             <a class="brand" href="{{ $page->baseUrl }}/" aria-label="e-Cidade — início">
-                <img src="{{ $page->baseUrl }}/assets/img/logo-large.svg" alt="e-Cidade">
+                <img src="{{ $page->logoUrl }}" alt="e-Cidade">
             </a>
 
             <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="main-nav">
@@ -55,7 +58,7 @@
     <footer class="site-footer">
         <div class="shell footer-grid">
             <div>
-                <img class="footer-logo" src="{{ $page->baseUrl }}/assets/img/logo-large.svg" alt="e-Cidade">
+                <img class="footer-logo" src="{{ $page->logoUrl }}" alt="e-Cidade">
                 <p>Software livre para gestão pública municipal integrada.</p>
             </div>
             <nav aria-label="Links da comunidade">

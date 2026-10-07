@@ -1,0 +1,30 @@
+# SPDX-FileCopyrightText: 2026 e-Cidade community
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+version = 1
+
+[[annotations]]
+path = [
+    ".prettierrc.json",
+    "composer.json",
+    "composer.lock",
+    "package.json",
+    "package-lock.json",
+    "vendor-bin/phpunit/composer.json",
+    "vendor-bin/phpunit/composer.lock",
+    "vendor-bin/php-cs-fixer/composer.json",
+    "vendor-bin/php-cs-fixer/composer.lock",
+    "source/CNAME"
+]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 e-Cidade community"
+SPDX-License-Identifier = "AGPL-3.0-or-later"
+
+[[annotations]]
+path = [
+    "source/assets/images/migrated/**",
+    "source/favicon.ico"
+]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 e-Cidade community"
+SPDX-License-Identifier = "AGPL-3.0-or-later"

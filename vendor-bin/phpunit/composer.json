@@ -1,0 +1,11 @@
+{
+  "name": "e-cidade/site-phpunit-tools",
+  "description": "Isolated PHPUnit tooling for the e-Cidade community site",
+  "type": "project",
+  "require-dev": {
+    "phpunit/phpunit": "^12.0"
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

@@ -11,6 +11,11 @@ cover_alt: Alunos do Instituto Federal da Bahia em aula sobre o e-Cidade
 source_url: https://artecult.com/aula-inaugural-do-e-cidade-faz-historia/
 source_label: ArteCult
 ---
+<!--
+SPDX-FileCopyrightText: 2026 e-Cidade community
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
 
 Pela primeira vez desde 2013, uma capacitação ligada ao software público aproximou empresas prestadoras de serviços, comunidade e estudantes de uma instituição pública de ensino superior. A aula inaugural, realizada em julho, contou com quase 40 alunos do Instituto Federal da Bahia (IFBA).
 

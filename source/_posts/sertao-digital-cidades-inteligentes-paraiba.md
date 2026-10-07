@@ -9,6 +9,11 @@ category: Notícias
 cover_image: /assets/images/migrated/sertao-digital.png
 cover_alt: Divulgação do projeto Sertão Digital
 ---
+<!--
+SPDX-FileCopyrightText: 2026 e-Cidade community
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
 
 Os municípios paraibanos de Marizópolis, Cajazeiras, Sousa, São João do Rio do Peixe e São José de Piranhas passaram a buscar soluções inovadoras de gestão pública com o objetivo de se tornarem referência regional em Cidades Inteligentes.
 

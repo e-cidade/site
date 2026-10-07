@@ -9,6 +9,11 @@ category: Notícias
 cover_image: /assets/images/migrated/governanca-academia.png
 cover_alt: Ilustração sobre governança participativa do e-Cidade
 ---
+<!--
+SPDX-FileCopyrightText: 2026 e-Cidade community
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
 
 A experiência do software público e-Cidade avançou com a decisão de incorporar representantes da academia ao Comitê Gestor. A medida foi aprovada na reunião de 5 de maio, junto com projetos de interesse dos prestadores de serviço, da comunidade e da academia.
 

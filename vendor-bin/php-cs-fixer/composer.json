@@ -1,0 +1,11 @@
+{
+  "name": "e-cidade/site-php-cs-fixer-tools",
+  "description": "Isolated PHP CS Fixer tooling for the e-Cidade community site",
+  "type": "project",
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "^3.0"
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

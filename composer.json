@@ -7,18 +7,52 @@
     "samdark/sitemap": "^3.0",
     "tightenco/jigsaw": "^1.8.8"
   },
+  "require-dev": {
+    "bamarni/composer-bin-plugin": "^1.8"
+  },
   "autoload": {
     "psr-4": {
       "App\\Listeners\\": "listeners/"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/php/"
+    }
+  },
   "config": {
+    "allow-plugins": {
+      "bamarni/composer-bin-plugin": true
+    },
     "optimize-autoloader": true,
-    "sort-packages": true
+    "sort-packages": true,
+    "platform": {
+      "php": "8.5.11"
+    }
+  },
+  "extra": {
+    "bamarni-bin": {
+      "bin-links": false,
+      "forward-command": true
+    }
   },
   "scripts": {
     "dev": "npm run dev",
     "build": "npm run build",
-    "prod": "npm run build"
+    "lint": "find . -name '*.php' -not -path './vendor/*' -not -path './vendor-bin/*' -print0 | xargs -0 -n1 php -l",
+    "tools:install": [
+      "composer --working-dir=vendor-bin/phpunit install --ansi --prefer-dist --no-progress --no-interaction",
+      "composer --working-dir=vendor-bin/php-cs-fixer install --ansi --prefer-dist --no-progress --no-interaction"
+    ],
+    "cs:check": "vendor-bin/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run --diff --allow-risky=yes",
+    "cs:fix": "vendor-bin/php-cs-fixer/vendor/bin/php-cs-fixer fix --allow-risky=yes",
+    "test": "vendor-bin/phpunit/vendor/bin/phpunit --colors=always --fail-on-warning --fail-on-risky",
+    "test:build": "bash scripts/test-build.sh",
+    "post-install-cmd": [
+      "@tools:install"
+    ],
+    "post-update-cmd": [
+      "@tools:install"
+    ]
   }
 }

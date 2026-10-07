@@ -9,6 +9,11 @@ category: Notícias
 cover_image: /assets/images/migrated/ambiente-demonstracao.png
 cover_alt: Apresentação do ambiente de demonstração do e-Cidade
 ---
+<!--
+SPDX-FileCopyrightText: 2026 e-Cidade community
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
 
 Em dezembro de 2025, a comunidade do e-Cidade apresentou um ambiente de demonstração do software em uma live no canal ACtech, do Portal ArteCult. A gravação detalha o funcionamento do ambiente e está disponível no [YouTube](https://www.youtube.com/watch?v=WoeoxEe8TFk).
 

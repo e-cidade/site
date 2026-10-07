@@ -1,10 +1,11 @@
-name: Build and smoke tests
+# SPDX-FileCopyrightText: 2026 e-Cidade community
+# SPDX-License-Identifier: AGPL-3.0-or-later
+name: Build
 
 on:
   pull_request:
   push:
     branches: [main]
-  workflow_dispatch:
 
 permissions:
   contents: read
@@ -17,30 +18,17 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: actions/setup-node@v4
+      - uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
         with:
-          node-version: '20'
-          cache: npm
-      - uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.3'
           coverage: none
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: package.json
+          cache: npm
       - run: composer install --no-interaction --no-progress --prefer-dist
       - run: npm ci --no-audit --no-fund
       - run: composer build
-      - name: Smoke test generated pages
-        shell: bash
-        run: |
-          set -euo pipefail
-          test -f build_production/index.html
-          test -f build_production/sobre/index.html
-          test -f build_production/noticias/index.html
-          test -f build_production/codigo-fonte/index.html
-          test -f build_production/manuais-e-documentacoes/index.html
-          test -f build_production/prestadores-de-servico/index.html
-          test -f build_production/aula-inaugural-do-e-cidade-faz-historia/index.html
-          test -f build_production/assets/images/migrated/aula-inaugural.png
-          ! grep -R "wp-content/uploads" source/_posts
+      - run: composer test:build

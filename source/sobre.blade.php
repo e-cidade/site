@@ -2,6 +2,8 @@
 title: Sobre
 description: Conheça o e-Cidade, seus requisitos, sua história e o papel do Comitê Gestor.
 ---
+{{-- SPDX-FileCopyrightText: 2026 e-Cidade community --}}
+{{-- SPDX-License-Identifier: AGPL-3.0-or-later --}}
 @extends('_layouts.main')
 
 @section('body')

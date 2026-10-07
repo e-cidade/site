@@ -2,6 +2,8 @@
 title: e-Cidade
 description: Software livre para gestão pública municipal integrada, construído e mantido por um ecossistema de organizações, empresas, comunidades e profissionais.
 ---
+{{-- SPDX-FileCopyrightText: 2026 e-Cidade community --}}
+{{-- SPDX-License-Identifier: AGPL-3.0-or-later --}}
 @extends('_layouts.main')
 
 @section('body')

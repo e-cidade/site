@@ -7,6 +7,11 @@ date: 2025-01-21
 author: Comunidade e-Cidade
 category: Notícias
 ---
+<!--
+SPDX-FileCopyrightText: 2026 e-Cidade community
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
 
 Em julho de 2024, durante uma reunião da comunidade e-Cidade, foi apresentado em detalhes um novo código-fonte do sistema e comunicadas novidades previstas para o segundo semestre.
 
