@@ -65,7 +65,7 @@ jobs:
           set -eu
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add source/_posts
+          git add source/_posts source/assets/images/news
           git commit --signoff -m "content: sync news issue #${ISSUE_NUMBER}"
           git push --force-with-lease -u origin "$BRANCH"
 
