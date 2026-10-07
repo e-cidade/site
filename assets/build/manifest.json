@@ -1,17 +1,17 @@
 {
-  "source/_assets/css/main.css": {
-    "file": "assets/main-DfbDqYW2.css",
+  "source/_assets/js/main.js": {
+    "file": "assets/main-CPiCBs8L.js",
+    "name": "main",
+    "src": "source/_assets/js/main.js",
+    "isEntry": true
+  },
+  "source/_assets/scss/main.scss": {
+    "file": "assets/main-BoSrPS2a.css",
     "name": "main",
     "names": [
       "main.css"
     ],
-    "src": "source/_assets/css/main.css",
-    "isEntry": true
-  },
-  "source/_assets/js/main.js": {
-    "file": "assets/main-B9beKUIk.js",
-    "name": "main",
-    "src": "source/_assets/js/main.js",
+    "src": "source/_assets/scss/main.scss",
     "isEntry": true
   }
 }
