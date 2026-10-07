@@ -28,8 +28,8 @@ description: Onde encontrar o código e as diferentes linhas de desenvolvimento 
         </div>
         <aside class="aside-card">
             <p class="eyebrow">Como contribuir</p>
-            <p>Escolha a linha de desenvolvimento relacionada à sua necessidade ou use as Discussions da organização quando não souber onde uma contribuição deve ser feita.</p>
-            <a class="text-link" href="https://github.com/e-cidade/e-cidade/discussions">Abrir Discussions →</a>
+            <p>Escolha a linha de desenvolvimento relacionada à sua necessidade. Se não souber onde uma contribuição deve ser feita, use o fórum da comunidade.</p>
+            <a class="text-link" href="{{ $page->forumUrl }}" target="_blank" rel="noopener noreferrer">Abrir fórum →</a>
         </aside>
     </div>
 </section>

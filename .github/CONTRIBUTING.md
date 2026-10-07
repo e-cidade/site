@@ -52,10 +52,10 @@ O template `source/prestadores-de-servico.blade.php` lê a collection automatica
 
 As regras de arquitetura, testes, qualidade, SPDX/REUSE, toolchain, Docker e assinatura de commits estão em [AGENTS.md](../AGENTS.md).
 
-## Discussões do e-Cidade
+## Fórum do e-Cidade
 
-Questões sobre o ecossistema e-Cidade como um todo devem ser levadas ao repositório comunitário:
+Questões sobre o ecossistema e-Cidade como um todo devem ser levadas ao fórum da comunidade:
 
-https://github.com/e-cidade/e-cidade/discussions
+https://ecidades.popsolutions.co
 
 Issues deste repositório devem permanecer focadas no site.

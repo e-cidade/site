@@ -41,9 +41,8 @@ Este repositório mantém o **site comunitário do e-Cidade**. O código do sist
 - **Novo site comunitário:** https://site-ecidade.librecode.coop/
 - **Domínio institucional:** https://ecidade.softwarepublico.org/
 - **Código-fonte e linhas de desenvolvimento:** https://github.com/e-cidade/e-cidade
-- **Discussões da comunidade:** https://github.com/e-cidade/e-cidade/discussions
+- **Fórum da comunidade:** https://ecidades.popsolutions.co
 - **Telegram:** https://t.me/eCidadeCE
-- **Fórum:** https://ecidades.popsolutions.co
 - **Software Público Brasileiro:** https://softwarepublico.gov.br/social/e-cidade/
 
 ## Adoção e serviços
@@ -54,6 +53,6 @@ O site oficial reúne informações institucionais, documentação, notícias e 
 
 ## Participe
 
-Contribuições podem acontecer de várias formas: desenvolvimento, documentação, testes, implantação, relato de experiências, produção de conteúdo e participação nas discussões da comunidade.
+Contribuições podem acontecer de várias formas: desenvolvimento, documentação, testes, implantação, relato de experiências, produção de conteúdo e participação no fórum da comunidade.
 
 Para mudanças neste site, consulte [CONTRIBUTING.md](.github/CONTRIBUTING.md). Orientações técnicas para manutenção automatizada e agentes estão em [AGENTS.md](AGENTS.md).
