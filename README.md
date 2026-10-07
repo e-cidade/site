@@ -9,7 +9,9 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
 O e-Cidade é um ecossistema de software público voltado à administração municipal. A proposta é permitir que governos locais utilizem, evoluam e contratem serviços em torno de uma base aberta, reduzindo dependência de um único fornecedor e preservando autonomia tecnológica.
 
-**Site oficial:** https://ecidade.softwarepublico.org/
+**Novo site comunitário:** https://site-ecidade.librecode.coop/
+
+**Domínio institucional atual:** https://ecidade.softwarepublico.org/ — ainda aponta para o site WordPress legado enquanto o cutover não é concluído.
 
 ## Por que e-Cidade
 
@@ -36,7 +38,8 @@ O e-Cidade é relevante para:
 
 Este repositório mantém o **site comunitário do e-Cidade**. O código do sistema, suas diferentes linhas de desenvolvimento e os caminhos de colaboração são apresentados a partir dos canais da comunidade.
 
-- **Site:** https://ecidade.softwarepublico.org/
+- **Novo site comunitário:** https://site-ecidade.librecode.coop/
+- **Domínio institucional:** https://ecidade.softwarepublico.org/
 - **Código-fonte e linhas de desenvolvimento:** https://github.com/e-cidade/e-cidade
 - **Discussões da comunidade:** https://github.com/e-cidade/e-cidade/discussions
 - **Telegram:** https://t.me/eCidadeCE
