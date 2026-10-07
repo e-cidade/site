@@ -5,7 +5,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/13.4/phpunit.xsd"
-         bootstrap="vendor/autoload.php"
+         bootstrap="tests/php/bootstrap.php"
          colors="true"
          cacheDirectory=".phpunit.cache">
     <testsuites>

@@ -6,23 +6,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="{{ $page->description ?? $page->siteDescription }}">
-    <meta name="author" content="{{ $page->siteAuthor }}">
-    <meta name="robots" content="index,follow">
-    <link rel="canonical" href="{{ $page->getUrl() }}">
-
-    <meta property="og:type" content="{{ $page->type ?? 'website' }}">
-    <meta property="og:site_name" content="{{ $page->siteName }}">
-    <meta property="og:title" content="{{ $page->title ? $page->title . ' | ' : '' }}{{ $page->siteName }}">
-    <meta property="og:description" content="{{ $page->description ?? $page->siteDescription }}">
-    <meta property="og:url" content="{{ $page->getUrl() }}">
-    <meta property="og:image" content="{{ $page->logoUrl }}">
-
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="{{ $page->title ? $page->title . ' | ' : '' }}{{ $page->siteName }}">
-    <meta name="twitter:description" content="{{ $page->description ?? $page->siteDescription }}">
-
     <title>{{ $page->title ? $page->title . ' | ' : '' }}{{ $page->siteName }}</title>
+    @include('_partials.seo')
 
     <link rel="icon" type="image/png" href="{{ $page->logoUrl }}">
     <link rel="apple-touch-icon" href="{{ $page->logoUrl }}">

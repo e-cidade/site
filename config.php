@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 return [
     'baseUrl' => '',
     'production' => false,
+    'indexable' => true,
     'siteName' => 'e-Cidade',
     'siteDescription' => 'Software livre para gestão pública municipal integrada, desenvolvido de forma colaborativa pelo ecossistema e-Cidade.',
     'siteAuthor' => 'Comunidade e-Cidade',

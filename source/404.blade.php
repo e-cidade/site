@@ -1,6 +1,7 @@
 ---
 title: Página não encontrada
 description: A página solicitada não foi encontrada.
+noindex: true
 ---
 {{-- SPDX-FileCopyrightText: 2026 e-Cidade community --}}
 {{-- SPDX-License-Identifier: AGPL-3.0-or-later --}}

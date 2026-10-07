@@ -13,17 +13,40 @@ use PHPUnit\Framework\TestCase;
 
 final class GenerateSitemapTest extends TestCase
 {
-    public static function excludedPaths(): iterable
+    #[DataProvider('indexablePathProvider')]
+    public function testDetectsIndexablePaths(string $path, bool $expected): void
     {
-        yield 'assets' => ['/assets/build/app.css', true];
-        yield 'favicon' => ['/favicon.ico', true];
-        yield '404 page' => ['/404/index.html', true];
-        yield 'regular page' => ['/sobre/index.html', false];
+        self::assertSame($expected, (new GenerateSitemap())->isIndexableHtmlPath($path));
     }
 
-    #[DataProvider('excludedPaths')]
-    public function testExcludedPaths(string $path, bool $expected): void
+    public static function indexablePathProvider(): iterable
     {
-        self::assertSame($expected, (new GenerateSitemap())->isExcluded($path));
+        yield 'home' => ['/', true];
+        yield 'regular page' => ['/sobre', true];
+        yield 'html page' => ['/noticias/index.html', true];
+        yield 'asset' => ['/assets/build/app.css', false];
+        yield 'robots' => ['/robots.txt', false];
+        yield 'sitemap' => ['/sitemap.xml', false];
+        yield '404' => ['/404', false];
+    }
+
+    public function testResolvesCoverImageForSitemap(): void
+    {
+        $page = (object) ['cover_image' => '/assets/images/news.png'];
+
+        self::assertSame(
+            ['https://example.com/assets/images/news.png'],
+            (new GenerateSitemap())->resolveImages('https://example.com', $page),
+        );
+    }
+
+    public function testAbsoluteImageRemainsUnchanged(): void
+    {
+        $page = (object) ['socialImage' => 'https://cdn.example.com/social.jpg'];
+
+        self::assertSame(
+            ['https://cdn.example.com/social.jpg'],
+            (new GenerateSitemap())->resolveImages('https://example.com', $page),
+        );
     }
 }
