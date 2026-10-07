@@ -18,6 +18,22 @@ pagination:
     </div>
 </section>
 
+<section class="section section--muted" aria-labelledby="news-submit-title">
+    <div class="shell shell--narrow">
+        <p class="eyebrow">Participe</p>
+        <h2 id="news-submit-title">Compartilhe novidades da comunidade</h2>
+        <p>Sua prefeitura está usando o e-Cidade? Houve uma capacitação, evento, implantação ou lançamento? Envie a notícia para revisão e publicação.</p>
+        <div class="actions">
+            <a
+                class="button button--primary"
+                href="https://github.com/e-cidade/site/issues/new?template=news.yml"
+                target="_blank"
+                rel="noopener noreferrer"
+            >Enviar uma notícia →</a>
+        </div>
+    </div>
+</section>
+
 <section class="section">
     <div class="shell">
         <div class="post-grid">

@@ -36,6 +36,20 @@
         <p class="source-note">Fonte original: <a href="{{ $page->source_url }}">{{ $page->source_label ?? $page->source_url }}</a></p>
     @endif
 
+    <section class="card" aria-labelledby="news-submit-title">
+        <p class="eyebrow">Participe</p>
+        <h3 id="news-submit-title">Tem uma novidade sobre o e-Cidade?</h3>
+        <p>Compartilhe uma implantação, capacitação, evento, lançamento ou outra iniciativa da comunidade.</p>
+        <div class="actions">
+            <a
+                class="button button--secondary"
+                href="https://github.com/e-cidade/site/issues/new?template=news.yml"
+                target="_blank"
+                rel="noopener noreferrer"
+            >Enviar uma notícia →</a>
+        </div>
+    </section>
+
     <nav class="post-nav" aria-label="Navegação entre notícias">
         <div>
             @if ($next = $page->getNext())
