@@ -15,6 +15,14 @@
             <span aria-hidden="true">•</span>
             <span>{{ $page->author }}</span>
         </p>
+        @if ($page->cover_image)
+            <figure class="article-cover">
+                <img src="{{ $page->cover_image }}" alt="{{ $page->cover_alt ?? '' }}">
+                @if ($page->cover_caption)
+                    <figcaption>{{ $page->cover_caption }}</figcaption>
+                @endif
+            </figure>
+        @endif
     </header>
 
     <div class="prose">

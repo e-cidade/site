@@ -6,18 +6,22 @@ description: Comunidade lança página para centralizar informações, conteúdo
 date: 2025-06-13
 author: Comunidade e-Cidade
 category: Notícias
+cover_image: https://ecidade.softwarepublico.org/wp-content/uploads/2025/06/Design-sem-nome-10.png
+cover_alt: Divulgação da página comunitária do e-Cidade
 source_url: https://artecult.com/pagina-do-e-cidade-lancada-pela-comunidade/
 source_label: ArteCult
 ---
 
-Durante os eventos de 20 anos do software público, a comunidade e-Cidade anunciou o lançamento de uma página destinada a centralizar informações relacionadas ao sistema e organizar a produção colaborativa do código.
+Durante os eventos dos 20 anos do software público, a comunidade e-Cidade anunciou uma página destinada a centralizar informações relacionadas ao sistema e organizar caminhos para colaboração no código.
 
-No ambiente seriam publicadas notícias e novidades do e-Cidade, além de informações técnicas, acesso ao Fórum e à comunidade do software no Telegram.
+A proposta era reunir notícias e novidades do e-Cidade, informações técnicas, acesso ao Fórum e ao grupo da comunidade no Telegram.
 
-Igor Oliveira, responsável pelo desenvolvimento da página, destacou que durante muito tempo quem precisava de informações sobre o e-Cidade enfrentava dificuldade para encontrar um lugar centralizado com conteúdo confiável, atualizado e acessível. A nova página foi apresentada como uma referência para a comunidade.
+Igor Oliveira, responsável pelo desenvolvimento da página, explicou que durante muito tempo quem precisava de informações sobre o e-Cidade enfrentava dificuldade para localizar um ponto central com conteúdo confiável, atualizado e acessível. O novo site foi concebido para funcionar como essa referência.
 
-Também foi criado um espaço dedicado aos prestadores de serviços, com destaque para empresas que colaboram com o desenvolvimento do código e fortalecem a atuação da comunidade, além de outras empresas que trabalham com o e-Cidade.
+![Registro relacionado ao lançamento da página comunitária](https://artecult.com/wp-content/uploads/2025/05/unnamed-1.jpg)
 
-A publicação também apontava para o repositório no Portal do Software Público Brasileiro e para o GitHub usado na colaboração em torno do código.
+Também foi criado um espaço dedicado aos prestadores de serviços, destacando empresas que colaboram com o desenvolvimento do código e com a comunidade, além de outras organizações que atuam com o e-Cidade.
 
-A comunidade anunciou ainda a intenção de inserir novos conteúdos para facilitar treinamento e capacitação, além de publicações relacionadas ao e-Cidade e à evolução de novas linhas do projeto.
+A publicação apontava ainda para o repositório no Portal do Software Público Brasileiro e para o GitHub como espaços de acesso e colaboração.
+
+Entre os próximos passos anunciados estava a inclusão de conteúdos voltados a treinamento e capacitação, além de novas publicações sobre o e-Cidade e suas diferentes linhas de evolução.

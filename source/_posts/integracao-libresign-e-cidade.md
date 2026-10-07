@@ -8,10 +8,10 @@ author: Comunidade e-Cidade
 category: Notícias
 ---
 
-No final de julho de 2024, durante uma reunião da comunidade e-Cidade, um novo código-fonte do sistema foi apresentado em detalhes e outras novidades previstas para o segundo semestre foram comunicadas aos participantes.
+Em julho de 2024, durante uma reunião da comunidade e-Cidade, foi apresentado em detalhes um novo código-fonte do sistema e comunicadas novidades previstas para o segundo semestre.
 
-Na mesma reunião foi anunciada a integração da plataforma de assinatura digital e gestão documental LibreSign com o e-Cidade, já em utilização pela prefeitura de Pirapora, em Minas Gerais.
+Na mesma reunião, foi anunciada a integração da plataforma de assinatura digital e gestão documental LibreSign com o e-Cidade, já em uso pela prefeitura de Pirapora, em Minas Gerais.
 
-A integração tornou-se possível por meio do trabalho conjunto da LibreCode e da Contass Consultoria, que lideraram o desenvolvimento colaborativo das duas soluções.
+A integração foi viabilizada pelo trabalho conjunto da LibreCode e da Contass Consultoria, que atuaram no desenvolvimento colaborativo das duas soluções.
 
-A iniciativa demonstrou a possibilidade de conectar o e-Cidade a outros projetos de software livre para ampliar fluxos digitais da administração pública.
+A iniciativa mostrou como o e-Cidade pode ser conectado a outros projetos de software livre para ampliar fluxos digitais na administração pública.

@@ -6,24 +6,24 @@ description: Curso de capacitação reúne empresas, comunidade e estudantes do 
 date: 2026-08-27
 author: Comunidade e-Cidade
 category: Notícias
+cover_image: https://ecidade.softwarepublico.org/wp-content/uploads/2026/08/image.png
+cover_alt: Alunos do Instituto Federal da Bahia em aula sobre o e-Cidade
 source_url: https://artecult.com/aula-inaugural-do-e-cidade-faz-historia/
 source_label: ArteCult
 ---
 
-Pela primeira vez, desde 2013, um software público realiza um curso de capacitação que aproxima as empresas que prestam serviços ao software, a comunidade e os alunos de uma instituição pública de ensino superior. A aula inaugural aconteceu na quarta-feira, dia 22/07, e contou com a presença de quase 40 alunos do Instituto Federal da Bahia (IFBA).
+Pela primeira vez desde 2013, uma capacitação ligada ao software público aproximou empresas prestadoras de serviços, comunidade e estudantes de uma instituição pública de ensino superior. A aula inaugural, realizada em julho, contou com quase 40 alunos do Instituto Federal da Bahia (IFBA).
 
-O curso foi oferecido gratuitamente para o IFBA e participantes da comunidade sob a liderança do Comitê Gestor do e-Cidade, composto pelas empresas DBSeller, CPD Municipal, Contass, Navarro Tecnologia e a cooperativa LibreCode. O conteúdo tem foco técnico e busca ensinar a linguagem PHP aplicada ao e-Cidade.
+O curso foi oferecido gratuitamente ao IFBA e a participantes da comunidade sob a liderança do Comitê Gestor do e-Cidade, formado pelas empresas DBSeller, CPD Municipal, Contass, Navarro Tecnologia e pela cooperativa LibreCode. O foco é técnico, com ensino de PHP aplicado ao e-Cidade.
 
-Na visão do professor Wanderlei Silva, da empresa CPD Municipal, a aula inaugural foi um sucesso e um importante marco alcançado pela comunidade. Foram abordados o início do software e-Cidade, sua importância como genuíno software público brasileiro, as parcerias e projetos que o curso proporcionará envolvendo o e-Cidade e o projeto Cidades Inteligentes, do IFBA.
+Segundo o professor Wanderlei Silva, da CPD Municipal, o encontro apresentou a origem do e-Cidade, sua importância como software público brasileiro, as parcerias criadas ao redor do curso e sua relação com o projeto Cidades Inteligentes do IFBA. A parte técnica abordou a arquitetura do e-Cidade, informações fundamentais sobre o sistema e o cenário do software público.
 
-Entrando na parte técnica, a palestra abordou a arquitetura do e-Cidade, informações fundamentais sobre o sistema, a filosofia e a importância do cenário atual do software público.
+O professor contou com o apoio de Wellington Carvalho, do Sertão Digital, e Gabriel Senna, da DBSeller, que também participam da formação.
 
-O professor contou com o apoio de Wellington Carvalho, do Sertão Digital, e Gabriel Senna, da DBSeller, que também vão ministrar o curso.
+![Participantes acompanhando a capacitação do e-Cidade](https://ecidade.softwarepublico.org/wp-content/uploads/2026/08/WhatsApp-Image-2026-07-29-at-10.45.15.jpeg)
 
-Para Gabriel Senna, analista da DBSeller, a aula sobre a arquitetura base do e-Cidade foi esclarecedora para que os alunos entendessem o ecossistema desse GRP.
+Gabriel Senna destacou que a apresentação da arquitetura ajudou os alunos a compreender o ecossistema do GRP. A explicação percorreu o modelo cliente-servidor, tecnologias abertas como Linux, PostgreSQL, Apache e PHP e a evolução do frontend, de HTML, CSS, JavaScript e AJAX para ferramentas como Vue.js e Laravel. Também foram revisados HTTP, XML, APIs RESTful e SOAP.
 
-Durante a explicação do modelo cliente-servidor, Gabriel comentou sobre a base sólida do ambiente, usando tecnologias de código aberto como Linux, PostgreSQL, Apache e PHP. Segundo ele, foi possível perceber a evolução tecnológica da plataforma ao longo dos anos, desde a estrutura clássica de frontend com HTML, CSS, JavaScript e AJAX até frameworks mais modernos, como Vue.js e Laravel. A revisão de HTTP, XML, APIs RESTful e SOAP também ajudou a contextualizar a comunicação web.
+Na abertura, Corinto Meffe, especialista em Ecossistemas Digitais, relacionou a capacitação à capacidade do software público de gerar soluções e oportunidades. Os alunos podem atuar nas empresas do Comitê Gestor ou criar seus próprios negócios, fortalecendo o empreendedorismo digital.
 
-Na abertura do evento, Corinto Meffe, especialista em Ecossistemas Digitais, comentou que o curso demonstra como o software público tem capacidade de gerar soluções e oportunidades de forma acelerada. Os alunos podem se tornar profissionais que atuem nas empresas do Comitê Gestor ou criar suas próprias empresas, fortalecendo o empreendedorismo digital.
-
-O curso acontece em ambiente cedido pelo IFBA e o conteúdo será aplicado diretamente no projeto de Cidades Inteligentes, liderado pelo Instituto na região de Irecê, na Bahia.
+O curso acontece em ambiente cedido pelo IFBA e o conteúdo será aplicado ao projeto de Cidades Inteligentes liderado pelo Instituto na região de Irecê, Bahia.

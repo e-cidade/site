@@ -253,6 +253,21 @@ a:hover { color: var(--brand); }
     letter-spacing: -.05em;
 }
 .article-meta { display: flex; gap: .6rem; color: var(--muted); }
+.article-cover { margin: 2rem 0 0; }
+.article-cover img,
+.prose img {
+    display: block;
+    width: 100%;
+    border-radius: 16px;
+    border: 1px solid var(--line);
+}
+.article-cover figcaption,
+.prose figcaption {
+    margin-top: .5rem;
+    color: var(--muted);
+    font-size: .85rem;
+}
+.prose img { margin: 1.8rem 0; }
 .source-note {
     margin-top: 3rem;
     padding: 1rem 1.2rem;

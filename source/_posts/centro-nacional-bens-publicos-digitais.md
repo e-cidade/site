@@ -6,28 +6,28 @@ description: UFPR articula o primeiro Centro Nacional de Bens Públicos Digitais
 date: 2025-11-14
 author: Comunidade e-Cidade
 category: Notícias
+cover_image: https://ecidade.softwarepublico.org/wp-content/uploads/2025/11/image-1024x683.png
+cover_alt: Imagem de divulgação do Centro Nacional de Bens Públicos Digitais
 source_url: https://www.c3sl.ufpr.br/2025/10/14/inedito-no-brasil-centro-de-bens-publicos-digitais-sera-lancado-em-novembro/
 source_label: C3SL / UFPR
 ---
 
-O Centro Nacional de Bens Públicos Digitais será sediado na UFPR e reunirá iniciativas voltadas à soberania digital e às tecnologias abertas e livres.
+O Centro Nacional de Bens Públicos Digitais (CNBPD), sediado na Universidade Federal do Paraná, foi apresentado como uma iniciativa para reunir projetos voltados à soberania digital e a tecnologias abertas e livres.
 
-Resultado da articulação da Universidade Federal do Paraná (UFPR) com pesquisadores e instituições de ensino e inovação de todo o país, entrou em fase final de estruturação o primeiro Centro Nacional de Bens Públicos Digitais (CNBPD) da história do Brasil.
+Resultado da articulação da UFPR com pesquisadores e instituições de ensino e inovação de todo o país, o Centro foi concebido para fortalecer o ecossistema nacional de software livre e bens públicos digitais, reunindo soluções tecnológicas abertas e colaborativas de interesse público.
 
-O CNBPD tem como objetivo fortalecer o ecossistema nacional de software livre e bens públicos digitais, reunindo soluções tecnológicas abertas e colaborativas voltadas ao interesse público.
+Marcos Sunye, reitor da UFPR e fundador do Centro de Computação Científica e Software Livre (C3SL), apontou a falta de uma referência nacional para gestores públicos encontrarem alternativas tecnológicas brasileiras às plataformas das grandes empresas globais. O CNBPD foi proposto para cumprir esse papel de articulação e visibilidade.
 
-Marcos Sunye, reitor da UFPR e fundador do Centro de Computação Científica e Software Livre (C3SL), explicou que o Centro Nacional deve desempenhar um papel aglutinador, tornando conhecidos os Bens Públicos Digitais feitos no Brasil e ajudando órgãos públicos a localizar alternativas tecnológicas nacionais.
+A proposta prevê um núcleo de governança e um repositório nacional de iniciativas digitais livres, interoperáveis e sustentáveis desenvolvidas por universidades, órgãos públicos, empresas, cooperativas tecnológicas e comunidades. A iniciativa se alinha às diretrizes da ONU e da Digital Public Goods Alliance.
 
-O CNBPD foi concebido como núcleo de governança e repositório nacional de iniciativas digitais livres, interoperáveis e sustentáveis, desenvolvidas por universidades, órgãos públicos, empresas, cooperativas tecnológicas e comunidades de software. A iniciativa se alinha às diretrizes da ONU e da Digital Public Goods Alliance.
+Paralelamente, foi anunciada a formação da Aliança Nacional pelos Bens Públicos Digitais, reunindo universidades, governos, empresas, cooperativas e organizações da sociedade civil. Uma Carta de Princípios orienta compromissos de licenciamento livre, governança participativa e sustentabilidade.
 
-Paralelamente, foi iniciada a formação da Aliança Nacional pelos Bens Públicos Digitais, reunindo universidades, governos, empresas públicas e privadas, cooperativas e organizações da sociedade civil. Uma Carta de Princípios orienta compromissos de licenciamento livre, governança participativa e sustentabilidade.
+Nésio Fernandes, da Organização Colibri para o Desenvolvimento da Saúde Única, relacionou a iniciativa à necessidade de criar uma articulação nacional entre poder público e sociedade civil em torno dos bens públicos digitais.
 
-Nésio Fernandes, da Organização Colibri para o Desenvolvimento da Saúde Única, destacou que a iniciativa busca criar um instrumento nacional capaz de articular sociedade civil e poder público em torno dos bens públicos digitais.
+## Experiência do C3SL
 
-## Expertise do C3SL
+O C3SL acumula cerca de duas décadas de experiência em projetos como Paraná Digital, Linux Educacional e plataformas de monitoramento e gestão de dados públicos. Essa trajetória foi apontada como base técnica e institucional para a organização do novo Centro.
 
-O C3SL acumula cerca de duas décadas de experiência em projetos como Paraná Digital, Linux Educacional e plataformas de monitoramento e gestão de dados públicos. Essa trajetória foi apontada como base para a articulação do novo Centro Nacional.
-
-A proposta combina experiências consolidadas com novas iniciativas e busca criar uma estrutura institucional colaborativa para o avanço da soberania digital no país.
+A proposta combina experiências consolidadas com novas iniciativas e busca criar uma estrutura colaborativa para o avanço da soberania digital no país.
 
 O lançamento do CNBPD estava previsto para novembro de 2025, com a UFPR organizando o processo inicial de adesão à Carta de Princípios da Aliança Nacional.

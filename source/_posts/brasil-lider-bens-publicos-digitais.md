@@ -6,27 +6,27 @@ description: Reflexão sobre a experiência brasileira em software público e se
 date: 2025-06-23
 author: Comunidade e-Cidade
 category: Notícias
+cover_image: https://ecidade.softwarepublico.org/wp-content/uploads/2025/06/image.png
+cover_alt: Divulgação dos 20 anos do Software Público Brasileiro
 source_url: https://artecult.com/brasil-ainda-pode-ser-lider-mundial-em-bens-publicos-digitais/
 source_label: ArteCult
 ---
 
-Os dois eventos comemorativos dos 20 anos do software público realizados em maio refletiram a força do modelo brasileiro, que se manteve em atividade ao longo de duas décadas. O representante da prefeitura de Volta Redonda, Caio Teixeira, comentou que o município utiliza o e-Cidade desde 2013 e vem avançando com a instalação de novos módulos.
+Os eventos comemorativos dos 20 anos do software público, realizados em maio de 2025, foram apresentados como evidência da continuidade do modelo brasileiro. Caio Teixeira, representante da prefeitura de Volta Redonda, relatou que o município utiliza o e-Cidade desde 2013 e continuava avançando com novos módulos.
 
-Nas transmissões, três temas mereceram destaque. O primeiro foi o alinhamento do software público com os bens públicos digitais. O Brasil já praticava esse modelo antes mesmo da ONU consolidar o conceito de Digital Public Goods (DPGs).
+Três temas foram destacados. O primeiro foi o alinhamento entre a experiência brasileira de software público e o conceito internacional de Bens Públicos Digitais. O Portal do Software Público Brasileiro foi lançado em 2007 a partir de um modelo iniciado em 2005, antes de a ONU articular, em 2019, uma aliança internacional para Digital Public Goods.
 
-Quando, em 2019, a ONU promoveu a criação de uma aliança internacional para os DPGs estruturada em padrões abertos, como forma de apoiar os Objetivos de Desenvolvimento Sustentável e a soberania digital, os conceitos reforçaram o pioneirismo brasileiro com o Portal do Software Público Brasileiro, lançado em 2007 a partir de um modelo criado em 2005.
+O segundo destaque foi o Novo SGA, solução de gestão de atendimento ao público que passou a ser utilizada também por clínicas e cartórios, mostrando que projetos surgidos no setor público podem alcançar outros contextos.
 
-O segundo destaque foi a presença de um caso de sucesso voltado ao mercado privado: o Novo SGA, solução para gestão de atendimento ao público que passou a ser adotada também por clínicas e cartórios. O caso demonstra como soluções originadas no setor público podem alcançar outros contextos.
+O terceiro foi a maturidade do modelo, demonstrada por casos de uso de diferentes portes e regiões do país. Essa diversidade reforça a possibilidade de utilizar software público em distintas realidades institucionais.
 
-O terceiro ponto foi a maturidade do modelo. Há casos de sucesso em diferentes escalas e regiões do país, demonstrando que software público pode ser usado em cidades e instituições com realidades diversas e, com adaptações, também em contextos privados.
+A maturidade das soluções também foi relacionada à aceleração da transformação digital dos municípios, modernização da gestão, digitalização de serviços e criação de oportunidades econômicas.
 
-A maturidade das soluções aponta para uma possível aceleração da transformação digital dos municípios brasileiros, com modernização da gestão, digitalização de serviços, geração de oportunidades de negócios e empregos e fortalecimento da autonomia tecnológica.
+![Equipe do governo do México relacionada à experiência brasileira de software público](https://artecult.com/wp-content/uploads/2025/06/WhatsApp-Image-2025-06-12-at-11.45.33.jpeg)
 
-Os relatos também recuperam a projeção internacional que o modelo brasileiro já teve. Uma imagem de 2014, por exemplo, registrou uma equipe do governo do México trabalhando com a experiência brasileira.
+Um registro de 2014 mostra o governo do México organizando uma equipe para trabalhar com o modelo criado no Brasil. A publicação usa esse histórico para defender que o país ainda tem condições de exercer liderança no debate de bens públicos digitais, desde que consiga articular suas soluções e comunidades.
 
-A possibilidade de liderança depende da capacidade de articular as soluções existentes, fortalecer suas comunidades e tornar o legado do software público parte de uma estratégia contemporânea de bens públicos digitais.
+Eventos online dos 20 anos do Software Público:
 
-Links relacionados aos eventos de 20 anos do Software Público:
-
-- [Transmissão 1](https://www.youtube.com/watch?v=5c-C7reD24k)
-- [Transmissão 2](https://www.youtube.com/watch?v=yeIJxaEZQ6o)
+- [Primeira transmissão](https://www.youtube.com/watch?v=5c-C7reD24k)
+- [Segunda transmissão](https://www.youtube.com/watch?v=yeIJxaEZQ6o)

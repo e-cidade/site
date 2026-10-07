@@ -39,7 +39,7 @@ description: Conheça o e-Cidade, seus requisitos, sua história e o papel do Co
             <p class="eyebrow">Histórico</p>
             <h3>Apresentação na Latinoware 2021</h3>
             <p>Uma apresentação pública registra parte da trajetória e do contexto do projeto.</p>
-            <a class="text-link" href="https://www.youtube.com/results?search_query=e-cidade+Latinoware+2021">Procurar apresentação →</a>
+            <a class="text-link" href="https://www.youtube.com/watch?v=Rq_xb2c47GI&t=1835s">Assistir no YouTube →</a>
         </aside>
     </div>
 </section>

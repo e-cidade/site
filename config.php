@@ -17,7 +17,7 @@ return [
         'posts' => [
             'author' => 'Comunidade e-Cidade',
             'sort' => '-date',
-            'path' => 'noticias/{filename}',
+            'path' => '{filename}',
         ],
     ],
 

@@ -6,18 +6,24 @@ description: Comitê Gestor amplia participação com representantes da academia
 date: 2026-05-27
 author: Comunidade e-Cidade
 category: Notícias
+cover_image: https://ecidade.softwarepublico.org/wp-content/uploads/2026/05/image.png
+cover_alt: Ilustração sobre governança participativa do e-Cidade
 ---
 
-A experiência pioneira do software público e-Cidade permanece avançando no país. Depois de receber dois integrantes eleitos pela comunidade, o Comitê Gestor (CG) contará também com a participação de professores universitários. A decisão foi aprovada na reunião do Comitê realizada em 05 de maio, quando projetos de interesse dos prestadores de serviço, da comunidade e da academia foram confirmados.
+A experiência do software público e-Cidade avançou com a decisão de incorporar representantes da academia ao Comitê Gestor. A medida foi aprovada na reunião de 5 de maio, junto com projetos de interesse dos prestadores de serviço, da comunidade e da academia.
 
-O anúncio oficial seria realizado na comunidade junto com o lançamento de um novo ambiente colaborativo em fase de organização. Em 2024, o repositório da comunidade foi disponibilizado sob a liderança de uma das empresas integrantes do Comitê, e para 2026 estava prevista a disponibilização de um novo ambiente voltado à colaboração, inovação e desenvolvimento conjunto.
+O anúncio foi associado à preparação de um novo ambiente colaborativo voltado à inovação e ao desenvolvimento conjunto. Em 2024, um repositório da comunidade havia sido disponibilizado sob a liderança de uma das empresas integrantes do Comitê.
 
-Para Igor Oliveira, diretor de tecnologia da Contass Contabilidade e Consultoria, a entrada da academia no Comitê Gestor representa um avanço estratégico por fortalecer a tomada de decisões com base em conhecimento técnico, científico e inovador. A participação de professores do IFBA contribui para ampliar a visão crítica, promover soluções mais qualificadas e aproximar o comitê das práticas de ensino, pesquisa e extensão.
+![Igor Oliveira, da Contass](https://ecidade.softwarepublico.org/wp-content/uploads/2026/05/image-4.png)
 
-A presença da academia traz uma nova estrutura para o Comitê, que passa a contar com as cinco empresas que atuam desde sua criação, dois representantes da comunidade eleitos em 2024 e dois representantes da academia.
+Igor Oliveira, diretor de tecnologia da [Contass](https://www.contassconsultoria.com.br), avaliou que a entrada da academia fortalece a tomada de decisões com conhecimento técnico e científico, amplia a visão crítica e aproxima o Comitê de práticas de ensino, pesquisa e extensão. Para ele, a integração também reforça o compromisso com soluções alinhadas às necessidades do e-Cidade e da comunidade.
 
-Segundo Evandro Schaulet, diretor da DBSeller Sistemas Integrados, a participação da academia eleva o nível e o impacto das ações do Comitê Gestor, permite qualificar iniciativas e a evolução do e-Cidade e abre possibilidades para envolver alunos em projetos e utilizar o próprio sistema como ferramenta de apoio em cursos voltados à gestão pública.
+Com a mudança, o Comitê passou a reunir as cinco empresas que atuavam desde sua criação, dois representantes da comunidade eleitos em 2024 e dois representantes da academia.
 
-O modelo de governança em rede do software público e-Cidade mantém sua característica de aprimoramento contínuo. O passo seguinte anunciado pelo Comitê foi a celebração de um Acordo de Cooperação Técnica entre empresas e universidades para desenvolvimento de projetos conjuntos.
+![Evandro Schaulet, da DBSeller](https://ecidade.softwarepublico.org/wp-content/uploads/2026/05/image-3.png)
+
+Evandro Schaulet, diretor da [DBSeller](https://www.dbseller.com.br/), destacou que a participação de professores pode qualificar iniciativas e a evolução do e-Cidade. O envolvimento de alunos em projetos também abre espaço para inovação, desenvolvimento e uso do próprio sistema como apoio em cursos voltados à gestão pública.
+
+O passo seguinte anunciado pelo Comitê foi a celebração de um Acordo de Cooperação Técnica entre empresas e universidades para o desenvolvimento de projetos conjuntos.
 
 Grupo da comunidade no Telegram: [t.me/eCidadeCE](https://t.me/eCidadeCE).
