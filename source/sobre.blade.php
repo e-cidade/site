@@ -1,6 +1,6 @@
 ---
 title: Sobre
-description: Conheça o e-Cidade, seus requisitos, sua história e o papel do Comitê Gestor.
+description: Conheça o e-Cidade, sua história e o papel do Comitê Gestor.
 ---
 {{-- SPDX-FileCopyrightText: 2026 e-Cidade community --}}
 {{-- SPDX-License-Identifier: AGPL-3.0-or-later --}}
@@ -21,16 +21,6 @@ description: Conheça o e-Cidade, seus requisitos, sua história e o papel do Co
             <h2>O software</h2>
             <p>O e-Cidade destina-se a informatizar a gestão dos Municípios Brasileiros de forma integrada. Esta informatização contempla a integração entre os entes municipais: Prefeitura Municipal, Câmara Municipal, Autarquias, Fundações e outros.</p>
             <p>A economia de recursos é somente uma das vantagens na adoção do e-Cidade, além da liberdade de escolha dos fornecedores e garantia de continuidade do sistema.</p>
-
-            <h2>Requisitos mínimos</h2>
-            <ul>
-                <li>Apache</li>
-                <li>Firefox</li>
-                <li>PHP 7.4.x</li>
-                <li>PostgreSQL 12.x</li>
-                <li>Ubuntu Linux 20.04.x</li>
-                <li>Java para recursos de Business Intelligence</li>
-            </ul>
 
             <h2>O Comitê Gestor</h2>
             <p>O Comitê Gestor do software público e-Cidade é responsável pela governança, coordenação e tomada de decisões estratégicas relacionadas à gestão e evolução do sistema.</p>
