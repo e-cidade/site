@@ -177,7 +177,33 @@ a:hover { color: var(--brand); }
 .card p { color: var(--muted); }
 .card-index { color: #8b9c92; font-size: .8rem; font-weight: 800; letter-spacing: .08em; }
 
-.post-card { display: flex; flex-direction: column; min-height: 270px; }
+.post-card {
+    display: flex;
+    flex-direction: column;
+    min-height: 360px;
+    padding: 0;
+    overflow: hidden;
+}
+.post-card__media {
+    display: block;
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+    background: var(--warm);
+}
+.post-card__media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.post-card__body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 1.35rem 1.5rem 1.5rem;
+}
+.post-card__excerpt { color: var(--muted); }
+.post-card__excerpt p { margin: 0 0 1rem; }
 .post-card .text-link { margin-top: auto; }
 
 .text-link {
