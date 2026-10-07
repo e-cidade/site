@@ -36,7 +36,7 @@ jobs:
           pr_number=$(gh api "repos/${{ github.repository }}/commits/$HEAD_SHA/pulls" --jq '.[0].number // empty')
           test -n "$pr_number"
           echo "number=$pr_number" >> "$GITHUB_OUTPUT"
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v7
         with:
           name: preview-build
           path: build_preview/
