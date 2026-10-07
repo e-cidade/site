@@ -22,5 +22,8 @@
     "@tighten/jigsaw-vite-plugin": {
       "picomatch": "^2.3.2"
     }
+  },
+  "volta": {
+    "node": "24.21.0"
   }
 }

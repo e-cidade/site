@@ -25,7 +25,10 @@
       "bamarni/composer-bin-plugin": true
     },
     "optimize-autoloader": true,
-    "sort-packages": true
+    "sort-packages": true,
+    "platform": {
+      "php": "8.5.11"
+    }
   },
   "extra": {
     "bamarni-bin": {

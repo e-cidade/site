@@ -6,9 +6,6 @@
     "friendsofphp/php-cs-fixer": "^3.0"
   },
   "config": {
-    "platform": {
-      "php": "8.3.0"
-    },
     "sort-packages": true
   }
 }

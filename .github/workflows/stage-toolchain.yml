@@ -1,0 +1,50 @@
+# SPDX-FileCopyrightText: 2026 e-Cidade community
+# SPDX-License-Identifier: AGPL-3.0-or-later
+name: Stage toolchain locks
+
+on:
+  push:
+    branches:
+      - chore/modernize-project-infrastructure
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: true
+
+      - name: Setup PHP from composer.json
+        uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
+        with:
+          coverage: none
+
+      - name: Setup Node from package.json
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: package.json
+
+      - run: composer update --no-interaction --no-progress --prefer-dist
+      - run: composer --working-dir=vendor-bin/phpunit update --no-interaction --no-progress --prefer-dist
+      - run: composer --working-dir=vendor-bin/php-cs-fixer update --no-interaction --no-progress --prefer-dist
+      - run: npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+
+      - name: Resolve pinned PHP image
+        run: |
+          php_version="$(php -r '$c=json_decode(file_get_contents("composer.json"), true); echo $c["config"]["platform"]["php"];')"
+          image="php:${php_version}-cli-bookworm"
+          digest="$(docker buildx imagetools inspect "$image" | awk '/^Digest:/ {print $2; exit}')"
+          test -n "$digest"
+          printf '%s@%s\n' "$image" "$digest" > .php-image
+
+      - name: Push generated toolchain files to temporary staging branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add composer.lock package-lock.json vendor-bin/phpunit/composer.lock vendor-bin/php-cs-fixer/composer.lock .php-image
+          git commit -s -m "chore: stage generated toolchain files"
+          git push origin HEAD:refs/heads/chore/toolchain-staging --force
