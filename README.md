@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: 2026 e-Cidade community
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
 # Site da comunidade e-Cidade
 
 Site estático da comunidade e-Cidade, construído com Jigsaw, Vite e SCSS e publicado por GitHub Actions.

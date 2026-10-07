@@ -1,9 +1,26 @@
 # SPDX-FileCopyrightText: 2026 e-Cidade community
 # SPDX-License-Identifier: AGPL-3.0-or-later
+
 version = 1
 
 [[annotations]]
-path = ["**"]
+path = [
+    ".prettierrc.json",
+    "composer.json",
+    "composer.lock",
+    "package.json",
+    "package-lock.json",
+    "source/CNAME"
+]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 e-Cidade community"
+SPDX-License-Identifier = "AGPL-3.0-or-later"
+
+[[annotations]]
+path = [
+    "source/assets/images/migrated/**",
+    "source/favicon.ico"
+]
 precedence = "aggregate"
 SPDX-FileCopyrightText = "2026 e-Cidade community"
 SPDX-License-Identifier = "AGPL-3.0-or-later"

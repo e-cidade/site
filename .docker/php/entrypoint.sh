@@ -1,4 +1,7 @@
 #!/bin/bash
+# SPDX-FileCopyrightText: 2026 e-Cidade community
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
 
 # Set uid of host machine
 usermod --non-unique --uid "${HOST_UID}" www-data
