@@ -1,20 +1,18 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # SPDX-FileCopyrightText: 2026 e-Cidade community
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
+set -euo pipefail
 
-# Set uid of host machine
 usermod --non-unique --uid "${HOST_UID}" www-data
 groupmod --non-unique --gid "${HOST_GID}" www-data
 
-# Composer
-if [ ! -d "vendor" ]; then
-    composer install
+if [ ! -d vendor ]; then
+    composer install --no-interaction --prefer-dist
 fi
 
-# NPM
-. $NVM_DIR/nvm.sh
-if [ ! -d "node_modules" ]; then
-    npm install
+if [ ! -d node_modules ]; then
+    npm ci --no-audit --no-fund
 fi
-npm run watch
+
+exec npm run dev -- --host 0.0.0.0 --port 3000

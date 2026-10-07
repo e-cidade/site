@@ -73,3 +73,15 @@ A branch `main` é publicada no GitHub Pages. O deploy de produção preserva o 
 ## Licença
 
 O projeto segue AGPL-3.0-or-later e usa metadados SPDX/REUSE. Consulte `LICENSE` e `REUSE.toml`.
+
+
+## Toolchain
+
+As versões usadas por CI e desenvolvimento têm fontes de verdade explícitas:
+
+- PHP de execução: `composer.json > config.platform.php`;
+- compatibilidade mínima de PHP: `composer.json > require.php`;
+- Node.js de execução: `package.json > volta.node`;
+- compatibilidade mínima de Node.js: `package.json > engines.node`.
+
+Os workflows não repetem esses números: `setup-php` lê o Composer e `setup-node` lê o `package.json`. O Dockerfile mantém a tag PHP explícita para compatibilidade com o Dependabot, pinada também por digest, e o workflow `Toolchain` verifica que essa tag continua alinhada ao Composer. A versão do Node usada na imagem Docker é lida diretamente de `package.json`.
