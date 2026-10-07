@@ -3,7 +3,8 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 set -euo pipefail
 
-# shellcheck disable=SC2016 -- the PHP snippet is intentionally single-quoted.
+# The PHP snippet is intentionally single-quoted so the shell does not expand PHP variables.
+# shellcheck disable=SC2016
 expected_php="$(php -r '$config = json_decode(file_get_contents("composer.json"), true, 512, JSON_THROW_ON_ERROR); echo $config["config"]["platform"]["php"];')"
 actual_php="$(php -r 'echo PHP_VERSION;')"
 
