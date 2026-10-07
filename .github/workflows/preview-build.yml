@@ -39,7 +39,7 @@ jobs:
           SITE_BUILD_DIR: build_preview
           EXPECTED_BASE_URL: ${{ env.PREVIEW_BASE_URL }}
         run: composer test:build
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: preview-build
           path: build_preview/
