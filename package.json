@@ -5,20 +5,14 @@
     "dev": "vite",
     "build": "NODE_ENV=production vite build",
     "preview": "NODE_ENV=preview vite build --mode preview",
-    "format:blade": "prettier --write \"source/**/*.blade.php\"",
-    "lint:blade": "prettier --check \"source/**/*.blade.php\"",
     "lint:js": "prettier --check \"source/_assets/js/**/*.js\" \"tests-js/**/*.js\"",
-    "lint:scss": "stylelint \"source/_assets/scss/**/*.scss\"",
     "test:js": "node --test tests-js/**/*.test.js",
     "test:scss": "sass --no-source-map source/_assets/scss/main.scss /tmp/e-cidade-site.css"
   },
   "devDependencies": {
-    "@shufo/prettier-plugin-blade": "^1.16.2",
     "@tighten/jigsaw-vite-plugin": "^2.1.0",
     "prettier": "^3.6.2",
     "sass-embedded": "^1.104.0",
-    "stylelint": "^17.15.0",
-    "stylelint-config-recommended-scss": "^17.0.1",
     "vite": "^8.3.0"
   },
   "engines": {

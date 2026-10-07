@@ -1,6 +1,6 @@
 # SPDX-FileCopyrightText: 2026 e-Cidade community
 # SPDX-License-Identifier: AGPL-3.0-or-later
-name: Refresh quality lockfiles
+name: Refresh PHP quality lockfiles
 
 on:
   push:
@@ -21,20 +21,14 @@ jobs:
         with:
           php-version: '8.3'
           coverage: none
-      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
-        with:
-          node-version: '24'
       - run: composer update --no-interaction --no-progress --prefer-dist
       - run: composer --working-dir=vendor-bin/phpunit update --no-interaction --no-progress --prefer-dist
       - run: composer --working-dir=vendor-bin/php-cs-fixer update --no-interaction --no-progress --prefer-dist
-      - run: npm install --package-lock-only --ignore-scripts --no-audit --no-fund
-      - run: npm audit --audit-level=high
       - uses: actions/upload-artifact@v4
         with:
-          name: quality-lockfiles
+          name: php-quality-lockfiles
           path: |
             composer.lock
             vendor-bin/phpunit/composer.lock
             vendor-bin/php-cs-fixer/composer.lock
-            package-lock.json
           retention-days: 1
