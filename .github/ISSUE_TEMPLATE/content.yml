@@ -1,0 +1,29 @@
+# SPDX-FileCopyrightText: 2026 e-Cidade community
+# SPDX-License-Identifier: AGPL-3.0-or-later
+name: Atualização de conteúdo
+description: Proponha inclusão, correção ou atualização de conteúdo institucional do site.
+title: "[Conteúdo] "
+labels:
+  - documentation
+body:
+  - type: textarea
+    id: change
+    attributes:
+      label: Alteração proposta
+      description: Explique o que precisa ser incluído, corrigido ou atualizado.
+    validations:
+      required: true
+  - type: input
+    id: page
+    attributes:
+      label: Página relacionada
+      description: Informe a URL ou seção do site, quando aplicável.
+  - type: textarea
+    id: source
+    attributes:
+      label: Fonte ou evidência
+      description: Inclua referências que permitam validar a informação.
+  - type: textarea
+    id: context
+    attributes:
+      label: Contexto adicional

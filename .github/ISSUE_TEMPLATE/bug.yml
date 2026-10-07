@@ -1,0 +1,30 @@
+# SPDX-FileCopyrightText: 2026 e-Cidade community
+# SPDX-License-Identifier: AGPL-3.0-or-later
+name: Problema no site
+description: Relate um erro de conteúdo, navegação, acessibilidade, layout ou funcionamento do site.
+title: "[Bug] "
+labels:
+  - bug
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problema
+      description: Descreva o que aconteceu e o que você esperava.
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: Página afetada
+      description: Informe a URL quando o problema estiver em uma página específica.
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Como reproduzir
+      description: Inclua os passos necessários quando aplicável.
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidências
+      description: Screenshots, mensagens de erro ou outras informações úteis.

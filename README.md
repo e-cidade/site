@@ -3,85 +3,54 @@ SPDX-FileCopyrightText: 2026 e-Cidade community
 SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
-# Site da comunidade e-Cidade
+# e-Cidade
 
-Site estático da comunidade e-Cidade, construído com Jigsaw, Vite e SCSS e publicado por GitHub Actions.
+**Software livre para gestão pública municipal integrada.**
 
-O conteúdo institucional, as notícias e o acervo de imagens migrado do antigo WordPress são mantidos no próprio repositório.
+O e-Cidade é um ecossistema de software público voltado à administração municipal. A proposta é permitir que governos locais utilizem, evoluam e contratem serviços em torno de uma base aberta, reduzindo dependência de um único fornecedor e preservando autonomia tecnológica.
 
-## Desenvolvimento local
+**Site oficial:** https://ecidade.softwarepublico.org/
 
-Requisitos:
+## Por que e-Cidade
 
-- PHP 8.3+ (runtime de desenvolvimento/CI fixado por `config.platform.php`)
-- Composer
-- Node.js 24+ (runtime fixado por `package.json#volta.node`)
-- npm
+A transformação digital de um município não deveria significar aprisionamento tecnológico. O e-Cidade oferece uma base aberta para que a administração pública possa manter continuidade, escolher fornecedores, desenvolver integrações e evoluir seus processos com participação de uma comunidade mais ampla.
 
-```bash
-composer install
-npm ci
-npm run dev
-```
+Entre os princípios que orientam o projeto estão:
 
-## Qualidade
+- **autonomia tecnológica:** código aberto e liberdade para operar, adaptar e evoluir a solução;
+- **continuidade:** o conhecimento e o software não ficam restritos a um único fornecedor;
+- **ecossistema:** empresas, cooperativas, profissionais, academia e poder público podem contribuir e prestar serviços;
+- **gestão integrada:** o projeto reúne funcionalidades voltadas à operação cotidiana da administração municipal;
+- **colaboração:** melhorias podem ser compartilhadas entre diferentes municípios e organizações.
 
-A integração contínua é segmentada por responsabilidade:
+## Para quem
 
-- Composer: validação e auditoria de dependências PHP;
-- PHP: lint, PHPUnit e PHP-CS-Fixer, com PHPUnit e PHP-CS-Fixer isolados em `vendor-bin/`;
-- JavaScript: Prettier e testes nativos do Node.js;
-- SCSS: compilação isolada com Sass;
-- ShellCheck: validação dos scripts shell;
-- Build: geração do site e smoke tests;
-- REUSE: conformidade SPDX/REUSE.
+O e-Cidade é relevante para:
 
-Para executar localmente:
+- prefeituras e demais estruturas de governo local que buscam alternativas abertas para gestão municipal;
+- equipes de tecnologia do setor público que precisam manter controle sobre infraestrutura, dados e integrações;
+- empresas, cooperativas e profissionais que implantam, mantêm ou desenvolvem soluções para governos;
+- universidades, comunidades e organizações interessadas em software público e bens públicos digitais.
 
-```bash
-composer lint
-composer cs:check
-composer test
-npm run lint:js
-npm run test:js
-npm run test:scss
-composer build
-composer test:build
-shellcheck scripts/*.sh
-```
+## Conheça o ecossistema
 
-## Conteúdo
+Este repositório mantém o **site comunitário do e-Cidade**. O código do sistema, suas diferentes linhas de desenvolvimento e os caminhos de colaboração são apresentados a partir dos canais da comunidade.
 
-- páginas institucionais: `source/*.blade.php`;
-- notícias: `source/_posts/*.md`;
-- SCSS: `source/_assets/scss/`;
-- JavaScript: `source/_assets/js/`;
-- mídia editorial migrada: `source/assets/images/migrated/`.
+- **Site:** https://ecidade.softwarepublico.org/
+- **Código-fonte e linhas de desenvolvimento:** https://github.com/e-cidade/e-cidade
+- **Discussões da comunidade:** https://github.com/e-cidade/e-cidade/discussions
+- **Telegram:** https://t.me/eCidadeCE
+- **Fórum:** https://ecidades.popsolutions.co
+- **Software Público Brasileiro:** https://softwarepublico.gov.br/social/e-cidade/
 
-## Preview de pull requests
+## Adoção e serviços
 
-Cada pull request gera um build isolado e, após os testes, publica um preview em:
+O e-Cidade não depende de um único prestador. Organizações podem implantar, hospedar, integrar, manter e desenvolver a solução de acordo com a realidade de cada município.
 
-`https://site-ecidade.librecode.coop/pr-preview/pr-<numero>/`
+O site oficial reúne informações institucionais, documentação, notícias e referências de prestadores que atuam no ecossistema.
 
-O build ocorre no contexto não privilegiado do pull request e o deploy é feito por um `workflow_run`, permitindo previews de forks sem expor credenciais ao código contribuído. Ao fechar o PR, o preview é removido.
+## Participe
 
-## Publicação
+Contribuições podem acontecer de várias formas: desenvolvimento, documentação, testes, implantação, relato de experiências, produção de conteúdo e participação nas discussões da comunidade.
 
-A branch `main` é publicada no GitHub Pages. O deploy de produção preserva o diretório `pr-preview/`, evitando apagar previews ativos.
-
-## Licença
-
-O projeto segue AGPL-3.0-or-later e usa metadados SPDX/REUSE. Consulte `LICENSE` e `REUSE.toml`.
-
-
-## Toolchain
-
-As versões usadas por CI e desenvolvimento têm fontes de verdade explícitas:
-
-- PHP de execução: `composer.json > config.platform.php`;
-- compatibilidade mínima de PHP: `composer.json > require.php`;
-- Node.js de execução: `package.json > volta.node`;
-- compatibilidade mínima de Node.js: `package.json > engines.node`.
-
-Os workflows não repetem esses números: `setup-php` lê o Composer e `setup-node` lê o `package.json`. O Dockerfile mantém a tag PHP explícita para compatibilidade com o Dependabot, pinada também por digest, e o workflow `Toolchain` verifica que essa tag continua alinhada ao Composer. A versão do Node usada na imagem Docker é lida diretamente de `package.json`.
+Para mudanças neste site, consulte [CONTRIBUTING.md](.github/CONTRIBUTING.md). Orientações técnicas para manutenção automatizada e agentes estão em [AGENTS.md](AGENTS.md).
