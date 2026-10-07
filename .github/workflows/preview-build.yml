@@ -1,46 +1,64 @@
 # SPDX-FileCopyrightText: 2026 e-Cidade community
 # SPDX-License-Identifier: AGPL-3.0-or-later
-name: PR Preview Build
+name: PR Preview
 
 on:
   pull_request:
     branches: [main]
-    types: [opened, reopened, synchronize]
+    types: [opened, reopened, synchronize, closed]
 
 permissions:
-  contents: read
+  contents: write
+  pull-requests: write
 
 concurrency:
-  group: preview-build-${{ github.event.pull_request.number }}
+  group: pr-preview-${{ github.event.pull_request.number }}
   cancel-in-progress: true
 
 env:
   PREVIEW_BASE_URL: https://site-ecidade.librecode.coop/pr-preview/pr-${{ github.event.pull_request.number }}
 
 jobs:
-  build:
+  preview:
+    if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+
       - uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
+        if: github.event.action != 'closed'
         with:
           coverage: none
+
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        if: github.event.action != 'closed'
         with:
           node-version-file: package.json
           cache: npm
+
       - run: composer install --no-interaction --no-progress --prefer-dist
+        if: github.event.action != 'closed'
+
       - run: npm ci --no-audit --no-fund
+        if: github.event.action != 'closed'
+
       - run: npm run preview
+        if: github.event.action != 'closed'
+
       - name: Test preview build
+        if: github.event.action != 'closed'
         env:
           SITE_BUILD_DIR: build_preview
           EXPECTED_BASE_URL: ${{ env.PREVIEW_BASE_URL }}
         run: composer test:build
-      - uses: actions/upload-artifact@v6
+
+      - name: Deploy or remove preview
+        uses: rossjrw/pr-preview-action@ffa7509e91a3ec8dfc2e5536c4d5c1acdf7a6de9 # v1.8.1
         with:
-          name: preview-build
-          path: build_preview/
-          retention-days: 1
+          action: auto
+          source-dir: ./build_preview/
+          preview-branch: gh-pages
+          pages-base-url: site-ecidade.librecode.coop
+          wait-for-pages-deployment: false
