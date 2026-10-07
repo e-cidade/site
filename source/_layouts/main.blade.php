@@ -1,28 +1,120 @@
 {{-- SPDX-FileCopyrightText: 2026 e-Cidade community --}}
 {{-- SPDX-License-Identifier: AGPL-3.0-or-later --}}
 
+@php
+    $documentTitle = $page->title ? $page->title . ' | ' . $page->siteName : $page->siteName;
+    $description = $page->description ?? $page->siteDescription;
+    $canonicalUrl = $page->getUrl();
+    $isArticle = ($page->type ?? null) === 'article';
+    $indexable = ($page->indexable ?? true) && !($page->noindex ?? false);
+
+    $resolveAbsoluteUrl = static function (?string $url) use ($page): ?string {
+        if ($url === null || $url === '') {
+            return null;
+        }
+        if (preg_match('#^https?://#i', $url) === 1) {
+            return $url;
+        }
+        return rtrim((string) $page->baseUrl, '/') . '/' . ltrim($url, '/');
+    };
+
+    $coverImage = $page->cover_image ?? null;
+    $socialImage = $resolveAbsoluteUrl($coverImage ?: $page->logoUrl);
+    $socialImageAlt = $coverImage ? ($page->cover_alt ?? $page->title ?? $page->siteName) : $page->siteName;
+    $twitterCard = $coverImage ? 'summary_large_image' : 'summary';
+    $siteUrl = rtrim((string) $page->baseUrl, '/');
+
+    $structuredData = [
+        '@context' => 'https://schema.org',
+        '@graph' => [
+            [
+                '@type' => 'WebSite',
+                '@id' => $siteUrl . '/#website',
+                'url' => $siteUrl . '/',
+                'name' => $page->siteName,
+                'description' => $page->siteDescription,
+            ],
+            [
+                '@type' => 'SoftwareApplication',
+                '@id' => $siteUrl . '/#software',
+                'name' => $page->siteName,
+                'url' => $siteUrl . '/',
+                'description' => $page->siteDescription,
+                'applicationCategory' => 'GovernmentApplication',
+                'operatingSystem' => 'Web',
+                'isAccessibleForFree' => true,
+                'sameAs' => [$page->communityUrl],
+            ],
+        ],
+    ];
+
+    if ($isArticle) {
+        $article = [
+            '@type' => 'Article',
+            '@id' => $canonicalUrl . '#article',
+            'headline' => $page->title,
+            'description' => $description,
+            'mainEntityOfPage' => $canonicalUrl,
+            'author' => [
+                '@type' => 'Organization',
+                'name' => $page->author ?? $page->siteAuthor,
+            ],
+        ];
+
+        if ($socialImage) {
+            $article['image'] = [$socialImage];
+        }
+        if ($page->date ?? null) {
+            $article['datePublished'] = $page->getDate()->format(DATE_ATOM);
+        }
+
+        $structuredData['@graph'][] = $article;
+    }
+@endphp
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="{{ $page->description ?? $page->siteDescription }}">
+    <title>{{ $documentTitle }}</title>
+
+    <meta name="description" content="{{ $description }}">
     <meta name="author" content="{{ $page->siteAuthor }}">
-    <meta name="robots" content="index,follow">
-    <link rel="canonical" href="{{ $page->getUrl() }}">
+    @if ($indexable)
+        <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1">
+    @else
+        <meta name="robots" content="noindex,nofollow,noarchive">
+    @endif
+    <link rel="canonical" href="{{ $canonicalUrl }}">
 
-    <meta property="og:type" content="{{ $page->type ?? 'website' }}">
+    <meta property="og:type" content="{{ $isArticle ? 'article' : 'website' }}">
     <meta property="og:site_name" content="{{ $page->siteName }}">
-    <meta property="og:title" content="{{ $page->title ? $page->title . ' | ' : '' }}{{ $page->siteName }}">
-    <meta property="og:description" content="{{ $page->description ?? $page->siteDescription }}">
-    <meta property="og:url" content="{{ $page->getUrl() }}">
-    <meta property="og:image" content="{{ $page->logoUrl }}">
+    <meta property="og:title" content="{{ $documentTitle }}">
+    <meta property="og:description" content="{{ $description }}">
+    <meta property="og:url" content="{{ $canonicalUrl }}">
+    <meta property="og:locale" content="pt_BR">
+    @if ($socialImage)
+        <meta property="og:image" content="{{ $socialImage }}">
+        <meta property="og:image:secure_url" content="{{ $socialImage }}">
+        <meta property="og:image:alt" content="{{ $socialImageAlt }}">
+    @endif
+    @if ($isArticle && ($page->date ?? null))
+        <meta property="article:published_time" content="{{ $page->getDate()->format(DATE_ATOM) }}">
+    @endif
+    @if ($isArticle)
+        <meta property="article:author" content="{{ $page->author ?? $page->siteAuthor }}">
+    @endif
 
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="{{ $page->title ? $page->title . ' | ' : '' }}{{ $page->siteName }}">
-    <meta name="twitter:description" content="{{ $page->description ?? $page->siteDescription }}">
+    <meta name="twitter:card" content="{{ $twitterCard }}">
+    <meta name="twitter:title" content="{{ $documentTitle }}">
+    <meta name="twitter:description" content="{{ $description }}">
+    @if ($socialImage)
+        <meta name="twitter:image" content="{{ $socialImage }}">
+        <meta name="twitter:image:alt" content="{{ $socialImageAlt }}">
+    @endif
 
-    <title>{{ $page->title ? $page->title . ' | ' : '' }}{{ $page->siteName }}</title>
+    <script type="application/ld+json">{!! json_encode($structuredData, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
 
     <link rel="icon" type="image/png" href="{{ $page->logoUrl }}">
     <link rel="apple-touch-icon" href="{{ $page->logoUrl }}">
