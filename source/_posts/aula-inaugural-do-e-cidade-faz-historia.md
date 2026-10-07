@@ -6,6 +6,10 @@ description: Curso de capacitação reúne empresas, comunidade e estudantes do 
 date: 2026-08-27
 author: Comunidade e-Cidade
 category: Notícias
+content_source: "github"
+external_id: "github-issue-88"
+github_issue: 88
+editor_url: "https://github.com/e-cidade/site/issues/88"
 cover_image: /assets/images/migrated/aula-inaugural.png
 cover_alt: Alunos do Instituto Federal da Bahia em aula sobre o e-Cidade
 source_url: https://artecult.com/aula-inaugural-do-e-cidade-faz-historia/

@@ -6,6 +6,10 @@ description: Municípios paraibanos articulam transformação digital, capacita�
 date: 2025-07-29
 author: Comunidade e-Cidade
 category: Notícias
+content_source: "github"
+external_id: "github-issue-95"
+github_issue: 95
+editor_url: "https://github.com/e-cidade/site/issues/95"
 cover_image: /assets/images/migrated/sertao-digital.png
 cover_alt: Divulgação do projeto Sertão Digital
 ---

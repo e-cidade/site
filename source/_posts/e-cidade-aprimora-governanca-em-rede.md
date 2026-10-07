@@ -6,6 +6,10 @@ description: Comunidade escolhe representantes para ampliar participação no Co
 date: 2025-06-01
 author: Comunidade e-Cidade
 category: Notícias
+content_source: "github"
+external_id: "github-issue-92"
+github_issue: 92
+editor_url: "https://github.com/e-cidade/site/issues/92"
 cover_image: /assets/images/migrated/governanca-em-rede.png
 cover_alt: Divulgação sobre governança em rede do e-Cidade
 source_url: https://artecult.com/o-software-e-cidade-aprimora-seu-modelo-de-governanca-em-rede/

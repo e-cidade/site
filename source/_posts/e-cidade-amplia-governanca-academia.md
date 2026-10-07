@@ -6,6 +6,10 @@ description: Comitê Gestor amplia participação com representantes da academia
 date: 2026-05-27
 author: Comunidade e-Cidade
 category: Notícias
+content_source: "github"
+external_id: "github-issue-91"
+github_issue: 91
+editor_url: "https://github.com/e-cidade/site/issues/91"
 cover_image: /assets/images/migrated/governanca-academia.png
 cover_alt: Ilustração sobre governança participativa do e-Cidade
 ---

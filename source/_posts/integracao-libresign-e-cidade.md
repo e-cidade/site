@@ -6,6 +6,10 @@ description: Integração entre e-Cidade e LibreSign entra em uso em município 
 date: 2025-01-21
 author: Comunidade e-Cidade
 category: Notícias
+content_source: "github"
+external_id: "github-issue-93"
+github_issue: 93
+editor_url: "https://github.com/e-cidade/site/issues/93"
 ---
 <!--
 SPDX-FileCopyrightText: 2026 e-Cidade community
