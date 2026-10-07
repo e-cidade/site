@@ -23,7 +23,7 @@
 
     <link rel="icon" href="{{ $page->baseUrl }}/favicon.ico">
     @viteRefresh()
-    <link rel="stylesheet" href="{{ vite('source/_assets/css/main.css') }}">
+    <link rel="stylesheet" href="{{ vite('source/_assets/scss/main.scss') }}">
 </head>
 <body>
     <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>

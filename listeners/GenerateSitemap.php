@@ -1,43 +1,43 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Listeners;
 
+use Illuminate\Support\Str;
 use samdark\sitemap\Sitemap;
 use TightenCo\Jigsaw\Jigsaw;
-use Illuminate\Support\Str;
 
-class GenerateSitemap
+final class GenerateSitemap
 {
-    protected $exclude = [
+    /** @var list<string> */
+    private const EXCLUDED_PATHS = [
         '/assets/*',
         '*/favicon.ico',
-        '*/404*'
+        '*/404*',
     ];
 
-    public function handle(Jigsaw $jigsaw)
+    public function handle(Jigsaw $jigsaw): void
     {
         $baseUrl = $jigsaw->getConfig('baseUrl');
 
-        if (! $baseUrl) {
-            echo("\nTo generate a sitemap.xml file, please specify a 'baseUrl' in config.php.\n\n");
-
+        if (! is_string($baseUrl) || $baseUrl === '') {
             return;
         }
 
         $sitemap = new Sitemap($jigsaw->getDestinationPath() . '/sitemap.xml');
 
         collect($jigsaw->getOutputPaths())
-            ->reject(function ($path) {
-                return $this->isExcluded($path);
-            })->each(function ($path) use ($baseUrl, $sitemap) {
+            ->reject(fn (string $path): bool => $this->isExcluded($path))
+            ->each(function (string $path) use ($baseUrl, $sitemap): void {
                 $sitemap->addItem(rtrim($baseUrl, '/') . $path, time(), Sitemap::DAILY);
-        });
+            });
 
         $sitemap->write();
     }
 
-    public function isExcluded($path)
+    public function isExcluded(string $path): bool
     {
-        return Str::is($this->exclude, $path);
+        return Str::is(self::EXCLUDED_PATHS, $path);
     }
 }
