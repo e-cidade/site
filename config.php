@@ -18,7 +18,6 @@ return [
     'communityUrl' => 'https://github.com/e-cidade/e-cidade',
     'siteRepositoryUrl' => 'https://github.com/e-cidade/site',
     'telegramUrl' => 'https://t.me/eCidadeCE',
-    'forumUrl' => 'https://ecidades.popsolutions.co',
     'spbUrl' => 'https://softwarepublico.gov.br/social/e-cidade/',
 
     'collections' => [

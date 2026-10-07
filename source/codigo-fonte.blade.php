@@ -28,8 +28,8 @@ description: Onde encontrar o código e as diferentes linhas de desenvolvimento 
         </div>
         <aside class="aside-card">
             <p class="eyebrow">Como contribuir</p>
-            <p>Escolha a linha de desenvolvimento relacionada à sua necessidade. Se não souber onde uma contribuição deve ser feita, use o fórum da comunidade.</p>
-            <a class="text-link" href="{{ $page->forumUrl }}" target="_blank" rel="noopener noreferrer">Abrir fórum →</a>
+            <p>Escolha a linha de desenvolvimento relacionada à sua necessidade. Se não souber onde uma contribuição deve ser feita, consulte o repositório comunitário do e-Cidade.</p>
+            <a class="text-link" href="{{ $page->communityUrl }}">Abrir repositório comunitário →</a>
         </aside>
     </div>
 </section>

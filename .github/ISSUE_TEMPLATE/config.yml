@@ -1,7 +1,3 @@
 # SPDX-FileCopyrightText: 2026 e-Cidade community
 # SPDX-License-Identifier: AGPL-3.0-or-later
 blank_issues_enabled: true
-contact_links:
-  - name: Fórum da comunidade e-Cidade
-    url: https://ecidades.popsolutions.co
-    about: Use este espaço para assuntos sobre o ecossistema e-Cidade que não sejam específicos deste site.

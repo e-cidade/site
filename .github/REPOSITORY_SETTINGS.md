@@ -11,7 +11,7 @@ Recommended GitHub settings:
 - website: https://site-ecidade.librecode.coop/ enquanto o domínio institucional `ecidade.softwarepublico.org` continuar apontando para o WordPress legado; após o cutover, trocar para https://ecidade.softwarepublico.org/
 - topics: e-cidade, software-publico, software-livre, gestao-municipal, governo-digital, jigsaw, php, static-site
 - Issues: enabled for site-specific work and editorial news submissions.
-- Discussions: disabled; community discussion belongs in the forum at https://ecidades.popsolutions.co.
+- Discussions: disabled; use Issues only for site-specific work and keep broader community coordination in `e-cidade/e-cidade`.
 - Projects: disabled; project management belongs in the broader community governance space.
 
 ## Pull request governance
