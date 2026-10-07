@@ -1,53 +1,40 @@
-# This is a basic workflow to help you get started with Actions
+name: Deploy
 
-name: CD
-
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
-  pull_request:
-    types:
-      - closed
+  push:
+    branches: [main]
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+permissions:
+  contents: write
+
+concurrency:
+  group: pages-deploy
+  cancel-in-progress: true
+
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    if: github.event.pull_request.merged == true
-    # The type of runner that the job will run on
+  deploy:
     runs-on: ubuntu-latest
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-      - name: Read package.json node and npm engines version
-        uses: skjnldsv/read-package-engines-version-actions@8205673bab74a63eb9b8093402fd9e0e018663a1 # v2.2
-        id: versions
+      - uses: actions/checkout@v4
         with:
-          fallbackNode: '^20'
-          fallbackNpm: '^9'
-      - name: Set up node ${{ steps.versions.outputs.nodeVersion }}
-        uses: actions/setup-node@e33196f7422957bea03ed53f6fbb155025ffc7b8 # v3
+          persist-credentials: false
+      - uses: actions/setup-node@v4
         with:
-          node-version: ${{ steps.versions.outputs.nodeVersion }}
-      - name: Set up php 8.2
-        uses: shivammathur/setup-php@v2
+          node-version: '20'
+          cache: npm
+      - uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.2
-      - name: Set up PHP dependencie
-        run: composer i
-      - name: Run composer command
-        run: composer prod
+          php-version: '8.3'
+          coverage: none
+      - run: composer install --no-interaction --no-progress --prefer-dist
+      - run: npm ci --no-audit --no-fund
+      - run: composer build
       - name: Deploy to GitHub Pages
-        if: success()
-        uses: crazy-max/ghaction-github-pages@v2
+        uses: crazy-max/ghaction-github-pages@v4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          # Build directory to deploy
           build_dir: build_production
-          # Write the given domain name to the CNAME file
           fqdn: site-ecidade.librecode.coop
-          # Allow Jekyll to build your site
           jekyll: false

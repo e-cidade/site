@@ -1,17 +1,46 @@
-# [e-Cidade](https://site-ecidade.librecode.coop) site
+# Site da comunidade e-Cidade
 
-Repositório do site do e-Cidade
+Site estático da comunidade e-Cidade, construído com [Jigsaw](https://jigsaw.tighten.com/) e Vite e publicado por GitHub Actions.
 
-## Instalação
+O conteúdo institucional, as notícias e o acervo de imagens migrado do antigo WordPress são mantidos no próprio repositório.
+
+## Desenvolvimento local
+
+Requisitos:
+
+- PHP 8.3+
+- Composer
+- Node.js 20.19+
+- npm
 
 ```bash
-git clone git@github.com:e-cidade/site.git
-cd site
-docker-compose up
+composer install
+npm ci
+npm run dev
 ```
 
-## Adicionando novo post
+## Build de produção
 
-* Faça um fork deste projeto
-* Crie um arquivo na pasta `source/_posts` seguindo como exemplo algum outro arquivo que já esteja nesta pasta
-* Faça um pull request para adicionar o seu post e aguarde revisão
+```bash
+composer build
+```
+
+O resultado é gerado em `build_production/`.
+
+## Conteúdo
+
+- páginas institucionais: `source/*.blade.php`;
+- notícias: `source/_posts/*.md`;
+- estilos: `source/_assets/css/`;
+- JavaScript: `source/_assets/js/`;
+- mídia editorial migrada: `source/assets/images/migrated/`.
+
+Para adicionar uma notícia, crie um arquivo Markdown em `source/_posts/` com título, data, descrição e layout `post`.
+
+## Publicação
+
+Pull requests executam build e smoke tests. A branch `main` é publicada por GitHub Actions.
+
+## Licença
+
+Consulte [LICENSE](LICENSE).
