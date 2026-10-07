@@ -22,7 +22,8 @@
     <title>{{ $page->title ? $page->title . ' | ' : '' }}{{ $page->siteName }}</title>
 
     <link rel="icon" href="{{ $page->baseUrl }}/favicon.ico">
-    <link rel="stylesheet" href="{{ mix('css/main.css', 'assets/build') }}">
+    @viteRefresh()
+    <link rel="stylesheet" href="{{ vite('source/_assets/css/main.css') }}">
 </head>
 <body>
     <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
@@ -76,6 +77,6 @@
         </div>
     </footer>
 
-    <script src="{{ mix('js/main.js', 'assets/build') }}"></script>
+    <script type="module" src="{{ vite('source/_assets/js/main.js') }}"></script>
 </body>
 </html>

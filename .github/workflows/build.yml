@@ -1,4 +1,4 @@
-name: Build
+name: Build and smoke tests
 
 on:
   pull_request:
@@ -26,8 +26,21 @@ jobs:
           cache: npm
       - uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: '8.3'
           coverage: none
       - run: composer install --no-interaction --no-progress --prefer-dist
       - run: npm ci --no-audit --no-fund
-      - run: composer prod
+      - run: composer build
+      - name: Smoke test generated pages
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f build_production/index.html
+          test -f build_production/sobre/index.html
+          test -f build_production/noticias/index.html
+          test -f build_production/codigo-fonte/index.html
+          test -f build_production/manuais-e-documentacoes/index.html
+          test -f build_production/prestadores-de-servico/index.html
+          test -f build_production/aula-inaugural-do-e-cidade-faz-historia/index.html
+          test -f build_production/assets/images/migrated/aula-inaugural.png
+          ! grep -R "wp-content/uploads" source/_posts

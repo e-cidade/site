@@ -25,11 +25,11 @@ jobs:
           cache: npm
       - uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: '8.3'
           coverage: none
       - run: composer install --no-interaction --no-progress --prefer-dist
       - run: npm ci --no-audit --no-fund
-      - run: composer prod
+      - run: composer build
       - name: Deploy to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v4
         env:

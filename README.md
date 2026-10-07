@@ -1,29 +1,28 @@
 # Site da comunidade e-Cidade
 
-Site estático da comunidade e-Cidade, construído com [Jigsaw](https://jigsaw.tighten.com/) e publicado por GitHub Actions.
+Site estático da comunidade e-Cidade, construído com [Jigsaw](https://jigsaw.tighten.com/) e Vite e publicado por GitHub Actions.
 
-O conteúdo institucional e as notícias são mantidos no próprio repositório. A estrutura substitui a dependência do WordPress e preserva o histórico editorial do site público.
+O conteúdo institucional, as notícias e o acervo de imagens migrado do antigo WordPress são mantidos no próprio repositório.
 
 ## Desenvolvimento local
 
 Requisitos:
 
-- PHP 8.2+
+- PHP 8.3+
 - Composer
-- Node.js 20+
-- npm 9+
+- Node.js 20.19+
+- npm
 
 ```bash
 composer install
-npm run watch
+npm ci
+npm run dev
 ```
-
-O Jigsaw recompila as páginas e o Laravel Mix recompila os assets.
 
 ## Build de produção
 
 ```bash
-composer prod
+composer build
 ```
 
 O resultado é gerado em `build_production/`.
@@ -33,9 +32,14 @@ O resultado é gerado em `build_production/`.
 - páginas institucionais: `source/*.blade.php`;
 - notícias: `source/_posts/*.md`;
 - estilos: `source/_assets/css/`;
-- JavaScript: `source/_assets/js/`.
+- JavaScript: `source/_assets/js/`;
+- mídia editorial migrada: `source/assets/images/migrated/`.
 
 Para adicionar uma notícia, crie um arquivo Markdown em `source/_posts/` com título, data, descrição e layout `post`.
+
+## Publicação
+
+Pull requests executam build e smoke tests. A branch `main` é publicada por GitHub Actions.
 
 ## Licença
 
