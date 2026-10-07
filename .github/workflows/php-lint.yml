@@ -1,6 +1,6 @@
 # SPDX-FileCopyrightText: 2026 e-Cidade community
 # SPDX-License-Identifier: AGPL-3.0-or-later
-name: PHP
+name: PHP lint
 
 on:
   pull_request:
@@ -11,11 +11,11 @@ permissions:
   contents: read
 
 concurrency:
-  group: php-${{ github.ref }}
+  group: php-lint-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  lint-and-test:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -27,4 +27,3 @@ jobs:
           coverage: none
       - run: composer install --no-interaction --no-progress --prefer-dist
       - run: composer lint
-      - run: composer test

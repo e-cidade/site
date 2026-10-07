@@ -1,6 +1,9 @@
 {
-  "printWidth": 120,
+  "plugins": [
+    "@shufo/prettier-plugin-blade"
+  ],
   "singleQuote": true,
+  "printWidth": 120,
   "tabWidth": 4,
   "trailingComma": "all"
 }
