@@ -46,6 +46,17 @@ updates:
     labels:
       - dependencies
 
+  - package-ecosystem: docker
+    directory: /.docker/php
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:18"
+      timezone: America/Sao_Paulo
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+
   - package-ecosystem: github-actions
     directory: /
     schedule:

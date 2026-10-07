@@ -13,9 +13,9 @@ O conteúdo institucional, as notícias e o acervo de imagens migrado do antigo 
 
 Requisitos:
 
-- PHP 8.3+
+- PHP 8.3+ (runtime de desenvolvimento/CI fixado por `config.platform.php`)
 - Composer
-- Node.js 24+
+- Node.js 24+ (runtime fixado por `package.json#volta.node`)
 - npm
 
 ```bash
