@@ -3,7 +3,6 @@
 
 name: Publicar notícia
 description: Envie uma notícia para revisão e publicação no site do e-Cidade.
-title: ""
 body:
   - type: markdown
     attributes:
@@ -48,12 +47,14 @@ body:
     validations:
       required: true
 
-  - type: textarea
+  - type: upload
     id: cover
     attributes:
       label: Imagem de capa
-      description: Opcional. Cole, arraste ou selecione a imagem principal da notícia neste campo.
-      placeholder: Arraste ou cole a imagem aqui.
+      description: Opcional. Envie a imagem principal da notícia.
+    validations:
+      required: false
+      accept: ".png,.jpg,.jpeg,.gif,.svg,.webp"
 
   - type: input
     id: cover_alt
