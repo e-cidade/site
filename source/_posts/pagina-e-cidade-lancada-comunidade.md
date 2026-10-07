@@ -11,6 +11,11 @@ cover_alt: Divulgação da página comunitária do e-Cidade
 source_url: https://artecult.com/pagina-do-e-cidade-lancada-pela-comunidade/
 source_label: ArteCult
 ---
+<!--
+SPDX-FileCopyrightText: 2026 e-Cidade community
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
 
 Durante os eventos dos 20 anos do software público, a comunidade e-Cidade anunciou uma página destinada a centralizar informações relacionadas ao sistema e organizar caminhos para colaboração no código.
 

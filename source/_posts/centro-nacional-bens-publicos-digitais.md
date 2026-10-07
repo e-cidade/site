@@ -11,6 +11,11 @@ cover_alt: Imagem de divulgação do Centro Nacional de Bens Públicos Digitais
 source_url: https://www.c3sl.ufpr.br/2025/10/14/inedito-no-brasil-centro-de-bens-publicos-digitais-sera-lancado-em-novembro/
 source_label: C3SL / UFPR
 ---
+<!--
+SPDX-FileCopyrightText: 2026 e-Cidade community
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
 
 O Centro Nacional de Bens Públicos Digitais (CNBPD), sediado na Universidade Federal do Paraná, foi apresentado como uma iniciativa para reunir projetos voltados à soberania digital e a tecnologias abertas e livres.
 

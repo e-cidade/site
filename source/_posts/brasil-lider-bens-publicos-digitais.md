@@ -11,6 +11,11 @@ cover_alt: Divulgação dos 20 anos do Software Público Brasileiro
 source_url: https://artecult.com/brasil-ainda-pode-ser-lider-mundial-em-bens-publicos-digitais/
 source_label: ArteCult
 ---
+<!--
+SPDX-FileCopyrightText: 2026 e-Cidade community
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
 
 Os eventos comemorativos dos 20 anos do software público, realizados em maio de 2025, foram apresentados como evidência da continuidade do modelo brasileiro. Caio Teixeira, representante da prefeitura de Volta Redonda, relatou que o município utiliza o e-Cidade desde 2013 e continuava avançando com novos módulos.
 

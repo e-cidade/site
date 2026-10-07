@@ -4,6 +4,11 @@ section: body
 title: Manual do Financeiro
 description: Registro do Manual do Financeiro publicado no site e-Cidade.
 ---
+<!--
+SPDX-FileCopyrightText: 2026 e-Cidade community
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
 
 <section class="page-hero">
     <div class="shell shell--narrow">
