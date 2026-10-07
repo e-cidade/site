@@ -9,7 +9,17 @@ Contribuições são bem-vindas para conteúdo, documentação, acessibilidade, 
 
 Antes de começar uma mudança relevante, procure uma issue existente. Quando o trabalho ainda não estiver representado, abra uma issue para registrar o contexto e permitir alinhamento com a comunidade.
 
-## Fluxo básico
+## Publicando uma notícia
+
+Para propor uma notícia, use o formulário **Publicar notícia** na criação de uma nova Issue.
+
+Basta preencher título, resumo, data e texto. Imagem, autoria específica e fonte original são opcionais. Não é necessário conhecer Git, Markdown, HTML, CSS, JavaScript ou os templates do site.
+
+A Issue é usada para acompanhar a revisão editorial. Comentários servem para conversar sobre ajustes e não entram automaticamente no texto publicado.
+
+O fluxo técnico de branch, Pull Request, preview e publicação é responsabilidade dos mantenedores.
+
+## Fluxo básico para alterações técnicas
 
 1. Crie uma branch a partir de `main`.
 2. Faça alterações pequenas e revisáveis.

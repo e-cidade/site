@@ -1,0 +1,76 @@
+# SPDX-FileCopyrightText: 2026 e-Cidade community
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+name: Publicar notícia
+description: Envie uma notícia para revisão e publicação no site do e-Cidade.
+title: ""
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Preencha os campos abaixo. Você não precisa conhecer Git, HTML ou Markdown.
+        O texto pode ser escrito normalmente; recursos de formatação do editor do GitHub são opcionais.
+
+  - type: input
+    id: summary
+    attributes:
+      label: Resumo
+      description: Explique em uma ou duas frases o que aconteceu e por que a notícia é relevante.
+      placeholder: Município adota o e-Cidade para modernizar a gestão pública.
+    validations:
+      required: true
+
+  - type: input
+    id: published_at
+    attributes:
+      label: Data da publicação
+      description: Use o formato AAAA-MM-DD.
+      placeholder: "2026-10-07"
+    validations:
+      required: true
+
+  - type: input
+    id: author
+    attributes:
+      label: Autor
+      description: Opcional. Se ficar vazio, será usado "Comunidade e-Cidade".
+      placeholder: Comunidade e-Cidade
+
+  - type: textarea
+    id: content
+    attributes:
+      label: Texto da notícia
+      description: Escreva o conteúdo normalmente. Você pode usar a barra de formatação do GitHub para links, listas, imagens e destaque.
+      placeholder: |
+        Primeiro parágrafo da notícia.
+
+        Um novo parágrafo pode ser escrito deixando uma linha em branco.
+    validations:
+      required: true
+
+  - type: upload
+    id: cover
+    attributes:
+      label: Imagem de capa
+      description: Opcional. Envie a imagem principal da notícia.
+
+  - type: input
+    id: cover_alt
+    attributes:
+      label: Texto alternativo da imagem
+      description: Se enviar uma imagem, descreva objetivamente o que ela mostra.
+      placeholder: Participantes durante a capacitação do e-Cidade
+
+  - type: input
+    id: source_label
+    attributes:
+      label: Fonte original
+      description: Opcional. Informe o nome da fonte quando a notícia se basear em uma publicação externa.
+      placeholder: Prefeitura de Exemplo
+
+  - type: input
+    id: source_url
+    attributes:
+      label: URL da fonte
+      description: Opcional. Link completo da publicação original.
+      placeholder: https://exemplo.gov.br/noticia
