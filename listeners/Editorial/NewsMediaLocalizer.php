@@ -81,7 +81,7 @@ final class NewsMediaLocalizer
     {
         $value = trim($value);
 
-        if (preg_match('/<img\\b[^>]*?\\bsrc=(["\\'])(https:\\/\\/[^"\\']+)\\1/i', $value, $match) === 1) {
+        if (preg_match("/<img\\b[^>]*?\\bsrc=([\"'])(https:\\/\\/[^\"']+)\\1/i", $value, $match) === 1) {
             return $match[2];
         }
 
@@ -89,7 +89,7 @@ final class NewsMediaLocalizer
             return $match[1];
         }
 
-        if (preg_match('/https:\\/\\/[^\\s"\\'<>)]*/i', $value, $match) === 1) {
+        if (preg_match("/https:\\/\\/[^\\s\"'<>)]*/i", $value, $match) === 1) {
             return $match[0];
         }
 
