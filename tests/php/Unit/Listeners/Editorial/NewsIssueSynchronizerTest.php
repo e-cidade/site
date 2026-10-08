@@ -175,6 +175,73 @@ final class NewsIssueSynchronizerTest extends TestCase
         );
     }
 
+    public function testReopeningPublishedNewsWithoutEditorialChangesIsIdempotent(): void
+    {
+        $body = (string) file_get_contents(__DIR__ . '/../../../Fixtures/Editorial/valid-news-issue.md');
+        $synchronizer = new NewsIssueSynchronizer($this->postsDirectory);
+
+        $initial = $synchronizer->synchronize(
+            321,
+            'Título original',
+            $body,
+            'https://github.com/e-cidade/site/issues/321',
+            '2026-10-07T10:00:00Z',
+        );
+        $reopened = $synchronizer->synchronize(
+            321,
+            'Título original',
+            $body,
+            'https://github.com/e-cidade/site/issues/321',
+            '2026-10-08T09:30:00Z',
+            true,
+        );
+
+        self::assertTrue($initial['created']);
+        self::assertFalse($reopened['changed']);
+        self::assertFalse($reopened['created']);
+        self::assertSame($initial['path'], $reopened['path']);
+        self::assertStringNotContainsString(
+            'updated_at:',
+            (string) file_get_contents($initial['path']),
+        );
+    }
+
+    public function testPublishedRevisionDoesNotCommitOnlyToChangeUpdatedAt(): void
+    {
+        $body = (string) file_get_contents(__DIR__ . '/../../../Fixtures/Editorial/valid-news-issue.md');
+        $synchronizer = new NewsIssueSynchronizer($this->postsDirectory);
+
+        $synchronizer->synchronize(
+            321,
+            'Título original',
+            $body,
+            'https://github.com/e-cidade/site/issues/321',
+            '2026-10-07T10:00:00Z',
+        );
+        $revised = $synchronizer->synchronize(
+            321,
+            'Título revisado',
+            $body,
+            'https://github.com/e-cidade/site/issues/321',
+            '2026-10-08T10:00:00Z',
+            true,
+        );
+        $sameContent = $synchronizer->synchronize(
+            321,
+            'Título revisado',
+            $body,
+            'https://github.com/e-cidade/site/issues/321',
+            '2026-10-09T10:00:00Z',
+            true,
+        );
+
+        self::assertTrue($revised['changed']);
+        self::assertFalse($sameContent['changed']);
+        $content = (string) file_get_contents($revised['path']);
+        self::assertStringContainsString('updated_at: "2026-10-08T10:00:00Z"', $content);
+        self::assertStringNotContainsString('updated_at: "2026-10-09T10:00:00Z"', $content);
+    }
+
     /** @return array{changed:bool,created:bool,path:string,slug:string} */
     private function synchronize(string $title): array
     {
