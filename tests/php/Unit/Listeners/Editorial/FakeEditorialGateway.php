@@ -40,9 +40,13 @@ final class FakeEditorialGateway implements EditorialGateway
     public bool $prepared = false;
     public bool $createdPullRequest = false;
 
+    /** @var array<int,array<string,mixed>> */
+    public array $issuePayloads = [];
+
     public function issuePayload(int $issueNumber): array
     {
-        return ['action' => 'dispatch', 'issue' => ['number' => $issueNumber]];
+        return $this->issuePayloads[$issueNumber]
+            ?? ['action' => 'dispatch', 'issue' => ['number' => $issueNumber]];
     }
 
     public function ensureLabels(array $definitions): void {}
