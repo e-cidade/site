@@ -97,8 +97,9 @@ jobs:
           branch="content/news-${ISSUE_NUMBER}"
           pr_number="$(gh pr list --head "$branch" --state open --json number --jq '.[0].number // empty')"
           if [ -n "$pr_number" ]; then
-            git fetch origin "$branch"
+            git fetch origin main "$branch"
             git checkout -B "$branch" "origin/$branch"
+            git rebase origin/main
           else
             git fetch origin main
             git checkout -B "$branch" origin/main
