@@ -62,7 +62,14 @@ final class NewsIssueSynchronizer
         $rendered = $this->writer->render($entry);
         $existing = is_file($targetPath) ? (string) file_get_contents($targetPath) : null;
 
-        if ($existing === $rendered) {
+        if (
+            $existing === $rendered
+            || (
+                $publishedRevision
+                && $existing !== null
+                && $this->withoutRevisionTimestamp($existing) === $this->withoutRevisionTimestamp($rendered)
+            )
+        ) {
             return [
                 'changed' => false,
                 'created' => false,
@@ -85,6 +92,23 @@ final class NewsIssueSynchronizer
             'path' => $targetPath,
             'slug' => $entry->slug,
         ];
+    }
+
+    private function withoutRevisionTimestamp(string $content): string
+    {
+        if (! str_starts_with($content, "---\\n")) {
+            return $content;
+        }
+
+        $frontMatterEnd = strpos($content, "\\n---\\n", 4);
+        if ($frontMatterEnd === false) {
+            return $content;
+        }
+
+        $frontMatter = substr($content, 0, $frontMatterEnd + 1);
+        $body = substr($content, $frontMatterEnd + 1);
+
+        return (preg_replace('/^updated_at:[^\\r\\n]*\\r?\\n/m', '', $frontMatter) ?? $frontMatter) . $body;
     }
 
     private function publishedDate(string $path): string
