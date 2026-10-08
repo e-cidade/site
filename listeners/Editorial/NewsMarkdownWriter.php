@@ -41,6 +41,18 @@ final class NewsMarkdownWriter
             $frontMatter[] = 'source_label: ' . $this->yamlString((string) $entry->sourceLabel);
         }
 
+        if ($entry->mediaCopyright !== null) {
+            $frontMatter[] = 'media_copyright: ' . $this->yamlString($entry->mediaCopyright);
+        }
+
+        if ($entry->mediaLicense !== null) {
+            $frontMatter[] = 'media_license: ' . $this->yamlString($entry->mediaLicense);
+        }
+
+        if ($entry->mediaCredit !== null) {
+            $frontMatter[] = 'media_credit: ' . $this->yamlString($entry->mediaCredit);
+        }
+
         $frontMatter[] = 'content_source: ' . $this->yamlString($entry->source);
         $frontMatter[] = 'external_id: ' . $this->yamlString($entry->externalId);
 
@@ -49,7 +61,8 @@ final class NewsMarkdownWriter
         }
 
         if ($entry->updatedAt !== null) {
-            $frontMatter[] = 'source_updated_at: ' . $this->yamlString($entry->updatedAt);
+            $frontMatter[] = ($entry->source === 'github' ? 'updated_at: ' : 'source_updated_at: ')
+                . $this->yamlString($entry->updatedAt);
         }
 
         if ($entry->editorUrl !== null) {

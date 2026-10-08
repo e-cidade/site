@@ -24,6 +24,7 @@ final class NewsIssueSynchronizer
         string $title,
         string $body,
         string $issueUrl,
+        ?string $updatedAt = null,
     ): array {
         $this->ensureDirectory($this->postsDirectory);
 
@@ -38,6 +39,7 @@ final class NewsIssueSynchronizer
             $body,
             $issueUrl,
             $existingSlug,
+            $existingPath !== null ? $updatedAt : null,
         );
 
         if ($this->mediaLocalizer !== null) {

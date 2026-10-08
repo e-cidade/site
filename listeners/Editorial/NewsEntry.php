@@ -31,6 +31,9 @@ final readonly class NewsEntry
         public ?string $sourceUrl = null,
         public ?string $sourceLabel = null,
         public ?string $editorUrl = null,
+        public ?string $mediaCopyright = null,
+        public ?string $mediaLicense = null,
+        public ?string $mediaCredit = null,
     ) {}
 
     public function withLocalizedMedia(string $body, ?string $cover): self
@@ -54,6 +57,9 @@ final readonly class NewsEntry
             sourceUrl: $this->sourceUrl,
             sourceLabel: $this->sourceLabel,
             editorUrl: $this->editorUrl,
+            mediaCopyright: $this->mediaCopyright,
+            mediaLicense: $this->mediaLicense,
+            mediaCredit: $this->mediaCredit,
         );
     }
 }

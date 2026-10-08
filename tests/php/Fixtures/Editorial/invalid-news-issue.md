@@ -7,7 +7,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
 Resumo de teste.
 
-### Data da publicação
+### Data da notícia
 
 07/10/2026
 
@@ -26,6 +26,22 @@ https://github.com/user-attachments/assets/example-image
 ### Texto alternativo da imagem
 
 _No response_
+
+### Detentor dos direitos das imagens
+
+Prefeitura de Exemplo
+
+### Licença/permissão das imagens
+
+CC-BY-4.0
+
+### Crédito das imagens
+
+_No response_
+
+### Autorização para publicar as imagens
+
+- [x] Confirmo que tenho autorização para enviar e permitir a publicação das imagens informadas nesta notícia.
 
 ### Fonte original
 

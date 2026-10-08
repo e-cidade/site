@@ -1,0 +1,79 @@
+# SPDX-FileCopyrightText: 2026 e-Cidade community
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+name: News editorial review state
+
+on:
+  pull_request:
+    branches: [main]
+    types: [ready_for_review, converted_to_draft, synchronize]
+  pull_request_review:
+    types: [submitted, dismissed]
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+jobs:
+  state:
+    if: startsWith(github.event.pull_request.head.ref, 'content/news-')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Resolve editorial state
+        id: editorial
+        env:
+          ACTION: ${{ github.event.action }}
+          REVIEW_STATE: ${{ github.event.review.state }}
+          DRAFT: ${{ github.event.pull_request.draft }}
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          set -eu
+          issue_number="${HEAD_REF#content/news-}"
+          state=review
+          status="Em revisão"
+
+          if [ "$ACTION" = "converted_to_draft" ] || [ "$DRAFT" = "true" ]; then
+            state=draft
+            status="Rascunho editorial"
+          elif [ "$ACTION" = "submitted" ] && [ "$REVIEW_STATE" = "approved" ]; then
+            state=ready
+            status="Aprovada para publicação"
+          elif [ "$ACTION" = "dismissed" ]; then
+            state=review
+            status="Em revisão"
+          fi
+
+          echo "issue=$issue_number" >> "$GITHUB_OUTPUT"
+          echo "state=$state" >> "$GITHUB_OUTPUT"
+          echo "status=$status" >> "$GITHUB_OUTPUT"
+          echo "pr_url=https://github.com/$GITHUB_REPOSITORY/pull/$PR_NUMBER" >> "$GITHUB_OUTPUT"
+          echo "preview=https://site-ecidade.librecode.coop/pr-preview/pr-$PR_NUMBER/" >> "$GITHUB_OUTPUT"
+
+      - name: Request editorial reviewer
+        if: github.event.action == 'ready_for_review'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: gh pr edit "$PR_NUMBER" --add-reviewer vitormattos
+
+      - uses: ./.github/actions/news-state
+        env:
+          GH_TOKEN: ${{ github.token }}
+        with:
+          issue-number: ${{ steps.editorial.outputs.issue }}
+          state: ${{ steps.editorial.outputs.state }}
+
+      - uses: ./.github/actions/news-status
+        env:
+          GH_TOKEN: ${{ github.token }}
+        with:
+          issue-number: ${{ steps.editorial.outputs.issue }}
+          status: ${{ steps.editorial.outputs.status }}
+          pr-url: ${{ steps.editorial.outputs.pr_url }}
+          preview-url: ${{ steps.editorial.outputs.preview }}

@@ -30,6 +30,9 @@ final class NewsIssueContractTest extends TestCase
         self::assertSame('Equipe municipal durante a capacitação.', $result['cover_alt']);
         self::assertSame('Prefeitura de Exemplo', $result['source_label']);
         self::assertSame('https://exemplo.gov.br/noticia', $result['source_url']);
+        self::assertSame('Prefeitura de Exemplo', $result['media_copyright']);
+        self::assertSame('CC-BY-4.0', $result['media_license']);
+        self::assertSame('Foto: Prefeitura de Exemplo', $result['media_credit']);
     }
 
     public function testReadsPreferredSlugFromLegacyImportMarker(): void
@@ -44,7 +47,7 @@ final class NewsIssueContractTest extends TestCase
     public function testRejectsInvalidIssueFormData(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('A data da publicação deve usar o formato AAAA-MM-DD.');
+        $this->expectExceptionMessage('A data da notícia deve usar o formato AAAA-MM-DD.');
 
         (new NewsIssueContract())->parse(124, 'Notícia inválida', $this->fixture('invalid-news-issue.md'));
     }
@@ -52,7 +55,7 @@ final class NewsIssueContractTest extends TestCase
     public function testReportsMissingRequiredSectionWithFieldName(): void
     {
         $body = preg_replace(
-            '/### Resumo\\R.*?(?=### Data da publicação)/s',
+            '/### Resumo\\R.*?(?=### Data da notícia)/s',
             '',
             $this->fixture('valid-news-issue.md'),
         );
@@ -67,8 +70,8 @@ final class NewsIssueContractTest extends TestCase
     public function testRequiresAlternativeTextWhenCoverIsPresent(): void
     {
         $body = str_replace(
-            "### Data da publicação\n\n07/10/2026",
-            "### Data da publicação\n\n2026-10-07",
+            "### Data da notícia\n\n07/10/2026",
+            "### Data da notícia\n\n2026-10-07",
             $this->fixture('invalid-news-issue.md'),
         );
 

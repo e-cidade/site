@@ -37,11 +37,3 @@ precedence = "aggregate"
 SPDX-FileCopyrightText = "respective provider organizations"
 SPDX-License-Identifier = "LicenseRef-Provider-Logos"
 
-
-[[annotations]]
-path = [
-    "source/assets/images/news/**"
-]
-precedence = "aggregate"
-SPDX-FileCopyrightText = "respective news media contributors"
-SPDX-License-Identifier = "AGPL-3.0-or-later"

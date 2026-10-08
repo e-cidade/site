@@ -3,6 +3,9 @@
 
 name: Publicar notícia
 description: Envie uma notícia para revisão e publicação no site do e-Cidade.
+labels:
+  - editorial/news
+  - editorial/draft
 body:
   - type: markdown
     attributes:
@@ -22,8 +25,8 @@ body:
   - type: input
     id: published_at
     attributes:
-      label: Data da publicação
-      description: Use o formato AAAA-MM-DD.
+      label: Data da notícia
+      description: Data editorial da notícia. Use o formato AAAA-MM-DD. A publicação efetiva acontece após aprovação, merge e deploy.
       placeholder: "2026-10-07"
     validations:
       required: true
@@ -54,7 +57,7 @@ body:
       description: Opcional. Envie a imagem principal da notícia.
     validations:
       required: false
-      accept: ".png,.jpg,.jpeg,.gif,.svg,.webp"
+      accept: ".png,.jpg,.jpeg,.gif,.webp"
 
   - type: input
     id: cover_alt
@@ -62,6 +65,40 @@ body:
       label: Texto alternativo da imagem
       description: Se enviar uma imagem, descreva objetivamente o que ela mostra.
       placeholder: Participantes durante a capacitação do e-Cidade
+
+  - type: input
+    id: media_rights_holder
+    attributes:
+      label: Detentor dos direitos das imagens
+      description: Obrigatório quando houver qualquer imagem na notícia. Informe a pessoa ou organização que detém os direitos.
+      placeholder: Prefeitura de Exemplo
+
+  - type: dropdown
+    id: media_license
+    attributes:
+      label: Licença/permissão das imagens
+      description: Obrigatório quando houver imagens. Escolha a licença aplicável ou a opção de permissão específica.
+      options:
+        - CC-BY-4.0
+        - CC-BY-SA-4.0
+        - CC0-1.0
+        - LicenseRef-eCidade-Editorial-Permission
+
+  - type: input
+    id: media_credit
+    attributes:
+      label: Crédito das imagens
+      description: Opcional. Texto de crédito que deve aparecer na publicação.
+      placeholder: Foto: Prefeitura de Exemplo
+
+  - type: checkboxes
+    id: media_authorization
+    attributes:
+      label: Autorização para publicar as imagens
+      description: Marque quando a notícia contiver qualquer imagem, inclusive imagens inseridas no corpo.
+      options:
+        - label: Confirmo que tenho autorização para enviar e permitir a publicação das imagens informadas nesta notícia.
+          required: false
 
   - type: input
     id: source_label

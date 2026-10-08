@@ -5,7 +5,7 @@ name: Sync news issue
 
 on:
   issues:
-    types: [opened, edited, reopened]
+    types: [opened, edited, reopened, closed]
   workflow_dispatch:
     inputs:
       issue_number:
@@ -31,7 +31,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
 
@@ -48,12 +48,15 @@ jobs:
             event_path="$RUNNER_TEMP/news-issue-event.json"
             gh api "repos/$GITHUB_REPOSITORY/issues/$issue_number" > "$RUNNER_TEMP/news-issue.json"
             jq -n --slurpfile issue "$RUNNER_TEMP/news-issue.json" '{issue: $issue[0]}' > "$event_path"
+            action="dispatch"
           else
             issue_number="${{ github.event.issue.number }}"
             event_path="$GITHUB_EVENT_PATH"
+            action="${{ github.event.action }}"
           fi
           echo "number=$issue_number" >> "$GITHUB_OUTPUT"
           echo "event_path=$event_path" >> "$GITHUB_OUTPUT"
+          echo "action=$action" >> "$GITHUB_OUTPUT"
 
       - name: Detect editorial issue
         id: editorial
@@ -68,10 +71,12 @@ jobs:
 
           if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
             is_news=true
+          elif jq -e '.issue.labels[]? | select(.name == "editorial/news")' "$EVENT_PATH" >/dev/null; then
+            is_news=true
           else
             body="$(jq -r '.issue.body // ""' "$EVENT_PATH")"
             if printf '%s' "$body" | grep -Fq '### Resumo' &&
-               printf '%s' "$body" | grep -Fq '### Data da publicação' &&
+               { printf '%s' "$body" | grep -Fq '### Data da notícia' || printf '%s' "$body" | grep -Fq '### Data da publicação'; } &&
                printf '%s' "$body" | grep -Fq '### Texto da notícia'; then
               is_news=true
             else
@@ -86,8 +91,61 @@ jobs:
 
           echo "is_news=$is_news" >> "$GITHUB_OUTPUT"
 
+      - name: Resolve closed editorial cycle
+        if: steps.editorial.outputs.is_news == 'true' && steps.issue.outputs.action == 'closed'
+        id: closed
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE_NUMBER: ${{ steps.issue.outputs.number }}
+        run: |
+          set -eu
+          branch="content/news-${ISSUE_NUMBER}"
+          if grep -R -Eq "^github_issue:[[:space:]]*${ISSUE_NUMBER}[[:space:]]*$" source/_posts; then
+            echo "published=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          pr_number="$(gh pr list --head "$branch" --state open --json number --jq '.[0].number // empty')"
+          if [ -n "$pr_number" ]; then
+            gh pr close "$pr_number" --comment "Ciclo editorial encerrado porque a Issue de origem foi fechada antes da publicação."
+          fi
+
+          if git ls-remote --exit-code --heads origin "$branch" >/dev/null 2>&1; then
+            git push origin --delete "$branch"
+          fi
+
+          echo "published=false" >> "$GITHUB_OUTPUT"
+
+      - name: Mark discarded news
+        if: steps.editorial.outputs.is_news == 'true' && steps.issue.outputs.action == 'closed' && steps.closed.outputs.published != 'true'
+        uses: ./.github/actions/news-state
+        env:
+          GH_TOKEN: ${{ github.token }}
+        with:
+          issue-number: ${{ steps.issue.outputs.number }}
+          state: discarded
+
+      - name: Report discarded news
+        if: steps.editorial.outputs.is_news == 'true' && steps.issue.outputs.action == 'closed' && steps.closed.outputs.published != 'true'
+        uses: ./.github/actions/news-status
+        env:
+          GH_TOKEN: ${{ github.token }}
+        with:
+          issue-number: ${{ steps.issue.outputs.number }}
+          status: Descartada
+          detail: A proposta foi encerrada antes da publicação. O Pull Request e a branch editorial pendentes foram encerrados quando existiam.
+
+      - name: Keep published state on close
+        if: steps.editorial.outputs.is_news == 'true' && steps.issue.outputs.action == 'closed' && steps.closed.outputs.published == 'true'
+        uses: ./.github/actions/news-state
+        env:
+          GH_TOKEN: ${{ github.token }}
+        with:
+          issue-number: ${{ steps.issue.outputs.number }}
+          state: published
+
       - name: Resolve editorial branch
-        if: steps.editorial.outputs.is_news == 'true'
+        if: steps.editorial.outputs.is_news == 'true' && steps.issue.outputs.action != 'closed'
         id: branch
         env:
           GH_TOKEN: ${{ github.token }}
@@ -107,14 +165,40 @@ jobs:
             git checkout -B "$branch" origin/main
           fi
           echo "name=$branch" >> "$GITHUB_OUTPUT"
-          echo "pr_number=$pr_number" >> "$GITHUB_OUTPUT"
 
       - name: Sync issue into Markdown
-        if: steps.editorial.outputs.is_news == 'true'
+        if: steps.editorial.outputs.is_news == 'true' && steps.issue.outputs.action != 'closed'
         id: sync
         env:
           NEWS_ISSUE: "true"
         run: php scripts/sync-news-issue.php "${{ steps.issue.outputs.event_path }}" >> "$GITHUB_OUTPUT"
+
+      - name: Mark invalid news
+        if: steps.sync.outputs.is_news == 'true' && steps.sync.outputs.valid != 'true'
+        uses: ./.github/actions/news-state
+        env:
+          GH_TOKEN: ${{ github.token }}
+        with:
+          issue-number: ${{ steps.issue.outputs.number }}
+          state: invalid
+
+      - name: Report invalid news issue
+        if: steps.sync.outputs.is_news == 'true' && steps.sync.outputs.valid != 'true'
+        uses: ./.github/actions/news-status
+        env:
+          GH_TOKEN: ${{ github.token }}
+        with:
+          issue-number: ${{ steps.issue.outputs.number }}
+          status: Ação necessária
+          detail: ${{ steps.sync.outputs.validation_error }}
+
+      - name: Fail invalid news issue
+        if: steps.sync.outputs.is_news == 'true' && steps.sync.outputs.valid != 'true'
+        env:
+          VALIDATION_ERROR: ${{ steps.sync.outputs.validation_error }}
+        run: |
+          echo "::error::$VALIDATION_ERROR"
+          exit 1
 
       - name: Commit generated content
         if: steps.sync.outputs.is_news == 'true' && steps.sync.outputs.valid == 'true' && steps.sync.outputs.changed == 'true'
@@ -129,46 +213,50 @@ jobs:
           git commit --signoff -m "content: sync news issue #${ISSUE_NUMBER}"
           git push --force-with-lease -u origin "$BRANCH"
 
-      - name: Create draft pull request
-        if: steps.sync.outputs.is_news == 'true' && steps.sync.outputs.valid == 'true' && steps.branch.outputs.pr_number == '' && steps.sync.outputs.changed == 'true'
+      - name: Ensure draft pull request
+        if: steps.sync.outputs.is_news == 'true' && steps.sync.outputs.valid == 'true'
+        id: pr
         env:
           GH_TOKEN: ${{ github.token }}
           BRANCH: ${{ steps.branch.outputs.name }}
           ISSUE_NUMBER: ${{ steps.issue.outputs.number }}
+          CHANGED: ${{ steps.sync.outputs.changed }}
         run: |
           set -eu
-          pr_url="$(gh pr create \
-            --draft \
-            --base main \
-            --head "$BRANCH" \
-            --title "content: publish news from issue #${ISSUE_NUMBER}" \
-            --body "Generated automatically from #${ISSUE_NUMBER}. The Issue is the editorial source; this PR is the reviewable publication snapshot.")"
-          gh issue comment "$ISSUE_NUMBER" \
-            --body "Prévia editorial criada em $pr_url. Alterações nesta notícia atualizarão automaticamente o mesmo Pull Request enquanto ele estiver aberto."
-
-      - name: Report invalid news issue
-        if: steps.sync.outputs.is_news == 'true' && steps.sync.outputs.valid != 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-          ISSUE_NUMBER: ${{ steps.issue.outputs.number }}
-          VALIDATION_ERROR: ${{ steps.sync.outputs.validation_error }}
-        run: |
-          set -eu
-          hash="$(printf '%s' "$VALIDATION_ERROR" | sha256sum | cut -d' ' -f1)"
-          marker="<!-- e-cidade-news-validation-error:$hash -->"
-
-          if ! gh api "repos/$GITHUB_REPOSITORY/issues/$ISSUE_NUMBER/comments" --paginate --jq '.[].body' | grep -Fq "$marker"; then
-            gh issue comment "$ISSUE_NUMBER" --body "$marker
-          Não foi possível atualizar a prévia desta notícia porque a Issue está inválida.
-
-          **Erro:** $VALIDATION_ERROR
-
-          Corrija os campos da Issue mantendo os títulos das seções gerados pelo formulário. Assim que a Issue for salva novamente, a prévia será atualizada automaticamente."
+          pr_number="$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number // empty')"
+          if [ -z "$pr_number" ] && [ "$CHANGED" = "true" ]; then
+            pr_url="$(gh pr create               --draft               --base main               --head "$BRANCH"               --title "content: publish news from issue #${ISSUE_NUMBER}"               --body "Generated automatically from #${ISSUE_NUMBER}. The Issue is the editorial source; this PR is the reviewable publication snapshot.")"
+            pr_number="${pr_url##*/}"
           fi
 
-          echo "::error::$VALIDATION_ERROR"
-          exit 1
+          if [ -n "$pr_number" ]; then
+            pr_url="https://github.com/${GITHUB_REPOSITORY}/pull/${pr_number}"
+            echo "number=$pr_number" >> "$GITHUB_OUTPUT"
+            echo "url=$pr_url" >> "$GITHUB_OUTPUT"
+            echo "preview=https://site-ecidade.librecode.coop/pr-preview/pr-${pr_number}/" >> "$GITHUB_OUTPUT"
+          fi
 
-      - name: Report unchanged content
-        if: steps.sync.outputs.is_news == 'true' && steps.sync.outputs.valid == 'true' && steps.sync.outputs.changed != 'true'
-        run: echo "Issue content already matches the generated publication snapshot."
+      - name: Mark draft news
+        if: steps.sync.outputs.valid == 'true' && steps.pr.outputs.number != ''
+        uses: ./.github/actions/news-state
+        env:
+          GH_TOKEN: ${{ github.token }}
+        with:
+          issue-number: ${{ steps.issue.outputs.number }}
+          state: draft
+
+      - name: Report synchronized news
+        if: steps.sync.outputs.valid == 'true' && steps.pr.outputs.number != ''
+        uses: ./.github/actions/news-status
+        env:
+          GH_TOKEN: ${{ github.token }}
+        with:
+          issue-number: ${{ steps.issue.outputs.number }}
+          status: Rascunho editorial
+          detail: A notícia está sincronizada. Alterações nesta Issue atualizarão o mesmo Pull Request enquanto ele permanecer aberto.
+          pr-url: ${{ steps.pr.outputs.url }}
+          preview-url: ${{ steps.pr.outputs.preview }}
+
+      - name: Report unchanged published content
+        if: steps.sync.outputs.valid == 'true' && steps.pr.outputs.number == '' && steps.sync.outputs.changed != 'true'
+        run: echo "Issue content already matches the published snapshot."

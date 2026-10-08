@@ -21,6 +21,7 @@ final class GitHubIssueNewsSource
         string $body,
         string $issueUrl,
         ?string $existingSlug = null,
+        ?string $updatedAt = null,
     ): NewsEntry {
         $data = $this->contract->parse($issueNumber, $title, $body);
         $slug = $existingSlug !== null && trim($existingSlug) !== ''
@@ -35,7 +36,7 @@ final class GitHubIssueNewsSource
             slug: $slug,
             description: $data['summary'],
             publishedAt: $data['published_at'],
-            updatedAt: null,
+            updatedAt: $updatedAt,
             author: $data['author'],
             category: 'Notícias',
             body: $data['content'],
@@ -44,6 +45,9 @@ final class GitHubIssueNewsSource
             sourceUrl: $data['source_url'],
             sourceLabel: $data['source_label'],
             editorUrl: $issueUrl,
+            mediaCopyright: $data['media_copyright'],
+            mediaLicense: $data['media_license'],
+            mediaCredit: $data['media_credit'],
         );
 
         $this->validator->validate($entry);

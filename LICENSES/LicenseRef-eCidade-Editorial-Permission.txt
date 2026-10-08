@@ -1,0 +1,15 @@
+Editorial media permission
+
+Files carrying this LicenseRef are included in the e-Cidade site under a
+specific permission recorded in the GitHub Issue that is the editorial source
+for the corresponding news article.
+
+The permission allows the e-Cidade project to store, reproduce and publicly
+display the media as part of that article and its historical versions. It does
+not imply that the media is licensed under the software license of this
+repository and does not grant downstream recipients additional rights beyond
+those provided by the rights holder, applicable law or the permission recorded
+in the originating Issue.
+
+The relevant rights holder is recorded in the file's REUSE sidecar metadata and
+the originating GitHub Issue remains the audit record for the permission.

@@ -17,6 +17,10 @@
             <time datetime="{{ $page->getDate()->format('Y-m-d') }}">{{ $page->getDate()->format('d/m/Y') }}</time>
             <span aria-hidden="true">•</span>
             <span>{{ $page->author }}</span>
+            @if ($page->updated_at)
+                <span aria-hidden="true">•</span>
+                <span>Atualizada em {{ (new DateTimeImmutable((string) $page->updated_at))->format('d/m/Y') }}</span>
+            @endif
         </p>
         @if ($page->cover_image)
             @php
@@ -36,6 +40,10 @@
     <div class="prose">
         @yield('content')
     </div>
+
+    @if ($page->media_credit)
+        <p class="source-note">Crédito das imagens: {{ $page->media_credit }}</p>
+    @endif
 
     @if ($page->source_url)
         <p class="source-note">Fonte original: <a href="{{ $page->source_url }}">{{ $page->source_label ?? $page->source_url }}</a></p>
