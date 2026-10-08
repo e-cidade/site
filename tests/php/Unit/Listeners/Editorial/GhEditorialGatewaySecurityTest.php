@@ -41,6 +41,48 @@ final class GhEditorialGatewaySecurityTest extends TestCase
         );
     }
 
+    public function testUsesConfiguredAutomationIdentityForEditorialCommit(): void
+    {
+        $runner = new RecordingProcessRunner();
+        $runner->queue(
+            new ProcessResult(0, '', ''),
+            new ProcessResult(0, '', ''),
+            new ProcessResult(0, '', ''),
+            new ProcessResult(0, '', ''),
+            new ProcessResult(0, '', ''),
+        );
+
+        $gateway = new GhEditorialGateway(
+            'e-cidade/site',
+            '/repo',
+            $runner,
+            '/tmp/workspaces',
+            'e-cidade-editorial[bot]',
+            '123+e-cidade-editorial[bot]@users.noreply.github.com',
+        );
+
+        $workspace = new \App\Listeners\Editorial\EditorialWorkspace(
+            'content/news-321',
+            '/tmp/workspaces/news-321',
+            null,
+            false,
+        );
+
+        $gateway->commitAndPushEditorialChanges($workspace, 321);
+
+        self::assertSame(
+            ['git', '-C', '/tmp/workspaces/news-321', 'config', 'user.name', 'e-cidade-editorial[bot]'],
+            $runner->calls[0]['command'],
+        );
+        self::assertSame(
+            [
+                'git', '-C', '/tmp/workspaces/news-321', 'config', 'user.email',
+                '123+e-cidade-editorial[bot]@users.noreply.github.com',
+            ],
+            $runner->calls[1]['command'],
+        );
+    }
+
     public function testEditorialBranchNameIsDerivedFromIssueNumberOutsideGateway(): void
     {
         $runner = new RecordingProcessRunner();
