@@ -11,6 +11,7 @@ final class FilesystemEditorialContentSynchronizer implements EditorialContentSy
 {
     public function __construct(
         private readonly NewsMediaFetcher $mediaFetcher = new NativeNewsMediaFetcher(),
+        private readonly ?string $publishedPostsDirectory = null,
     ) {}
 
     public function synchronize(
@@ -36,6 +37,8 @@ final class FilesystemEditorialContentSynchronizer implements EditorialContentSy
             $body,
             $issueUrl,
             $updatedAt,
+            $this->publishedPostsDirectory !== null
+                && (new PublishedNewsLocator($this->publishedPostsDirectory))->existsForIssue($issueNumber),
         );
     }
 }
