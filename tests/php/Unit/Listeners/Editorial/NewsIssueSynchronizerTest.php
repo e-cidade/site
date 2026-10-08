@@ -67,6 +67,32 @@ final class NewsIssueSynchronizerTest extends TestCase
         self::assertStringContainsString('title: "Título alterado após revisão"', $content);
     }
 
+    public function testEditingAnUnpublishedDraftDoesNotInventPublicationUpdateDate(): void
+    {
+        $body = (string) file_get_contents(__DIR__ . '/../../../Fixtures/Editorial/valid-news-issue.md');
+        $synchronizer = new NewsIssueSynchronizer($this->postsDirectory);
+
+        $synchronizer->synchronize(
+            321,
+            'Título inicial',
+            $body,
+            'https://github.com/e-cidade/site/issues/321',
+            '2026-10-07T12:00:00Z',
+        );
+
+        $second = $synchronizer->synchronize(
+            321,
+            'Título corrigido antes da publicação',
+            $body,
+            'https://github.com/e-cidade/site/issues/321',
+            '2026-10-08T15:30:00Z',
+        );
+
+        $content = (string) file_get_contents($second['path']);
+        self::assertStringNotContainsString('updated_at:', $content);
+        self::assertStringContainsString('date: 2026-10-07', $content);
+    }
+
     public function testRevisionPreservesSlugAndOriginalDateWhileRecordingUpdatedAt(): void
     {
         $body = (string) file_get_contents(__DIR__ . '/../../../Fixtures/Editorial/valid-news-issue.md');
@@ -85,6 +111,7 @@ final class NewsIssueSynchronizerTest extends TestCase
             $body,
             'https://github.com/e-cidade/site/issues/321',
             '2026-10-08T15:30:00Z',
+            true,
         );
 
         self::assertSame($first['slug'], $second['slug']);

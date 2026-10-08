@@ -23,7 +23,9 @@ $gateway = new GhEditorialGateway($repository, $root);
 $lifecycle = new EditorialLifecycle($gateway);
 $service = new EditorialSyncService(
     $gateway,
-    new FilesystemEditorialContentSynchronizer(),
+    new FilesystemEditorialContentSynchronizer(
+        publishedPostsDirectory: $root . '/source/_posts',
+    ),
     $lifecycle,
 );
 $handler = new EditorialIssueEventHandler(
