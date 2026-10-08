@@ -102,7 +102,6 @@ final class EditorialSyncServiceTest extends TestCase
         self::assertStringContainsString('AAAA-MM-DD', $gateway->statuses[0]['body']);
     }
 
-
     public function testEditingDraftReusesTheSamePullRequestAndSkipsIdenticalSnapshots(): void
     {
         $gateway = new FakeEditorialGateway();
