@@ -14,14 +14,22 @@ final class NewsMediaAudit
 {
     /**
      * @return array{
-     *   media:list<array{path:string,public_path:string,category:string,referenced:bool,has_sidecar:bool}>,
+     *   media:list<array{
+     *     path:string,
+     *     public_path:string,
+     *     category:string,
+     *     referenced:bool,
+     *     references:list<array{post:string,source_url:?string}>,
+     *     has_sidecar:bool,
+     *     status:string
+     *   }>,
      *   orphaned:list<string>,
      *   missing_sidecar:list<string>
      * }
      */
     public function audit(string $root): array
     {
-        $posts = $this->postContents($root . '/source/_posts');
+        $posts = $this->posts($root . '/source/_posts');
         $media = [];
 
         foreach ([
@@ -31,7 +39,8 @@ final class NewsMediaAudit
             foreach ($this->mediaFiles($directory) as $path) {
                 $relative = substr($path, strlen($root . '/source'));
                 $publicPath = str_replace('\\', '/', $relative);
-                $referenced = $this->isReferenced($publicPath, $posts);
+                $references = $this->references($publicPath, $posts);
+                $referenced = $references !== [];
                 $hasSidecar = is_file($path . '.license');
 
                 $media[] = [
@@ -39,7 +48,9 @@ final class NewsMediaAudit
                     'public_path' => $publicPath,
                     'category' => $category,
                     'referenced' => $referenced,
+                    'references' => $references,
                     'has_sidecar' => $hasSidecar,
+                    'status' => $this->status($category, $referenced, $hasSidecar),
                 ];
             }
         }
@@ -90,33 +101,82 @@ final class NewsMediaAudit
         return $files;
     }
 
-    /** @return list<string> */
-    private function postContents(string $directory): array
+    /**
+     * @return list<array{path:string,content:string,source_url:?string}>
+     */
+    private function posts(string $directory): array
     {
         if (! is_dir($directory)) {
             return [];
         }
 
-        $contents = [];
+        $posts = [];
         foreach (glob($directory . '/*.md') ?: [] as $path) {
             $content = file_get_contents($path);
-            if (is_string($content)) {
-                $contents[] = $content;
+            if (! is_string($content)) {
+                continue;
             }
+
+            $posts[] = [
+                'path' => basename($path),
+                'content' => $content,
+                'source_url' => $this->frontMatterValue($content, 'source_url'),
+            ];
         }
 
-        return $contents;
+        return $posts;
     }
 
-    /** @param list<string> $posts */
-    private function isReferenced(string $publicPath, array $posts): bool
+    /**
+     * @param list<array{path:string,content:string,source_url:?string}> $posts
+     * @return list<array{post:string,source_url:?string}>
+     */
+    private function references(string $publicPath, array $posts): array
     {
+        $references = [];
         foreach ($posts as $post) {
-            if (str_contains($post, $publicPath)) {
-                return true;
+            if (! str_contains($post['content'], $publicPath)) {
+                continue;
             }
+
+            $references[] = [
+                'post' => $post['path'],
+                'source_url' => $post['source_url'],
+            ];
         }
 
-        return false;
+        return $references;
+    }
+
+    private function frontMatterValue(string $content, string $key): ?string
+    {
+        if (preg_match(
+            '/^' . preg_quote($key, '/') . ':\s*(.+)$/m',
+            $content,
+            $match,
+        ) !== 1) {
+            return null;
+        }
+
+        $value = trim($match[1], " \t\n\r\0\x0B\"'");
+
+        return $value === '' ? null : $value;
+    }
+
+    private function status(string $category, bool $referenced, bool $hasSidecar): string
+    {
+        if (! $referenced) {
+            return 'orphan-candidate';
+        }
+
+        if ($category === 'migrated') {
+            return 'historical-pending';
+        }
+
+        if (! $hasSidecar) {
+            return 'missing-reuse-sidecar';
+        }
+
+        return 'managed';
     }
 }
