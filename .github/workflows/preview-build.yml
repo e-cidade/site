@@ -10,6 +10,7 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  issues: write
 
 concurrency:
   group: pr-preview-${{ github.event.pull_request.number }}
@@ -84,3 +85,10 @@ jobs:
           preview-branch: gh-pages
           pages-base-url: site-ecidade.librecode.coop
           wait-for-pages-deployment: false
+
+      - name: Report editorial preview
+        if: github.event.action != 'closed' && startsWith(github.event.pull_request.head.ref, 'content/news-')
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EDITORIAL_PREVIEW_BASE_URL: https://site-ecidade.librecode.coop/pr-preview
+        run: php scripts/editorial/preview.php "$GITHUB_EVENT_PATH"

@@ -47,9 +47,13 @@ final class FakeEditorialGateway implements EditorialGateway
         $this->workspacePath = sys_get_temp_dir() . '/ecidade-fake-editorial-workspace-' . bin2hex(random_bytes(5));
     }
 
+    /** @var array<int,array<string,mixed>> */
+    public array $issuePayloads = [];
+
     public function issuePayload(int $issueNumber): array
     {
-        return ['action' => 'dispatch', 'issue' => ['number' => $issueNumber]];
+        return $this->issuePayloads[$issueNumber]
+            ?? ['action' => 'dispatch', 'issue' => ['number' => $issueNumber]];
     }
 
     public function ensureLabels(array $definitions): void {}
