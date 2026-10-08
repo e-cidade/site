@@ -5,6 +5,14 @@ name: Setup editorial repository metadata
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - .github/ISSUE_TEMPLATE/news.yml
+      - .github/workflows/editorial-setup.yml
+      - listeners/Editorial/EditorialLabels.php
+      - listeners/Editorial/EditorialState.php
+      - scripts/editorial/setup.php
 
 permissions:
   issues: write
