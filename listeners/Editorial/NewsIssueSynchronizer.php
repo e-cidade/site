@@ -34,6 +34,16 @@ final class NewsIssueSynchronizer
             ? pathinfo($existingPath, PATHINFO_FILENAME)
             : null;
 
+        if ($publishedRevision && $existingPath === null) {
+            throw new \InvalidArgumentException(
+                'A notícia publicada não foi localizada. A revisão foi interrompida para preservar a URL e a data original.',
+            );
+        }
+
+        $originalPublishedAt = $publishedRevision && $existingPath !== null
+            ? $this->publishedDate($existingPath)
+            : null;
+
         $entry = $this->source->fromIssue(
             $issueNumber,
             $title,
@@ -41,6 +51,7 @@ final class NewsIssueSynchronizer
             $issueUrl,
             $existingSlug,
             $publishedRevision && $existingPath !== null ? $updatedAt : null,
+            $originalPublishedAt,
         );
 
         if ($this->mediaLocalizer !== null) {
@@ -74,6 +85,18 @@ final class NewsIssueSynchronizer
             'path' => $targetPath,
             'slug' => $entry->slug,
         ];
+    }
+
+    private function publishedDate(string $path): string
+    {
+        $content = (string) file_get_contents($path);
+        if (preg_match('/^date:\\s*"?(\\d{4}-\\d{2}-\\d{2})"?\\s*$/m', $content, $matches) !== 1) {
+            throw new \InvalidArgumentException(
+                'A data original da notícia publicada não foi encontrada. A revisão foi interrompida.',
+            );
+        }
+
+        return $matches[1];
     }
 
     private function findManagedPostPath(int $issueNumber): ?string
