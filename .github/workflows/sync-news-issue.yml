@@ -26,12 +26,7 @@ jobs:
   sync:
     if: >-
       github.event_name == 'workflow_dispatch' ||
-      (
-        github.event.issue.pull_request == null &&
-        contains(github.event.issue.body || '', '### Resumo') &&
-        contains(github.event.issue.body || '', '### Data da publicação') &&
-        contains(github.event.issue.body || '', '### Texto da notícia')
-      )
+      github.event.issue.pull_request == null
     runs-on: ubuntu-latest
 
     steps:
@@ -39,14 +34,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
-        with:
-          coverage: none
-
-      - name: Install Composer dependencies
-        run: composer install --no-interaction --no-progress --prefer-dist
 
       - name: Resolve issue payload
         id: issue
@@ -68,7 +55,49 @@ jobs:
           echo "number=$issue_number" >> "$GITHUB_OUTPUT"
           echo "event_path=$event_path" >> "$GITHUB_OUTPUT"
 
+      - name: Detect editorial issue
+        id: editorial
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENT_NAME: ${{ github.event_name }}
+          ISSUE_NUMBER: ${{ steps.issue.outputs.number }}
+          EVENT_PATH: ${{ steps.issue.outputs.event_path }}
+        run: |
+          set -eu
+          is_news=false
+
+          if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
+            is_news=true
+          else
+            body="$(jq -r '.issue.body // ""' "$EVENT_PATH")"
+            if printf '%s' "$body" | grep -Fq '### Resumo' &&
+               printf '%s' "$body" | grep -Fq '### Data da publicação' &&
+               printf '%s' "$body" | grep -Fq '### Texto da notícia'; then
+              is_news=true
+            else
+              branch="content/news-${ISSUE_NUMBER}"
+              if git ls-remote --exit-code --heads origin "$branch" >/dev/null 2>&1; then
+                is_news=true
+              elif [ "$(gh pr list --head "$branch" --state all --json number --jq 'length')" -gt 0 ]; then
+                is_news=true
+              fi
+            fi
+          fi
+
+          echo "is_news=$is_news" >> "$GITHUB_OUTPUT"
+
+      - name: Setup PHP
+        if: steps.editorial.outputs.is_news == 'true'
+        uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
+        with:
+          coverage: none
+
+      - name: Install Composer dependencies
+        if: steps.editorial.outputs.is_news == 'true'
+        run: composer install --no-interaction --no-progress --prefer-dist
+
       - name: Resolve editorial branch
+        if: steps.editorial.outputs.is_news == 'true'
         id: branch
         env:
           GH_TOKEN: ${{ github.token }}
@@ -88,11 +117,14 @@ jobs:
           echo "pr_number=$pr_number" >> "$GITHUB_OUTPUT"
 
       - name: Sync issue into Markdown
+        if: steps.editorial.outputs.is_news == 'true'
         id: sync
+        env:
+          NEWS_ISSUE: "true"
         run: php scripts/sync-news-issue.php "${{ steps.issue.outputs.event_path }}" >> "$GITHUB_OUTPUT"
 
       - name: Commit generated content
-        if: steps.sync.outputs.is_news == 'true' && steps.sync.outputs.changed == 'true'
+        if: steps.sync.outputs.is_news == 'true' && steps.sync.outputs.valid == 'true' && steps.sync.outputs.changed == 'true'
         env:
           BRANCH: ${{ steps.branch.outputs.name }}
           ISSUE_NUMBER: ${{ steps.issue.outputs.number }}
@@ -105,7 +137,7 @@ jobs:
           git push --force-with-lease -u origin "$BRANCH"
 
       - name: Create draft pull request
-        if: steps.sync.outputs.is_news == 'true' && steps.branch.outputs.pr_number == '' && steps.sync.outputs.changed == 'true'
+        if: steps.sync.outputs.is_news == 'true' && steps.sync.outputs.valid == 'true' && steps.branch.outputs.pr_number == '' && steps.sync.outputs.changed == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           BRANCH: ${{ steps.branch.outputs.name }}
@@ -121,6 +153,29 @@ jobs:
           gh issue comment "$ISSUE_NUMBER" \
             --body "Prévia editorial criada em $pr_url. Alterações nesta notícia atualizarão automaticamente o mesmo Pull Request enquanto ele estiver aberto."
 
+      - name: Report invalid news issue
+        if: steps.sync.outputs.is_news == 'true' && steps.sync.outputs.valid != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE_NUMBER: ${{ steps.issue.outputs.number }}
+          VALIDATION_ERROR: ${{ steps.sync.outputs.validation_error }}
+        run: |
+          set -eu
+          hash="$(printf '%s' "$VALIDATION_ERROR" | sha256sum | cut -d' ' -f1)"
+          marker="<!-- e-cidade-news-validation-error:$hash -->"
+
+          if ! gh api "repos/$GITHUB_REPOSITORY/issues/$ISSUE_NUMBER/comments" --paginate --jq '.[].body' | grep -Fq "$marker"; then
+            gh issue comment "$ISSUE_NUMBER" --body "$marker
+          Não foi possível atualizar a prévia desta notícia porque a Issue está inválida.
+
+          **Erro:** $VALIDATION_ERROR
+
+          Corrija os campos da Issue mantendo os títulos das seções gerados pelo formulário. Assim que a Issue for salva novamente, a prévia será atualizada automaticamente."
+          fi
+
+          echo "::error::$VALIDATION_ERROR"
+          exit 1
+
       - name: Report unchanged content
-        if: steps.sync.outputs.is_news == 'true' && steps.sync.outputs.changed != 'true'
+        if: steps.sync.outputs.is_news == 'true' && steps.sync.outputs.valid == 'true' && steps.sync.outputs.changed != 'true'
         run: echo "Issue content already matches the generated publication snapshot."

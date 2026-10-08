@@ -44,9 +44,24 @@ final class NewsIssueContractTest extends TestCase
     public function testRejectsInvalidIssueFormData(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Publication date must use YYYY-MM-DD.');
+        $this->expectExceptionMessage('A data da publicação deve usar o formato AAAA-MM-DD.');
 
         (new NewsIssueContract())->parse(124, 'Notícia inválida', $this->fixture('invalid-news-issue.md'));
+    }
+
+    public function testReportsMissingRequiredSectionWithFieldName(): void
+    {
+        $body = preg_replace(
+            '/### Resumo\\R.*?(?=### Data da publicação)/s',
+            '',
+            $this->fixture('valid-news-issue.md'),
+        );
+        self::assertIsString($body);
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('O campo obrigatório "Resumo" está ausente.');
+
+        (new NewsIssueContract())->parse(127, 'Notícia sem resumo', $body);
     }
 
     public function testRequiresAlternativeTextWhenCoverIsPresent(): void
@@ -58,7 +73,7 @@ final class NewsIssueContractTest extends TestCase
         );
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Cover image requires alternative text.');
+        $this->expectExceptionMessage('A imagem de capa exige texto alternativo.');
 
         (new NewsIssueContract())->parse(125, 'Notícia sem texto alternativo', $body);
     }
