@@ -24,3 +24,5 @@ Na mesma reunião, foi anunciada a integração da plataforma de assinatura digi
 A integração foi viabilizada pelo trabalho conjunto da LibreCode e da Contass Consultoria, que atuaram no desenvolvimento colaborativo das duas soluções.
 
 A iniciativa mostrou como o e-Cidade pode ser conectado a outros projetos de software livre para ampliar fluxos digitais na administração pública.
+
+<!-- editorial-ci-scope-smoke-test -->
