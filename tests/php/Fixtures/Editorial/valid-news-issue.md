@@ -7,7 +7,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
 Município adota o e-Cidade para modernizar sua gestão.
 
-### Data da publicação
+### Data da notícia
 
 2026-10-07
 
@@ -30,6 +30,22 @@ https://github.com/user-attachments/assets/example-image
 ### Texto alternativo da imagem
 
 Equipe municipal durante a capacitação.
+
+### Detentor dos direitos das imagens
+
+Prefeitura de Exemplo
+
+### Licença/permissão das imagens
+
+LicenseRef-eCidade-Editorial-Permission
+
+### Crédito das imagens
+
+Foto: Prefeitura de Exemplo
+
+### Autorização para publicar as imagens
+
+- [x] Confirmo que tenho autorização para enviar e permitir a publicação das imagens informadas nesta notícia.
 
 ### Fonte original
 

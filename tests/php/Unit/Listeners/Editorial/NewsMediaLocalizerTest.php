@@ -111,7 +111,7 @@ final class NewsMediaLocalizerTest extends TestCase
         $localizer = new NewsMediaLocalizer($this->mediaDirectory, '/assets/images/news', $fetcher);
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('News media host is not allowed');
+        $this->expectExceptionMessage('Host de mídia não permitido');
 
         $localizer->localize($this->entry(
             cover: 'https://example.com/image.png',
@@ -154,6 +154,8 @@ final class NewsMediaLocalizerTest extends TestCase
             cover: $cover,
             coverAlt: $cover !== null ? 'Descrição da imagem' : null,
             editorUrl: 'https://github.com/e-cidade/site/issues/321',
+            mediaCopyright: 'e-Cidade test fixture',
+            mediaLicense: 'AGPL-3.0-or-later',
         );
     }
 

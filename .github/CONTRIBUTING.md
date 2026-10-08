@@ -13,9 +13,13 @@ Antes de começar uma mudança relevante, procure uma issue existente. Quando o 
 
 Para propor uma notícia, use o formulário **Publicar notícia** na criação de uma nova Issue.
 
-Basta preencher título, resumo, data e texto. Imagem, autoria específica e fonte original são opcionais. Não é necessário conhecer Git, Markdown, HTML, CSS, JavaScript ou os templates do site.
+Basta preencher título, resumo, data da notícia e texto. Imagem, autoria específica e fonte original são opcionais. Não é necessário conhecer Git, Markdown, HTML, CSS, JavaScript ou os templates do site.
 
-A Issue é usada para acompanhar a revisão editorial. Comentários servem para conversar sobre ajustes e não entram automaticamente no texto publicado.
+Quando houver imagens, informe o detentor dos direitos, a licença ou permissão aplicável e confirme que possui autorização para permitir a publicação. A data da notícia é um metadado editorial; a publicação efetiva só acontece depois da revisão, aprovação, merge e deploy.
+
+A Issue é usada para acompanhar a revisão editorial. Um comentário de status mantido pela automação concentra erros, Pull Request, preview e URL publicada. Outros comentários servem para conversar sobre ajustes e não entram automaticamente no texto publicado.
+
+O Pull Request é a aprovação formal do conteúdo. Ao entrar em revisão, o mantenedor editorial é solicitado como reviewer; a publicação só deve ocorrer depois de Review aprovado e CI verde. Fechar uma proposta antes da publicação encerra o PR e a branch editorial pendentes. Reabrir uma notícia já publicada inicia uma nova revisão preservando sua identidade e URL por padrão.
 
 O fluxo técnico de branch, Pull Request, preview e publicação é responsabilidade dos mantenedores.
 

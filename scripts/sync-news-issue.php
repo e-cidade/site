@@ -45,12 +45,15 @@ $number = filter_var($issue['number'] ?? null, FILTER_VALIDATE_INT);
 $title = is_string($issue['title'] ?? null) ? $issue['title'] : '';
 $body = is_string($issue['body'] ?? null) ? $issue['body'] : '';
 $url = is_string($issue['html_url'] ?? null) ? $issue['html_url'] : '';
+$updatedAt = is_string($issue['updated_at'] ?? null) ? $issue['updated_at'] : null;
 
 $isNews = getenv('NEWS_ISSUE') === 'true' || ($number !== false && $title !== '' && $url !== '');
 if (getenv('NEWS_ISSUE') !== 'true') {
-    foreach (['### Resumo', '### Data da publicação', '### Texto da notícia'] as $section) {
-        $isNews = $isNews && str_contains($body, $section);
-    }
+    $hasDate = str_contains($body, '### Data da notícia') || str_contains($body, '### Data da publicação');
+    $isNews = $isNews
+        && str_contains($body, '### Resumo')
+        && $hasDate
+        && str_contains($body, '### Texto da notícia');
 }
 
 if (! $isNews) {
@@ -64,7 +67,7 @@ try {
         mediaLocalizer: new NewsMediaLocalizer(
             __DIR__ . '/../source/assets/images/news',
         ),
-    ))->synchronize((int) $number, $title, $body, $url);
+    ))->synchronize((int) $number, $title, $body, $url, $updatedAt);
 } catch (InvalidArgumentException $exception) {
     $message = str_replace(["\r", "\n"], ' ', $exception->getMessage());
     echo "is_news=true\n";

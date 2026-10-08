@@ -46,7 +46,7 @@ final class NewsMediaLocalizer
                 $cover = $coverValue;
             } else {
                 $coverUrl = $this->extractUrl($coverValue);
-                $cover = $this->localizeUrl($coverUrl, $issueDirectory, (string) $entry->issueNumber, 'cover');
+                $cover = $this->localizeUrl($coverUrl, $issueDirectory, (string) $entry->issueNumber, 'cover', $entry);
             }
         }
 
@@ -55,7 +55,7 @@ final class NewsMediaLocalizer
             function (array $matches) use ($issueDirectory, $entry): string {
                 $url = $matches[2];
                 $basename = 'image-' . substr(hash('sha256', $url), 0, 12);
-                $local = $this->localizeUrl($url, $issueDirectory, (string) $entry->issueNumber, $basename);
+                $local = $this->localizeUrl($url, $issueDirectory, (string) $entry->issueNumber, $basename, $entry);
 
                 return '![' . $matches[1] . '](' . $local . ')';
             },
@@ -67,7 +67,7 @@ final class NewsMediaLocalizer
             function (array $matches) use ($issueDirectory, $entry): string {
                 $url = $matches[3];
                 $basename = 'image-' . substr(hash('sha256', $url), 0, 12);
-                $local = $this->localizeUrl($url, $issueDirectory, (string) $entry->issueNumber, $basename);
+                $local = $this->localizeUrl($url, $issueDirectory, (string) $entry->issueNumber, $basename, $entry);
 
                 return '<img' . $matches[1] . 'src=' . $matches[2] . $local . $matches[2] . $matches[4] . '>';
             },
@@ -101,6 +101,7 @@ final class NewsMediaLocalizer
         string $issueDirectory,
         string $issueNumber,
         string $basename,
+        NewsEntry $entry,
     ): string {
         if (isset($this->cache[$url])) {
             return $this->cache[$url];
@@ -110,7 +111,7 @@ final class NewsMediaLocalizer
         $binary = $this->fetcher->fetch($url);
 
         if (strlen($binary) > self::MAX_BYTES) {
-            throw new InvalidArgumentException('News media exceeds the 10 MB size limit.');
+            throw new InvalidArgumentException('A mídia da notícia excede o limite de 10 MB.');
         }
 
         $extension = $this->extensionFor($binary);
@@ -123,21 +124,37 @@ final class NewsMediaLocalizer
             }
         }
 
+        $this->writeLicenseSidecar($path, $entry);
+
         $publicPath = rtrim($this->publicBasePath, '/') . '/' . $issueNumber . '/' . $filename;
         $this->cache[$url] = $publicPath;
 
         return $publicPath;
     }
 
+    private function writeLicenseSidecar(string $path, NewsEntry $entry): void
+    {
+        if ($entry->mediaCopyright === null || $entry->mediaLicense === null) {
+            throw new InvalidArgumentException('Toda mídia versionada precisa de detentor de direitos e licença/permissão.');
+        }
+
+        $content = 'SPDX-FileCopyrightText: ' . $entry->mediaCopyright . "\n"
+            . 'SPDX-License-' . 'Identifier: ' . $entry->mediaLicense . "\n";
+
+        if (file_put_contents($path . '.license', $content) === false) {
+            throw new \RuntimeException('Unable to write REUSE metadata for ' . $path);
+        }
+    }
+
     private function assertAllowedUrl(string $url): void
     {
         if (parse_url($url, PHP_URL_SCHEME) !== 'https') {
-            throw new InvalidArgumentException('News media must use HTTPS.');
+            throw new InvalidArgumentException('A mídia da notícia deve usar HTTPS.');
         }
 
         $host = strtolower((string) parse_url($url, PHP_URL_HOST));
         if (! in_array($host, self::ALLOWED_HOSTS, true)) {
-            throw new InvalidArgumentException('News media host is not allowed: ' . $host);
+            throw new InvalidArgumentException('Host de mídia não permitido: ' . $host);
         }
     }
 
@@ -152,7 +169,7 @@ final class NewsMediaLocalizer
             'image/webp' => 'webp',
             'image/gif' => 'gif',
             'image/avif' => 'avif',
-            default => throw new InvalidArgumentException('Unsupported news media type: ' . (string) $mime),
+            default => throw new InvalidArgumentException('Tipo de mídia não suportado: ' . (string) $mime),
         };
     }
 

@@ -1,0 +1,5 @@
+SPDX-FileCopyrightText: e-Cidade test fixture
+SPDX-License-Identifier: LicenseRef-eCidade-Editorial-Permission
+
+This fixture confirms that the editorial media permission LicenseRef is tracked
+by REUSE without assigning it to the site source code.

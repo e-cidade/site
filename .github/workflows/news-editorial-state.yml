@@ -1,0 +1,31 @@
+# SPDX-FileCopyrightText: 2026 e-Cidade community
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+name: News editorial review state
+
+on:
+  pull_request:
+    branches: [main]
+    types: [ready_for_review, converted_to_draft, synchronize]
+  pull_request_review:
+    types: [submitted, dismissed]
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+jobs:
+  state:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Apply editorial review event
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EDITORIAL_REVIEWER: vitormattos
+          EDITORIAL_PREVIEW_BASE_URL: https://site-ecidade.librecode.coop/pr-preview
+        run: php scripts/editorial/review.php "$GITHUB_EVENT_PATH"
