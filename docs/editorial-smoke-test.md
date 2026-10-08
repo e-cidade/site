@@ -7,7 +7,9 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
 Os testes unitários cobrem regras e adapters sem criar recursos reais no GitHub. Este smoke test é reservado para validar a integração entre GitHub Issues, Actions, Pull Requests, preview e deploy.
 
-Use uma Issue explicitamente criada para teste, como #102.
+Antes de iniciar, siga o checklist de **configuração administrativa, critérios verificáveis e riscos ainda pendentes** em [Preparação operacional e critérios de aceite](editorial-release-readiness.md). Uma implementação com PHPUnit e CI verdes não comprova que a GitHub App, a proteção da main ou o fechamento da Issue funcionem em integração real.
+
+Use uma Issue explicitamente criada para teste, como #102. O PR experimental #104 deve permanecer sem merge até uma decisão explícita sobre publicação.
 
 ## 1. Sincronização
 
