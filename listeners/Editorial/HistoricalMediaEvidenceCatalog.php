@@ -23,10 +23,11 @@ final class HistoricalMediaEvidenceCatalog
         return [
             '/assets/images/migrated/ambiente-demonstracao.png' => [
                 'evidence_urls' => [
+                    'https://ecidade.softwarepublico.org/software-e-cidade-ganha-ambiente-de-demonstracao/',
                     'https://www.youtube.com/watch?v=WoeoxEe8TFk',
                 ],
-                'evidence_note' => 'A notícia relaciona a imagem à demonstração apresentada pela comunidade/DBSeller, mas a origem exata e a licença do arquivo ainda não foram verificadas.',
-                'rights_status' => 'pending-evidence',
+                'evidence_note' => 'A página histórica do e-Cidade e a gravação da demonstração foram localizadas, mas não há licença reutilizável explícita para a imagem.',
+                'rights_status' => 'source-located-license-pending',
             ],
             '/assets/images/migrated/aula-inaugural.png' => [
                 'evidence_urls' => [
