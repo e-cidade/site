@@ -27,7 +27,6 @@ if (! is_array($payload)) {
 $gateway = new GhEditorialGateway($repository, $root);
 $handler = new EditorialReviewEventHandler(
     new EditorialLifecycle($gateway),
-    getenv('EDITORIAL_REVIEWER') ?: 'vitormattos',
     getenv('EDITORIAL_PREVIEW_BASE_URL') ?: 'https://site-ecidade.librecode.coop/pr-preview',
 );
 $handler->handle($payload);

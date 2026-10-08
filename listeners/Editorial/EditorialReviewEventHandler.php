@@ -11,7 +11,6 @@ final class EditorialReviewEventHandler
 {
     public function __construct(
         private readonly EditorialLifecycle $lifecycle,
-        private readonly string $reviewer,
         private readonly string $previewBaseUrl,
     ) {}
 
@@ -46,7 +45,6 @@ final class EditorialReviewEventHandler
             new EditorialPullRequest($number, $url, $headRef, $draft),
             $action,
             $reviewState,
-            $this->reviewer,
             $this->previewBaseUrl,
         );
     }

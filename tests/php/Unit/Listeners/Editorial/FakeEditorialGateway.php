@@ -26,9 +26,6 @@ final class FakeEditorialGateway implements EditorialGateway
     /** @var list<string> */
     public array $deletedBranches = [];
 
-    /** @var list<array{pr:int,reviewer:string}> */
-    public array $reviewRequests = [];
-
     /** @var list<int> */
     public array $closedIssues = [];
 
@@ -114,11 +111,6 @@ final class FakeEditorialGateway implements EditorialGateway
     {
         $this->deletedBranches[] = $branch;
         $this->branchExists = false;
-    }
-
-    public function requestReviewer(int $pullRequestNumber, string $reviewer): void
-    {
-        $this->reviewRequests[] = ['pr' => $pullRequestNumber, 'reviewer' => $reviewer];
     }
 
     public function pullRequestForCommit(string $commitSha): ?EditorialPullRequest

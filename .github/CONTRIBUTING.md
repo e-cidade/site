@@ -19,7 +19,9 @@ Quando houver imagens, informe o detentor dos direitos, a licença ou permissão
 
 A Issue é usada para acompanhar a revisão editorial. Um comentário de status mantido pela automação concentra erros, Pull Request, preview e URL publicada. Outros comentários servem para conversar sobre ajustes e não entram automaticamente no texto publicado.
 
-O Pull Request é a aprovação formal do conteúdo. Ao entrar em revisão, o mantenedor editorial é solicitado como reviewer; a publicação só deve ocorrer depois de Review aprovado e CI verde. Fechar uma proposta antes da publicação encerra o PR e a branch editorial pendentes. Reabrir uma notícia já publicada inicia uma nova revisão preservando sua identidade e URL por padrão.
+O Pull Request é a aprovação formal do conteúdo. O GitHub solicita revisão automaticamente aos responsáveis definidos em `.github/CODEOWNERS`; a publicação só deve ocorrer depois de Review aprovado e CI verde. Fechar uma proposta antes da publicação encerra o PR e a branch editorial pendentes. Reabrir uma notícia já publicada inicia uma nova revisão preservando sua identidade e URL por padrão.
+
+A política de aprovação e os checks que devem ser protegidos em `main` estão documentados em [Governança editorial](../docs/editorial-governance.md).
 
 O fluxo técnico de branch, Pull Request, preview e publicação é responsabilidade dos mantenedores.
 

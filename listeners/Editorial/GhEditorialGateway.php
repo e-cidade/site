@@ -264,15 +264,6 @@ final class GhEditorialGateway implements EditorialGateway
         $this->mustRun(['git', 'push', 'origin', '--delete', $branch]);
     }
 
-    public function requestReviewer(int $pullRequestNumber, string $reviewer): void
-    {
-        $this->mustRun([
-            'gh', 'pr', 'edit', (string) $pullRequestNumber,
-            '--repo', $this->repository,
-            '--add-reviewer', $reviewer,
-        ]);
-    }
-
     public function pullRequestForCommit(string $commitSha): ?EditorialPullRequest
     {
         $result = $this->mustRun([
