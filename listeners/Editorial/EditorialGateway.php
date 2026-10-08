@@ -24,9 +24,9 @@ interface EditorialGateway
 
     public function findPullRequest(string $branch, string $state = 'open'): ?EditorialPullRequest;
 
-    public function prepareEditorialBranch(string $branch): void;
+    public function prepareEditorialBranch(string $branch): EditorialWorkspace;
 
-    public function commitAndPushEditorialChanges(string $branch, int $issueNumber): void;
+    public function commitAndPushEditorialChanges(EditorialWorkspace $workspace, int $issueNumber): void;
 
     public function createDraftPullRequest(string $branch, int $issueNumber): EditorialPullRequest;
 

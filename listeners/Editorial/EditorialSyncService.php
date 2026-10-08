@@ -13,7 +13,7 @@ final class EditorialSyncService
 {
     public function __construct(
         private readonly EditorialGateway $gateway,
-        private readonly NewsIssueSynchronizer $synchronizer,
+        private readonly EditorialContentSynchronizer $synchronizer,
         private readonly EditorialLifecycle $lifecycle,
         private readonly EditorialIssueDetector $detector = new EditorialIssueDetector(),
     ) {}
@@ -51,10 +51,11 @@ final class EditorialSyncService
             ];
         }
 
-        $this->gateway->prepareEditorialBranch($branch);
+        $workspace = $this->gateway->prepareEditorialBranch($branch);
 
         try {
             $result = $this->synchronizer->synchronize(
+                $workspace,
                 $issueNumber,
                 $title,
                 $body,
@@ -76,12 +77,13 @@ final class EditorialSyncService
             ];
         }
 
-        if ($result['changed']) {
-            $this->gateway->commitAndPushEditorialChanges($branch, $issueNumber);
+        $needsPush = $result['changed'] || $workspace->refreshRequired;
+        if ($needsPush) {
+            $this->gateway->commitAndPushEditorialChanges($workspace, $issueNumber);
         }
 
         $pullRequest = $existingPullRequest;
-        if ($pullRequest === null && $result['changed']) {
+        if ($pullRequest === null && $needsPush) {
             $pullRequest = $this->gateway->createDraftPullRequest($branch, $issueNumber);
         }
 
@@ -100,7 +102,7 @@ final class EditorialSyncService
         return [
             'handled' => true,
             'valid' => true,
-            'changed' => $result['changed'],
+            'changed' => $needsPush,
             'pull_request' => $pullRequest,
             'error' => null,
         ];
