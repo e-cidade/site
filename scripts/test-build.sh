@@ -43,4 +43,9 @@ if [[ -n "${EXPECTED_BASE_URL:-}" ]]; then
     echo "Preview build contains root-absolute Vite asset URLs." >&2
     exit 1
   fi
+
+  if grep -R -Eq 'src="/assets/images/' "${build_dir}" --include='*.html'; then
+    echo "Preview build contains root-absolute content image URLs." >&2
+    exit 1
+  fi
 fi

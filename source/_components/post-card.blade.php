@@ -3,8 +3,13 @@
 
 <article class="card post-card">
     @if ($post->cover_image)
+        @php
+            $coverImageUrl = str_starts_with((string) $post->cover_image, '/')
+                ? rtrim((string) $page->baseUrl, '/') . $post->cover_image
+                : $post->cover_image;
+        @endphp
         <a class="post-card__media" href="{{ $post->getUrl() }}" tabindex="-1" aria-hidden="true">
-            <img src="{{ $post->cover_image }}" alt="" loading="lazy">
+            <img src="{{ $coverImageUrl }}" alt="" loading="lazy">
         </a>
     @endif
     <div class="post-card__body">
