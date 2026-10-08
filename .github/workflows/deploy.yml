@@ -60,57 +60,9 @@ jobs:
           clean-exclude: pr-preview
           force: false
 
-      - name: Resolve published news
+      - name: Finalize editorial publication
         if: github.event_name == 'push'
-        id: news
         env:
           GH_TOKEN: ${{ github.token }}
-        run: |
-          set -eu
-
-          pr_number="$(gh api "repos/${GITHUB_REPOSITORY}/commits/${GITHUB_SHA}/pulls" --jq '[.[] | select(.head.ref | startswith("content/news-"))][0].number // empty')"
-          head_ref="$(gh api "repos/${GITHUB_REPOSITORY}/commits/${GITHUB_SHA}/pulls" --jq '[.[] | select(.head.ref | startswith("content/news-"))][0].head.ref // empty')"
-
-          if [ -z "$pr_number" ] || [ -z "$head_ref" ]; then
-            echo "found=false" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-
-          issue_number="${head_ref#content/news-}"
-          publication_url="$(php scripts/resolve-news-publication.php "$issue_number")"
-          echo "found=true" >> "$GITHUB_OUTPUT"
-          echo "issue=$issue_number" >> "$GITHUB_OUTPUT"
-          echo "pr_url=https://github.com/$GITHUB_REPOSITORY/pull/$pr_number" >> "$GITHUB_OUTPUT"
-          echo "publication_url=$publication_url" >> "$GITHUB_OUTPUT"
-
-      - name: Mark published news
-        if: steps.news.outputs.found == 'true'
-        uses: ./.github/actions/news-state
-        env:
-          GH_TOKEN: ${{ github.token }}
-        with:
-          issue-number: ${{ steps.news.outputs.issue }}
-          state: published
-
-      - name: Report published news
-        if: steps.news.outputs.found == 'true'
-        uses: ./.github/actions/news-status
-        env:
-          GH_TOKEN: ${{ github.token }}
-        with:
-          issue-number: ${{ steps.news.outputs.issue }}
-          status: Publicada
-          detail: A notícia foi aprovada, incorporada ao site e publicada com sucesso.
-          pr-url: ${{ steps.news.outputs.pr_url }}
-          publication-url: ${{ steps.news.outputs.publication_url }}
-
-      - name: Close published news issue
-        if: steps.news.outputs.found == 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-          ISSUE_NUMBER: ${{ steps.news.outputs.issue }}
-        run: |
-          state="$(gh issue view "$ISSUE_NUMBER" --json state --jq '.state')"
-          if [ "$state" = "OPEN" ]; then
-            gh issue close "$ISSUE_NUMBER" --reason completed
-          fi
+          EDITORIAL_BASE_URL: https://site-ecidade.librecode.coop
+        run: php scripts/editorial/publish.php "$GITHUB_SHA"
