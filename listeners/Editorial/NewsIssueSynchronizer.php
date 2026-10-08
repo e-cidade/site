@@ -34,6 +34,16 @@ final class NewsIssueSynchronizer
             ? pathinfo($existingPath, PATHINFO_FILENAME)
             : null;
 
+        if ($publishedRevision && $existingPath === null) {
+            throw new \InvalidArgumentException(
+                'A notícia publicada não foi localizada. A revisão foi interrompida para preservar a URL e a data original.',
+            );
+        }
+
+        $originalPublishedAt = $publishedRevision && $existingPath !== null
+            ? $this->publishedDate($existingPath)
+            : null;
+
         $entry = $this->source->fromIssue(
             $issueNumber,
             $title,
@@ -41,6 +51,7 @@ final class NewsIssueSynchronizer
             $issueUrl,
             $existingSlug,
             $publishedRevision && $existingPath !== null ? $updatedAt : null,
+            $originalPublishedAt,
         );
 
         if ($this->mediaLocalizer !== null) {
@@ -51,7 +62,14 @@ final class NewsIssueSynchronizer
         $rendered = $this->writer->render($entry);
         $existing = is_file($targetPath) ? (string) file_get_contents($targetPath) : null;
 
-        if ($existing === $rendered) {
+        if (
+            $existing === $rendered
+            || (
+                $publishedRevision
+                && $existing !== null
+                && $this->withoutRevisionTimestamp($existing) === $this->withoutRevisionTimestamp($rendered)
+            )
+        ) {
             return [
                 'changed' => false,
                 'created' => false,
@@ -74,6 +92,35 @@ final class NewsIssueSynchronizer
             'path' => $targetPath,
             'slug' => $entry->slug,
         ];
+    }
+
+    private function withoutRevisionTimestamp(string $content): string
+    {
+        if (! str_starts_with($content, "---\n")) {
+            return $content;
+        }
+
+        $frontMatterEnd = strpos($content, "\n---\n", 4);
+        if ($frontMatterEnd === false) {
+            return $content;
+        }
+
+        $frontMatter = substr($content, 0, $frontMatterEnd + 1);
+        $body = substr($content, $frontMatterEnd + 1);
+
+        return (preg_replace('/^updated_at:[^\\r\\n]*\\r?\\n/m', '', $frontMatter) ?? $frontMatter) . $body;
+    }
+
+    private function publishedDate(string $path): string
+    {
+        $content = (string) file_get_contents($path);
+        if (preg_match('/^date:\\s*"?(\\d{4}-\\d{2}-\\d{2})"?\\s*$/m', $content, $matches) !== 1) {
+            throw new \InvalidArgumentException(
+                'A data original da notícia publicada não foi encontrada. A revisão foi interrompida.',
+            );
+        }
+
+        return $matches[1];
     }
 
     private function findManagedPostPath(int $issueNumber): ?string

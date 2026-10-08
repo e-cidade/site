@@ -87,14 +87,14 @@ final class EditorialSyncService
             $pullRequest = $this->gateway->createDraftPullRequest($branch, $issueNumber);
         }
 
-        if ($pullRequest !== null) {
+        $recoveringFromInvalid = in_array(EditorialState::Invalid->label(), $labels, true);
+        if ($pullRequest !== null && ($needsPush || $recoveringFromInvalid)) {
             $this->lifecycle->updateState(
                 $issueNumber,
                 new EditorialStatus(
-                    EditorialState::Draft,
-                    'A notícia está sincronizada. Alterações nesta Issue atualizarão o mesmo Pull Request enquanto ele permanecer aberto.',
+                    $pullRequest->draft ? EditorialState::Draft : EditorialState::Review,
+                    'A notícia está sincronizada. A prévia só será informada depois de sua geração e validação.',
                     pullRequestUrl: $pullRequest->url,
-                    previewUrl: 'https://site-ecidade.librecode.coop/pr-preview/pr-' . $pullRequest->number . '/',
                 ),
             );
         }
