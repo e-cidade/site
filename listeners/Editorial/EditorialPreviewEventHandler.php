@@ -16,7 +16,7 @@ final class EditorialPreviewEventHandler
     ) {}
 
     /** @param array<string,mixed> $payload */
-    public function handle(array $payload): void
+    public function handle(array $payload, string $outcome = 'success'): void
     {
         $pullRequest = $payload['pull_request'] ?? null;
         if (! is_array($pullRequest)) {
@@ -44,13 +44,18 @@ final class EditorialPreviewEventHandler
         $issuePayload = $this->gateway->issuePayload($issueNumber);
         $state = $this->stateFromIssue($issuePayload['issue'] ?? null);
 
+        $success = $outcome === 'success';
         $this->lifecycle->updateState(
             $issueNumber,
             new EditorialStatus(
                 $state,
-                'A prévia foi gerada com sucesso para a versão atual desta notícia.',
+                $success
+                    ? 'A prévia foi gerada com sucesso para a versão atual desta notícia.'
+                    : 'Não foi possível gerar a prévia para a versão atual. Consulte os checks do Pull Request para identificar a falha.',
                 pullRequestUrl: $prUrl,
-                previewUrl: rtrim($this->previewBaseUrl, '/') . '/pr-' . $prNumber . '/',
+                previewUrl: $success
+                    ? rtrim($this->previewBaseUrl, '/') . '/pr-' . $prNumber . '/'
+                    : null,
             ),
         );
     }

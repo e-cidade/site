@@ -29,4 +29,4 @@ $gateway = new GhEditorialGateway($repository, $root);
     $gateway,
     new EditorialLifecycle($gateway),
     getenv('EDITORIAL_PREVIEW_BASE_URL') ?: 'https://site-ecidade.librecode.coop/pr-preview',
-))->handle($payload);
+))->handle($payload, getenv('EDITORIAL_PREVIEW_OUTCOME') ?: 'success');
