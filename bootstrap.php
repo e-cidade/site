@@ -9,3 +9,4 @@ declare(strict_types=1);
 
 $events->afterBuild(App\Listeners\GenerateSitemap::class);
 $events->afterBuild(App\Listeners\GenerateRobots::class);
+$events->afterBuild(App\Listeners\RewriteLocalImageUrls::class);
