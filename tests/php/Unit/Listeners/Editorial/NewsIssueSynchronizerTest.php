@@ -126,6 +126,55 @@ final class NewsIssueSynchronizerTest extends TestCase
         self::assertStringContainsString('github_issue: 321', $content);
     }
 
+    public function testPublishedRevisionKeepsTheOriginalDateEvenWhenTheIssueDateChanges(): void
+    {
+        $body = (string) file_get_contents(__DIR__ . '/../../../Fixtures/Editorial/valid-news-issue.md');
+        $synchronizer = new NewsIssueSynchronizer($this->postsDirectory);
+
+        $original = $synchronizer->synchronize(
+            321,
+            'Título publicado',
+            $body,
+            'https://github.com/e-cidade/site/issues/321',
+            '2026-10-07T12:00:00Z',
+        );
+
+        $changedDateBody = str_replace('2026-10-07', '2026-10-09', $body);
+        $revision = $synchronizer->synchronize(
+            321,
+            'Título após a publicação',
+            $changedDateBody,
+            'https://github.com/e-cidade/site/issues/321',
+            '2026-10-10T15:30:00Z',
+            true,
+        );
+
+        self::assertSame($original['path'], $revision['path']);
+        self::assertSame($original['slug'], $revision['slug']);
+        $content = (string) file_get_contents($revision['path']);
+        self::assertStringContainsString('date: 2026-10-07', $content);
+        self::assertStringNotContainsString('date: 2026-10-09', $content);
+        self::assertStringContainsString('updated_at: "2026-10-10T15:30:00Z"', $content);
+        self::assertStringContainsString('title: "Título após a publicação"', $content);
+    }
+
+    public function testPublishedRevisionRefusesToCreateANewPostWhenOriginalIsMissing(): void
+    {
+        $body = (string) file_get_contents(__DIR__ . '/../../../Fixtures/Editorial/valid-news-issue.md');
+
+        $this->expectException(\\InvalidArgumentException::class);
+        $this->expectExceptionMessage('A notícia publicada não foi localizada.');
+
+        (new NewsIssueSynchronizer($this->postsDirectory))->synchronize(
+            321,
+            'Tentativa de revisão',
+            $body,
+            'https://github.com/e-cidade/site/issues/321',
+            '2026-10-10T15:30:00Z',
+            true,
+        );
+    }
+
     /** @return array{changed:bool,created:bool,path:string,slug:string} */
     private function synchronize(string $title): array
     {
