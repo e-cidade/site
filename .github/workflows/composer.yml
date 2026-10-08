@@ -25,6 +25,6 @@ jobs:
         with:
           coverage: none
       - run: composer validate --strict
-      - run: composer audit
-      - run: composer --working-dir=vendor-bin/phpunit audit
-      - run: composer --working-dir=vendor-bin/php-cs-fixer audit
+      - run: composer audit --locked
+      - run: composer --working-dir=vendor-bin/phpunit audit --locked
+      - run: composer --working-dir=vendor-bin/php-cs-fixer audit --locked
