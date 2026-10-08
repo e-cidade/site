@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Listeners\Editorial;
 
 use App\Listeners\Editorial\EditorialLifecycle;
+use App\Listeners\Editorial\FilesystemEditorialContentSynchronizer;
 use App\Listeners\Editorial\EditorialPullRequest;
 use App\Listeners\Editorial\EditorialState;
 use App\Listeners\Editorial\EditorialSyncService;
@@ -279,6 +280,66 @@ final class EditorialSyncServiceTest extends TestCase
         self::assertCount(1, $gateway->commits);
         self::assertSame(EditorialState::Draft, $gateway->states[2]['state']);
         self::assertStringNotContainsString('Prévia:', $gateway->statuses[2]['body']);
+    }
+
+    public function testReopenedPublishedIssueCreatesRevisionWithSameSlugAndOriginalDate(): void
+    {
+        $gateway = new FakeEditorialGateway();
+        $gateway->workspacePath = $this->postsDirectory . '/workspace';
+        $firstService = new EditorialSyncService(
+            $gateway,
+            new TestEditorialContentSynchronizer(),
+            new EditorialLifecycle($gateway),
+        );
+
+        $first = $firstService->synchronize(
+            321,
+            'Notícia publicada originalmente',
+            $this->validBody(),
+            'https://github.com/e-cidade/site/issues/321',
+            '2026-10-07T10:00:00Z',
+            ['editorial/news'],
+        );
+        self::assertTrue($first['valid']);
+
+        $posts = glob($gateway->workspacePath . '/source/_posts/*.md') ?: [];
+        self::assertCount(1, $posts);
+        $originalSlug = basename($posts[0]);
+        $publishedPosts = $this->postsDirectory . '/published/_posts';
+        mkdir($publishedPosts, 0775, true);
+        copy($posts[0], $publishedPosts . '/' . $originalSlug);
+
+        $reopenedGateway = new FakeEditorialGateway();
+        $reopenedGateway->workspacePath = $gateway->workspacePath;
+        $revisionService = new EditorialSyncService(
+            $reopenedGateway,
+            new FilesystemEditorialContentSynchronizer(
+                publishedPostsDirectory: $publishedPosts,
+            ),
+            new EditorialLifecycle($reopenedGateway),
+        );
+        $result = $revisionService->synchronize(
+            321,
+            'Notícia revisada e republicada',
+            str_replace('2026-10-07', '2026-10-09', $this->validBody()),
+            'https://github.com/e-cidade/site/issues/321',
+            '2026-10-10T13:45:00Z',
+            ['editorial/news', 'editorial/published'],
+        );
+
+        self::assertTrue($result['valid']);
+        self::assertTrue($result['changed']);
+        self::assertTrue($reopenedGateway->createdPullRequest);
+        self::assertCount(1, glob($gateway->workspacePath . '/source/_posts/*.md') ?: []);
+
+        $revisedPath = $gateway->workspacePath . '/source/_posts/' . $originalSlug;
+        self::assertFileExists($revisedPath);
+        $content = (string) file_get_contents($revisedPath);
+        self::assertStringContainsString('github_issue: 321', $content);
+        self::assertStringContainsString('date: 2026-10-07', $content);
+        self::assertStringContainsString('updated_at: "2026-10-10T13:45:00Z"', $content);
+        self::assertStringContainsString('title: "Notícia revisada e republicada"', $content);
+        self::assertSame(EditorialState::Draft, $reopenedGateway->states[0]['state']);
     }
 
     private function validBody(): string
