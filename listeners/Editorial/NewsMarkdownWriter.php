@@ -49,6 +49,10 @@ final class NewsMarkdownWriter
             $frontMatter[] = 'media_license: ' . $this->yamlString($entry->mediaLicense);
         }
 
+        if ($entry->mediaSourceUrl !== null) {
+            $frontMatter[] = 'media_source_url: ' . $this->yamlString($entry->mediaSourceUrl);
+        }
+
         if ($entry->mediaCredit !== null) {
             $frontMatter[] = 'media_credit: ' . $this->yamlString($entry->mediaCredit);
         }

@@ -39,13 +39,17 @@ Prefeitura de Exemplo
 
 LicenseRef-eCidade-Editorial-Permission
 
+### Fonte das imagens
+
+_No response_
+
 ### Crédito das imagens
 
 Foto: Prefeitura de Exemplo
 
-### Autorização para publicar as imagens
+### Declaração sobre as imagens
 
-- [x] Confirmo que tenho autorização para enviar e permitir a publicação das imagens informadas nesta notícia.
+- [x] Confirmo que verifiquei a origem e que a licença/permissão informada permite ao projeto publicar estas imagens.
 
 ### Fonte original
 

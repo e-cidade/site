@@ -45,6 +45,10 @@
         <p class="source-note">Crédito das imagens: {{ $page->media_credit }}</p>
     @endif
 
+    @if ($page->media_source_url)
+        <p class="source-note">Origem das imagens: <a href="{{ $page->media_source_url }}">{{ $page->media_source_url }}</a></p>
+    @endif
+
     @if ($page->source_url)
         <p class="source-note">Fonte original: <a href="{{ $page->source_url }}">{{ $page->source_label ?? $page->source_url }}</a></p>
     @endif
