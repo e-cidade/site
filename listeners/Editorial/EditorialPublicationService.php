@@ -13,6 +13,7 @@ final class EditorialPublicationService
         private readonly EditorialGateway $gateway,
         private readonly EditorialLifecycle $lifecycle,
         private readonly NewsPublicationResolver $resolver,
+        private readonly string $baseUrl,
     ) {}
 
     public function publishForCommit(string $commitSha): bool
@@ -27,7 +28,7 @@ final class EditorialPublicationService
             return false;
         }
 
-        $publicationUrl = $this->resolver->resolve($issueNumber);
+        $publicationUrl = $this->resolver->resolveUrl($issueNumber, $this->baseUrl);
 
         $this->lifecycle->updateState(
             $issueNumber,
