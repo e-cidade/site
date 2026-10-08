@@ -51,6 +51,27 @@ final class EditorialLifecycleTest extends TestCase
         self::assertStringContainsString('**Descartada**', $gateway->statuses[0]['body']);
     }
 
+    public function testDiscardIsIdempotentForExternalEffects(): void
+    {
+        $gateway = new FakeEditorialGateway();
+        $gateway->branchExists = true;
+        $gateway->pullRequest = new EditorialPullRequest(
+            104,
+            'https://github.com/e-cidade/site/pull/104',
+            'content/news-102',
+            true,
+        );
+
+        $lifecycle = new EditorialLifecycle($gateway);
+        $lifecycle->discard(102, 'content/news-102');
+        $lifecycle->discard(102, 'content/news-102');
+
+        self::assertSame([104], $gateway->closedPullRequests);
+        self::assertSame(['content/news-102'], $gateway->deletedBranches);
+        self::assertCount(2, $gateway->states);
+        self::assertSame(EditorialState::Discarded, $gateway->states[1]['state']);
+    }
+
     public function testApprovedReviewMovesIssueToReady(): void
     {
         $gateway = new FakeEditorialGateway();
