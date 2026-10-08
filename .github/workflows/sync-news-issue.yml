@@ -97,6 +97,8 @@ jobs:
           branch="content/news-${ISSUE_NUMBER}"
           pr_number="$(gh pr list --head "$branch" --state open --json number --jq '.[0].number // empty')"
           if [ -n "$pr_number" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git fetch origin main "$branch"
             git checkout -B "$branch" "origin/$branch"
             git rebase origin/main
