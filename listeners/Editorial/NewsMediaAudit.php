@@ -181,8 +181,7 @@ final class NewsMediaAudit
         bool $referenced,
         bool $hasSidecar,
         ?array $evidence,
-    ): string
-    {
+    ): string {
         if (! $referenced) {
             return 'orphan-candidate';
         }
