@@ -21,16 +21,28 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+          fetch-depth: 0
+
+      - name: Classify pull request scope
+        id: ci-scope
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: php scripts/ci-scope.php "$BASE_SHA" "$HEAD_SHA" >> "$GITHUB_OUTPUT"
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        if: github.event_name != 'pull_request' || steps.ci-scope.outputs.editorial_only != 'true'
         with:
           node-version-file: package.json
           cache: npm
       - name: Restore Node dependencies
         id: node-deps
         uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        if: github.event_name != 'pull_request' || steps.ci-scope.outputs.editorial_only != 'true'
         with:
           path: node_modules
           key: node-modules-${{ runner.os }}-${{ hashFiles('package.json', 'package-lock.json') }}
       - run: npm ci --no-audit --no-fund
-        if: steps.node-deps.outputs.cache-hit != 'true'
+        if: (github.event_name != 'pull_request' || steps.ci-scope.outputs.editorial_only != 'true') && steps.node-deps.outputs.cache-hit != 'true'
       - run: npm run test:scss
+        if: github.event_name != 'pull_request' || steps.ci-scope.outputs.editorial_only != 'true'

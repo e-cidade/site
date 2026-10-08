@@ -21,4 +21,14 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+          fetch-depth: 0
+
+      - name: Classify pull request scope
+        id: ci-scope
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: php scripts/ci-scope.php "$BASE_SHA" "$HEAD_SHA" >> "$GITHUB_OUTPUT"
       - run: shellcheck scripts/*.sh
+        if: github.event_name != 'pull_request' || steps.ci-scope.outputs.editorial_only != 'true'

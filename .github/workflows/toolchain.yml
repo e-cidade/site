@@ -21,12 +21,24 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+          fetch-depth: 0
+
+      - name: Classify pull request scope
+        id: ci-scope
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: php scripts/ci-scope.php "$BASE_SHA" "$HEAD_SHA" >> "$GITHUB_OUTPUT"
       - name: Setup PHP from composer.json
+        if: github.event_name != 'pull_request' || steps.ci-scope.outputs.editorial_only != 'true'
         uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
         with:
           coverage: none
       - name: Setup Node from package.json
+        if: github.event_name != 'pull_request' || steps.ci-scope.outputs.editorial_only != 'true'
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version-file: package.json
       - run: bash scripts/check-toolchain.sh
+        if: github.event_name != 'pull_request' || steps.ci-scope.outputs.editorial_only != 'true'
