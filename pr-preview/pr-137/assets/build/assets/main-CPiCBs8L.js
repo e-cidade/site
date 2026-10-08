@@ -1,0 +1,1 @@
+function e(e=document){let t=e.querySelector(`.nav-toggle`),n=e.querySelector(`#main-nav`);return!t||!n?!1:(t.addEventListener(`click`,()=>{let e=t.getAttribute(`aria-expanded`)===`true`;t.setAttribute(`aria-expanded`,e?`false`:`true`),n.classList.toggle(`is-open`,!e)}),!0)}typeof document<`u`&&document.addEventListener(`DOMContentLoaded`,()=>e(document));
