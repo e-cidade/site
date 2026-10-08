@@ -139,7 +139,7 @@ final class NewsMediaLocalizer
         }
 
         $content = 'SPDX-FileCopyrightText: ' . $entry->mediaCopyright . "\n"
-            . 'SPDX-License-Identifier: ' . $entry->mediaLicense . "\n";
+            . 'SPDX-License-' . 'Identifier: ' . $entry->mediaLicense . "\n";
 
         if (file_put_contents($path . '.license', $content) === false) {
             throw new \RuntimeException('Unable to write REUSE metadata for ' . $path);

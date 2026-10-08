@@ -77,11 +77,8 @@ body:
     id: media_license
     attributes:
       label: Licença/permissão das imagens
-      description: Obrigatório quando houver imagens. Escolha a licença aplicável ou a opção de permissão específica.
+      description: Obrigatório quando houver imagens. A permissão específica fica registrada na Issue de origem.
       options:
-        - CC-BY-4.0
-        - CC-BY-SA-4.0
-        - CC0-1.0
         - LicenseRef-eCidade-Editorial-Permission
 
   - type: input

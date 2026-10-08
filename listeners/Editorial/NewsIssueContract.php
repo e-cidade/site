@@ -15,9 +15,6 @@ final class NewsIssueContract
     public const DEFAULT_AUTHOR = 'Comunidade e-Cidade';
 
     private const MEDIA_LICENSES = [
-        'CC-BY-4.0',
-        'CC-BY-SA-4.0',
-        'CC0-1.0',
         'LicenseRef-eCidade-Editorial-Permission',
     ];
 

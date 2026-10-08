@@ -37,7 +37,7 @@ Prefeitura de Exemplo
 
 ### Licença/permissão das imagens
 
-CC-BY-4.0
+LicenseRef-eCidade-Editorial-Permission
 
 ### Crédito das imagens
 

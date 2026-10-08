@@ -49,4 +49,4 @@ Para notícias novas que contenham imagens, a Issue registra:
 
 Cada arquivo localizado em `source/assets/images/news/<issue>/` recebe um arquivo sidecar `.license` com `SPDX-FileCopyrightText` e `SPDX-License-Identifier`. Isso mantém a informação de REUSE vinculada ao arquivo concreto, em vez de aplicar uma licença genérica a toda mídia editorial.
 
-As licenças suportadas no formulário são `CC-BY-4.0`, `CC-BY-SA-4.0`, `CC0-1.0` e `LicenseRef-eCidade-Editorial-Permission`. A última opção representa material cuja permissão específica para publicação está registrada na Issue de origem e não concede direitos adicionais além dessa permissão.
+O fluxo inicial usa `LicenseRef-eCidade-Editorial-Permission`: a permissão específica para publicação fica registrada na Issue de origem e não concede direitos adicionais além dessa permissão. Isso evita presumir que fotografias e outras mídias herdam a licença do código. O suporte a licenças públicas de mídia pode ser ampliado posteriormente, desde que o texto SPDX correspondente seja versionado e a origem/licença sejam verificáveis.

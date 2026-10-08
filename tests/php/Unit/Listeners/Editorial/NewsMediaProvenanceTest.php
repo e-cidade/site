@@ -60,7 +60,7 @@ final class NewsMediaProvenanceTest extends TestCase
             coverAlt: 'Descrição',
             editorUrl: 'https://github.com/e-cidade/site/issues/321',
             mediaCopyright: 'Prefeitura de Exemplo',
-            mediaLicense: 'CC-BY-4.0',
+            mediaLicense: 'LicenseRef-eCidade-Editorial-Permission',
             mediaCredit: 'Foto: Prefeitura de Exemplo',
         );
 
@@ -69,7 +69,10 @@ final class NewsMediaProvenanceTest extends TestCase
         self::assertSame('/assets/images/news/321/cover.png', $localized->cover);
         $sidecar = (string) file_get_contents($this->directory . '/321/cover.png.license');
         self::assertStringContainsString('SPDX-FileCopyrightText: Prefeitura de Exemplo', $sidecar);
-        self::assertStringContainsString('SPDX-License-Identifier: CC-BY-4.0', $sidecar);
+        self::assertStringContainsString(
+            'SPDX-License-' . 'Identifier: LicenseRef-eCidade-Editorial-Permission',
+            $sidecar,
+        );
     }
 }
 
