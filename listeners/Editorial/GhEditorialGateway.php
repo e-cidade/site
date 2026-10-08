@@ -17,6 +17,21 @@ final class GhEditorialGateway implements EditorialGateway
         private readonly ProcessRunner $runner = new NativeProcessRunner(),
     ) {}
 
+    public function issuePayload(int $issueNumber): array
+    {
+        $result = $this->mustRun([
+            'gh', 'api',
+            'repos/' . $this->repository . '/issues/' . $issueNumber,
+        ]);
+
+        $issue = json_decode($result->stdout, true, 512, JSON_THROW_ON_ERROR);
+        if (! is_array($issue)) {
+            throw new RuntimeException('Unable to read Issue #' . $issueNumber . '.');
+        }
+
+        return ['action' => 'dispatch', 'issue' => $issue];
+    }
+
     public function ensureLabels(array $definitions): void
     {
         foreach ($definitions as $name => $definition) {

@@ -9,6 +9,9 @@ namespace App\Listeners\Editorial;
 
 interface EditorialGateway
 {
+    /** @return array<string,mixed> */
+    public function issuePayload(int $issueNumber): array;
+
     /** @param array<string, array{color:string,description:string}> $definitions */
     public function ensureLabels(array $definitions): void;
 
