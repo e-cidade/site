@@ -26,8 +26,8 @@ path = [
     "source/favicon.ico"
 ]
 precedence = "aggregate"
-SPDX-FileCopyrightText = "2026 e-Cidade community"
-SPDX-License-Identifier = "AGPL-3.0-or-later"
+SPDX-FileCopyrightText = "legacy e-Cidade site contributors and respective rights holders"
+SPDX-License-Identifier = "LicenseRef-eCidade-Historical-Media"
 
 [[annotations]]
 path = [
