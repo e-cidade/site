@@ -34,8 +34,6 @@ interface EditorialGateway
 
     public function deleteBranch(string $branch): void;
 
-    public function requestReviewer(int $pullRequestNumber, string $reviewer): void;
-
     public function pullRequestForCommit(string $commitSha): ?EditorialPullRequest;
 
     public function closeIssue(int $issueNumber): void;

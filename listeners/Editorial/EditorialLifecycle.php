@@ -51,7 +51,6 @@ final class EditorialLifecycle
         EditorialPullRequest $pullRequest,
         string $action,
         ?string $reviewState,
-        string $reviewer,
         string $previewBaseUrl,
     ): void {
         $issueNumber = $pullRequest->issueNumber();
@@ -67,7 +66,6 @@ final class EditorialLifecycle
         }
 
         if ($action === 'ready_for_review') {
-            $this->gateway->requestReviewer($pullRequest->number, $reviewer);
             $state = EditorialState::Review;
         }
 

@@ -65,16 +65,14 @@ final class EditorialLifecycleTest extends TestCase
             $pullRequest,
             'submitted',
             'approved',
-            'vitormattos',
             'https://site.example/pr-preview',
         );
 
         self::assertSame(EditorialState::Ready, $gateway->states[0]['state']);
-        self::assertSame([], $gateway->reviewRequests);
         self::assertStringContainsString('**Aprovada para publicação**', $gateway->statuses[0]['body']);
     }
 
-    public function testReadyForReviewRequestsReviewer(): void
+    public function testReadyForReviewMovesIssueToReviewState(): void
     {
         $gateway = new FakeEditorialGateway();
         $pullRequest = new EditorialPullRequest(
@@ -88,11 +86,9 @@ final class EditorialLifecycleTest extends TestCase
             $pullRequest,
             'ready_for_review',
             null,
-            'vitormattos',
             'https://site.example/pr-preview',
         );
 
-        self::assertSame([['pr' => 104, 'reviewer' => 'vitormattos']], $gateway->reviewRequests);
         self::assertSame(EditorialState::Review, $gateway->states[0]['state']);
     }
 }
