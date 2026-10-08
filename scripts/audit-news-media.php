@@ -20,8 +20,8 @@ $result = (new NewsMediaAudit())->audit($root);
 $format = $argv[1] ?? 'json';
 
 if ($format === '--markdown') {
-    fwrite(STDOUT, "| Mídia | Estado | Referências | Fonte editorial |\n");
-    fwrite(STDOUT, "| --- | --- | --- | --- |\n");
+    fwrite(STDOUT, "| Mídia | Estado | Referências | Fonte editorial | Evidência de proveniência |\n");
+    fwrite(STDOUT, "| --- | --- | --- | --- | --- |\n");
 
     foreach ($result['media'] as $item) {
         $references = array_map(
@@ -36,11 +36,14 @@ if ($format === '--markdown') {
         fwrite(
             STDOUT,
             sprintf(
-                "| `%s` | %s | %s | %s |\n",
+                "| `%s` | %s | %s | %s | %s |\n",
                 ltrim($item['public_path'], '/'),
                 $item['status'],
                 $references === [] ? '—' : implode('<br>', $references),
                 $sources === [] ? '—' : implode('<br>', $sources),
+                $item['evidence_urls'] === []
+                    ? '—'
+                    : implode('<br>', $item['evidence_urls']),
             ),
         );
     }
