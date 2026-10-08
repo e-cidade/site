@@ -36,8 +36,8 @@ Use uma Issue explicitamente criada para teste, como #102.
 ## 4. Revisão e publicação
 
 1. mova o PR de Draft para Ready for review;
-2. confirme a solicitação de reviewer;
-3. aprove formalmente o PR;
+2. confirme que o GitHub aplica os responsáveis definidos em `.github/CODEOWNERS`;
+3. aprove formalmente o PR como code owner;
 4. faça merge;
 5. aguarde o deploy de produção;
 6. confirme estado `published`, URL pública no comentário e fechamento automático da Issue.

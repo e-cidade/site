@@ -54,4 +54,4 @@ O site oficial reúne informações institucionais, documentação, notícias e 
 
 Contribuições podem acontecer de várias formas: desenvolvimento, documentação, testes, implantação, relato de experiências, produção de conteúdo e participação nos canais ativos da comunidade.
 
-Para mudanças neste site, consulte [CONTRIBUTING.md](.github/CONTRIBUTING.md). Orientações técnicas para manutenção automatizada e agentes estão em [AGENTS.md](AGENTS.md).
+Para mudanças neste site, consulte [CONTRIBUTING.md](.github/CONTRIBUTING.md). O fluxo de publicação de notícias está documentado em [Operação do fluxo editorial](docs/editorial-workflow.md). Orientações técnicas para manutenção automatizada e agentes estão em [AGENTS.md](AGENTS.md).

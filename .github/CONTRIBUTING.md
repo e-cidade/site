@@ -15,7 +15,7 @@ Para propor uma notícia, use o formulário **Publicar notícia** na criação d
 
 Basta preencher título, resumo, data da notícia e texto. Imagem, autoria específica e fonte original são opcionais. Não é necessário conhecer Git, Markdown, HTML, CSS, JavaScript ou os templates do site.
 
-Quando houver imagens, informe o detentor dos direitos, a licença ou permissão aplicável e confirme que possui autorização para permitir a publicação. A data da notícia é um metadado editorial; a publicação efetiva só acontece depois da revisão, aprovação, merge e deploy.
+Quando houver imagens, informe o detentor dos direitos e a licença ou permissão aplicável. Para licença pública, informe também a origem da mídia e o crédito quando a licença exigir atribuição. A declaração do formulário confirma que a origem e o direito de publicação foram verificados. A data da notícia é um metadado editorial; a publicação efetiva só acontece depois da revisão, aprovação, merge e deploy.
 
 A Issue é usada para acompanhar a revisão editorial. Um comentário de status mantido pela automação concentra erros, Pull Request, preview e URL publicada. Outros comentários servem para conversar sobre ajustes e não entram automaticamente no texto publicado.
 
@@ -23,7 +23,7 @@ O Pull Request é a aprovação formal do conteúdo. O GitHub solicita revisão 
 
 A política de aprovação e os checks que devem ser protegidos em `main` estão documentados em [Governança editorial](../docs/editorial-governance.md).
 
-O fluxo técnico de branch, Pull Request, preview e publicação é responsabilidade dos mantenedores.
+O ciclo completo, os estados e as responsabilidades de autor, revisor e automação estão em [Operação do fluxo editorial](../docs/editorial-workflow.md). O fluxo técnico de branch, Pull Request, preview e publicação é responsabilidade dos mantenedores.
 
 ## Fluxo básico para alterações técnicas
 

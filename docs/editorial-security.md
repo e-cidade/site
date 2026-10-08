@@ -55,8 +55,9 @@ A implementação de produção, `GhEditorialGateway`:
 ### News editorial review state
 
 - `contents: read`: carregar a aplicação;
-- `issues: write`: atualizar estado/status;
-- `pull-requests: write`: solicitar reviewer.
+- `issues: write`: atualizar estado/status.
+
+A seleção de reviewer não é uma permissão da automação: ela é responsabilidade nativa do GitHub por meio de `.github/CODEOWNERS`.
 
 ### Deploy GitHub Pages
 
