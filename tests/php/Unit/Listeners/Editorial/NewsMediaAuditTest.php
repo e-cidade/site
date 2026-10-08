@@ -33,7 +33,7 @@ final class NewsMediaAuditTest extends TestCase
         file_put_contents($this->root . '/source/assets/images/migrated/orphan.png', 'orphan');
         file_put_contents(
             $this->root . '/source/_posts/example.md',
-            "cover_image: "/assets/images/migrated/used.png"\n",
+            '"cover_image: "/assets/images/migrated/used.png"' . "\n",
         );
 
         $result = (new NewsMediaAudit())->audit($this->root);
@@ -48,7 +48,7 @@ final class NewsMediaAuditTest extends TestCase
         file_put_contents($this->root . '/source/assets/images/news/10/cover.png', 'cover');
         file_put_contents(
             $this->root . '/source/_posts/example.md',
-            "cover_image: "/assets/images/news/10/cover.png"\n",
+            '"cover_image: "/assets/images/news/10/cover.png"' . "\n",
         );
 
         $result = (new NewsMediaAudit())->audit($this->root);
@@ -60,7 +60,7 @@ final class NewsMediaAuditTest extends TestCase
 
         file_put_contents(
             $this->root . '/source/assets/images/news/10/cover.png.license',
-            "SPDX-License-Identifier: CC0-1.0\n",
+            '"SPDX-" . "License-Identifier: CC0-1.0\n",
         );
 
         $result = (new NewsMediaAudit())->audit($this->root);
