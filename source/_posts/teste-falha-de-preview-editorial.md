@@ -6,6 +6,8 @@ description: "Teste temporário para validar o status da Issue quando o preview 
 date: 2026-10-08
 author: "Comunidade e-Cidade"
 category: "Notícias"
+cover_image: "/assets/images/news/142/missing.png"
+cover_alt: "Imagem inexistente usada apenas para testar falha do preview"
 content_source: "github"
 external_id: "github-issue-142"
 github_issue: 142
