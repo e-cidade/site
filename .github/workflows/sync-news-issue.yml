@@ -26,12 +26,55 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
+      - name: Detect editorial GitHub App configuration
+        id: app-config
+        env:
+          APP_ID: ${{ vars.EDITORIAL_APP_ID }}
+          APP_PRIVATE_KEY: ${{ secrets.EDITORIAL_APP_PRIVATE_KEY }}
+        run: |
+          if [[ -n "$APP_ID" && -n "$APP_PRIVATE_KEY" ]]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create editorial GitHub App token
+        id: app-token
+        if: steps.app-config.outputs.enabled == 'true'
+        uses: actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349 # v2
+        with:
+          app-id: ${{ vars.EDITORIAL_APP_ID }}
+          private-key: ${{ secrets.EDITORIAL_APP_PRIVATE_KEY }}
+          permission-contents: write
+          permission-issues: write
+          permission-pull-requests: write
+
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
+          persist-credentials: false
+          token: ${{ steps.app-token.outputs.token || github.token }}
+
+      - name: Configure ephemeral Git authentication
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token || github.token }}
+        run: gh auth setup-git
+
+      - name: Resolve GitHub App bot identity
+        id: app-user
+        if: steps.app-config.outputs.enabled == 'true'
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          APP_SLUG: ${{ steps.app-token.outputs.app-slug }}
+        run: |
+          user_id="$(gh api "/users/${APP_SLUG}[bot]" --jq .id)"
+          echo "name=${APP_SLUG}[bot]" >> "$GITHUB_OUTPUT"
+          echo "email=${user_id}+${APP_SLUG}[bot]@users.noreply.github.com" >> "$GITHUB_OUTPUT"
 
       - name: Run editorial issue application
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ steps.app-token.outputs.token || github.token }}
+          EDITORIAL_GIT_USER_NAME: ${{ steps.app-user.outputs.name || 'github-actions[bot]' }}
+          EDITORIAL_GIT_USER_EMAIL: ${{ steps.app-user.outputs.email || '41898282+github-actions[bot]@users.noreply.github.com' }}
           DISPATCH_ISSUE_NUMBER: ${{ github.event_name == 'workflow_dispatch' && inputs.issue_number || '' }}
         run: php scripts/editorial/sync.php "$GITHUB_EVENT_PATH"

@@ -16,6 +16,8 @@ final class GhEditorialGateway implements EditorialGateway
         private readonly string $workingDirectory,
         private readonly ProcessRunner $runner = new NativeProcessRunner(),
         private readonly ?string $workspaceRoot = null,
+        private readonly ?string $gitUserName = null,
+        private readonly ?string $gitUserEmail = null,
     ) {}
 
     public function issuePayload(int $issueNumber): array
@@ -198,10 +200,15 @@ final class GhEditorialGateway implements EditorialGateway
     public function commitAndPushEditorialChanges(EditorialWorkspace $workspace, int $issueNumber): void
     {
         $path = $workspace->path;
-        $this->mustRun(['git', '-C', $path, 'config', 'user.name', 'github-actions[bot]']);
+        $gitUserName = $this->gitUserName
+            ?? (getenv('EDITORIAL_GIT_USER_NAME') ?: 'github-actions[bot]');
+        $gitUserEmail = $this->gitUserEmail
+            ?? (getenv('EDITORIAL_GIT_USER_EMAIL')
+                ?: '41898282+github-actions[bot]@users.noreply.github.com');
+
+        $this->mustRun(['git', '-C', $path, 'config', 'user.name', $gitUserName]);
         $this->mustRun([
-            'git', '-C', $path, 'config', 'user.email',
-            '41898282+github-actions[bot]@users.noreply.github.com',
+            'git', '-C', $path, 'config', 'user.email', $gitUserEmail,
         ]);
         $this->mustRun([
             'git', '-C', $path, 'add',
