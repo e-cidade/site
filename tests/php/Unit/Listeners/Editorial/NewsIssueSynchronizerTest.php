@@ -162,7 +162,7 @@ final class NewsIssueSynchronizerTest extends TestCase
     {
         $body = (string) file_get_contents(__DIR__ . '/../../../Fixtures/Editorial/valid-news-issue.md');
 
-        $this->expectException(\\InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('A notícia publicada não foi localizada.');
 
         (new NewsIssueSynchronizer($this->postsDirectory))->synchronize(
