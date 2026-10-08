@@ -43,6 +43,31 @@ final class NewsMediaAuditTest extends TestCase
         self::assertFileExists($this->root . '/source/assets/images/migrated/orphan.png');
     }
 
+    public function testHistoricalEvidenceChangesPendingClassificationWithoutClaimingLicense(): void
+    {
+        file_put_contents(
+            $this->root . '/source/assets/images/migrated/aula-inaugural.png',
+            'image',
+        );
+        file_put_contents(
+            $this->root . '/source/_posts/example.md',
+            "cover_image: \"/assets/images/migrated/aula-inaugural.png\"\n",
+        );
+
+        $result = (new NewsMediaAudit())->audit($this->root);
+        $item = $result['media'][0];
+
+        self::assertSame('source-located-license-pending', $item['status']);
+        self::assertSame(
+            ['https://artecult.com/aula-inaugural-do-e-cidade-faz-historia/'],
+            $item['evidence_urls'],
+        );
+        self::assertStringContainsString(
+            'sem licença reutilizável explícita',
+            (string) $item['evidence_note'],
+        );
+    }
+
     public function testNewEditorialMediaRequiresPerFileReuseSidecar(): void
     {
         file_put_contents($this->root . '/source/assets/images/news/10/cover.png', 'cover');

@@ -120,3 +120,19 @@ Arquivos órfãos são apenas reportados. A exclusão deve acontecer em Pull Req
 O acervo em `source/assets/images/migrated/**` não deve mais ser marcado como AGPL por conveniência. Enquanto copyright/licença individual não forem verificados, esses arquivos usam `LicenseRef-eCidade-Historical-Media`, que registra explicitamente o estado de direitos desconhecido sem conceder uma licença inexistente.
 
 Quando um arquivo histórico for regularizado, a metadata genérica deve ser substituída por metadata específica e verificável.
+
+
+## Evidências versionadas do acervo histórico
+
+A auditoria diferencia **evidência de proveniência** de **prova de licença**.
+
+`HistoricalMediaEvidenceCatalog` registra URLs onde a origem editorial ou o contexto visual foi localizado. Isso permite avançar a pesquisa sem converter uma pista em copyright/licença por inferência.
+
+Os estados adicionais são:
+
+- `source-located-license-pending`: existe uma fonte editorial verificável relacionada à mídia, mas não uma licença reutilizável explícita;
+- `pending-evidence`: existe apenas uma pista contextual e ainda falta localizar a origem exata;
+- `historical-pending`: ainda não existe evidência versionada;
+- `orphan-candidate`: não há referência atual em conteúdo versionado.
+
+Uma mídia só deve deixar o estado pendente quando copyright e fundamento de reutilização forem comprovados de forma suficiente para substituir a `LicenseRef-eCidade-Historical-Media`.

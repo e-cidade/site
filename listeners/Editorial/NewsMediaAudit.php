@@ -12,6 +12,9 @@ use RecursiveIteratorIterator;
 
 final class NewsMediaAudit
 {
+    public function __construct(
+        private readonly HistoricalMediaEvidenceCatalog $evidence = new HistoricalMediaEvidenceCatalog(),
+    ) {}
     /**
      * @return array{
      *   media:list<array{
@@ -21,7 +24,10 @@ final class NewsMediaAudit
      *     referenced:bool,
      *     references:list<array{post:string,source_url:?string}>,
      *     has_sidecar:bool,
-     *     status:string
+     *     status:string,
+     *     rights_status:?string,
+     *     evidence_urls:list<string>,
+     *     evidence_note:?string
      *   }>,
      *   orphaned:list<string>,
      *   missing_sidecar:list<string>
@@ -42,6 +48,9 @@ final class NewsMediaAudit
                 $references = $this->references($publicPath, $posts);
                 $referenced = $references !== [];
                 $hasSidecar = is_file($path . '.license');
+                $evidence = $category === 'migrated'
+                    ? $this->evidence->for($publicPath)
+                    : null;
 
                 $media[] = [
                     'path' => $path,
@@ -50,7 +59,10 @@ final class NewsMediaAudit
                     'referenced' => $referenced,
                     'references' => $references,
                     'has_sidecar' => $hasSidecar,
-                    'status' => $this->status($category, $referenced, $hasSidecar),
+                    'status' => $this->status($category, $referenced, $hasSidecar, $evidence),
+                    'rights_status' => $evidence['rights_status'] ?? null,
+                    'evidence_urls' => $evidence['evidence_urls'] ?? [],
+                    'evidence_note' => $evidence['evidence_note'] ?? null,
                 ];
             }
         }
@@ -163,14 +175,21 @@ final class NewsMediaAudit
         return $value === '' ? null : $value;
     }
 
-    private function status(string $category, bool $referenced, bool $hasSidecar): string
-    {
+    /** @param array<string,mixed>|null $evidence */
+    private function status(
+        string $category,
+        bool $referenced,
+        bool $hasSidecar,
+        ?array $evidence,
+    ): string {
         if (! $referenced) {
             return 'orphan-candidate';
         }
 
         if ($category === 'migrated') {
-            return 'historical-pending';
+            return $evidence === null
+                ? 'historical-pending'
+                : (string) ($evidence['rights_status'] ?? 'historical-pending');
         }
 
         if (! $hasSidecar) {
