@@ -19,8 +19,13 @@
             <span>{{ $page->author }}</span>
         </p>
         @if ($page->cover_image)
+            @php
+                $coverImageUrl = str_starts_with((string) $page->cover_image, '/')
+                    ? rtrim((string) $page->baseUrl, '/') . $page->cover_image
+                    : $page->cover_image;
+            @endphp
             <figure class="article-cover">
-                <img src="{{ $page->cover_image }}" alt="{{ $page->cover_alt ?? '' }}">
+                <img src="{{ $coverImageUrl }}" alt="{{ $page->cover_alt ?? '' }}">
                 @if ($page->cover_caption)
                     <figcaption>{{ $page->cover_caption }}</figcaption>
                 @endif
