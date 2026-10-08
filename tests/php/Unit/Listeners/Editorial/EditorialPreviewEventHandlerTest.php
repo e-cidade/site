@@ -51,6 +51,37 @@ final class EditorialPreviewEventHandlerTest extends TestCase
         );
     }
 
+    public function testFailedPreviewPreservesStateWithoutAdvertisingPreviewUrl(): void
+    {
+        $gateway = new FakeEditorialGateway();
+        $gateway->issuePayloads[102] = [
+            'issue' => [
+                'number' => 102,
+                'labels' => [
+                    ['name' => 'editorial/draft'],
+                ],
+            ],
+        ];
+
+        $handler = new EditorialPreviewEventHandler(
+            $gateway,
+            new EditorialLifecycle($gateway),
+            'https://site.example/pr-preview',
+        );
+
+        $handler->handle([
+            'pull_request' => [
+                'number' => 104,
+                'html_url' => 'https://github.com/e-cidade/site/pull/104',
+                'head' => ['ref' => 'content/news-102'],
+            ],
+        ], 'failure');
+
+        self::assertSame(EditorialState::Draft, $gateway->states[0]['state']);
+        self::assertStringContainsString('Não foi possível gerar a prévia', $gateway->statuses[0]['body']);
+        self::assertStringNotContainsString('Prévia:', $gateway->statuses[0]['body']);
+    }
+
     public function testIgnoresNonEditorialPullRequest(): void
     {
         $gateway = new FakeEditorialGateway();
