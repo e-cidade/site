@@ -21,10 +21,24 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+          fetch-depth: 0
+
+      - name: Classify pull request scope
+        id: ci-scope
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: php scripts/ci-scope.php "$BASE_SHA" "$HEAD_SHA" >> "$GITHUB_OUTPUT"
       - uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
+        if: github.event_name != 'pull_request' || steps.ci-scope.outputs.editorial_only != 'true'
         with:
           coverage: none
       - run: composer validate --strict
+        if: github.event_name != 'pull_request' || steps.ci-scope.outputs.editorial_only != 'true'
       - run: composer audit --locked
+        if: github.event_name != 'pull_request' || steps.ci-scope.outputs.editorial_only != 'true'
       - run: composer --working-dir=vendor-bin/phpunit audit --locked
+        if: github.event_name != 'pull_request' || steps.ci-scope.outputs.editorial_only != 'true'
       - run: composer --working-dir=vendor-bin/php-cs-fixer audit --locked
+        if: github.event_name != 'pull_request' || steps.ci-scope.outputs.editorial_only != 'true'

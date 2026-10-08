@@ -21,12 +21,23 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+          fetch-depth: 0
+
+      - name: Classify pull request scope
+        id: ci-scope
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: php scripts/ci-scope.php "$BASE_SHA" "$HEAD_SHA" >> "$GITHUB_OUTPUT"
       - uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
+        if: github.event_name != 'pull_request' || steps.ci-scope.outputs.editorial_only != 'true'
         with:
           coverage: none
       - name: Restore Composer dependencies
         id: composer-deps
         uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        if: github.event_name != 'pull_request' || steps.ci-scope.outputs.editorial_only != 'true'
         with:
           path: |
             vendor
@@ -34,6 +45,8 @@ jobs:
             vendor-bin/php-cs-fixer/vendor
           key: composer-${{ runner.os }}-php85-${{ hashFiles('composer.json', 'composer.lock', 'vendor-bin/**/composer.json', 'vendor-bin/**/composer.lock') }}
       - run: composer install --no-interaction --no-progress --prefer-dist
-        if: steps.composer-deps.outputs.cache-hit != 'true'
+        if: (github.event_name != 'pull_request' || steps.ci-scope.outputs.editorial_only != 'true') && steps.composer-deps.outputs.cache-hit != 'true'
       - run: composer dump-autoload --no-interaction --optimize
+        if: github.event_name != 'pull_request' || steps.ci-scope.outputs.editorial_only != 'true'
       - run: composer cs:check
+        if: github.event_name != 'pull_request' || steps.ci-scope.outputs.editorial_only != 'true'
