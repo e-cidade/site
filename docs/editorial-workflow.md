@@ -172,6 +172,8 @@ Direitos, proveniência, crédito, licenças públicas, REUSE e tratamento de ac
 
 Detalhes estão em [Trust boundary do fluxo editorial](editorial-security.md).
 
+Para verificar os requisitos que dependem de administrador do GitHub e os critérios de aceite da publicação real, consulte [Preparação operacional e critérios de aceite](editorial-release-readiness.md). Não considere a governança aplicada apenas pela presença do CODEOWNERS.
+
 ## Verificação de integração
 
 Testes unitários não criam recursos reais no GitHub. Para validar integrações nativas do GitHub, use o roteiro em [Smoke test do fluxo editorial](editorial-smoke-test.md).
