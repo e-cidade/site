@@ -87,7 +87,8 @@ final class EditorialSyncService
             $pullRequest = $this->gateway->createDraftPullRequest($branch, $issueNumber);
         }
 
-        if ($pullRequest !== null) {
+        $recoveringFromInvalid = in_array(EditorialState::Invalid->label(), $labels, true);
+        if ($pullRequest !== null && ($needsPush || $recoveringFromInvalid)) {
             $this->lifecycle->updateState(
                 $issueNumber,
                 new EditorialStatus(
