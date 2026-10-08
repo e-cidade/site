@@ -77,24 +77,34 @@ body:
     id: media_license
     attributes:
       label: Licença/permissão das imagens
-      description: Obrigatório quando houver imagens. A permissão específica fica registrada na Issue de origem.
+      description: Obrigatório quando houver imagens. Use uma licença pública somente quando a origem comprovar que ela se aplica à mídia.
       options:
         - LicenseRef-eCidade-Editorial-Permission
+        - CC-BY-4.0
+        - CC-BY-SA-4.0
+        - CC0-1.0
+
+  - type: input
+    id: media_source_url
+    attributes:
+      label: Fonte das imagens
+      description: URL de origem da mídia. Obrigatória para imagens publicadas sob licença pública.
+      placeholder: https://exemplo.gov.br/galeria/foto
 
   - type: input
     id: media_credit
     attributes:
       label: Crédito das imagens
-      description: Opcional. Texto de crédito que deve aparecer na publicação.
+      description: Obrigatório para CC-BY-4.0 e CC-BY-SA-4.0. Nos demais casos, preencha quando houver crédito solicitado pelo detentor dos direitos.
       placeholder: Foto: Prefeitura de Exemplo
 
   - type: checkboxes
     id: media_authorization
     attributes:
-      label: Autorização para publicar as imagens
+      label: Declaração sobre as imagens
       description: Marque quando a notícia contiver qualquer imagem, inclusive imagens inseridas no corpo.
       options:
-        - label: Confirmo que tenho autorização para enviar e permitir a publicação das imagens informadas nesta notícia.
+        - label: Confirmo que verifiquei a origem e que a licença/permissão informada permite ao projeto publicar estas imagens.
           required: false
 
   - type: input

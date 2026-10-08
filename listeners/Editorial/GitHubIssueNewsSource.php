@@ -47,6 +47,7 @@ final class GitHubIssueNewsSource
             editorUrl: $issueUrl,
             mediaCopyright: $data['media_copyright'],
             mediaLicense: $data['media_license'],
+            mediaSourceUrl: $data['media_source_url'],
             mediaCredit: $data['media_credit'],
         );
 

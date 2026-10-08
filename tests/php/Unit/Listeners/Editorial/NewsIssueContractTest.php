@@ -32,6 +32,7 @@ final class NewsIssueContractTest extends TestCase
         self::assertSame('https://exemplo.gov.br/noticia', $result['source_url']);
         self::assertSame('Prefeitura de Exemplo', $result['media_copyright']);
         self::assertSame('LicenseRef-eCidade-Editorial-Permission', $result['media_license']);
+        self::assertNull($result['media_source_url']);
         self::assertSame('Foto: Prefeitura de Exemplo', $result['media_credit']);
     }
 

@@ -33,6 +33,7 @@ final readonly class NewsEntry
         public ?string $editorUrl = null,
         public ?string $mediaCopyright = null,
         public ?string $mediaLicense = null,
+        public ?string $mediaSourceUrl = null,
         public ?string $mediaCredit = null,
     ) {}
 
@@ -59,6 +60,7 @@ final readonly class NewsEntry
             editorUrl: $this->editorUrl,
             mediaCopyright: $this->mediaCopyright,
             mediaLicense: $this->mediaLicense,
+            mediaSourceUrl: $this->mediaSourceUrl,
             mediaCredit: $this->mediaCredit,
         );
     }

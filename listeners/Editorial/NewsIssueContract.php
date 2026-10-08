@@ -16,9 +16,23 @@ final class NewsIssueContract
 
     private const MEDIA_LICENSES = [
         'LicenseRef-eCidade-Editorial-Permission',
+        'CC-BY-4.0',
+        'CC-BY-SA-4.0',
+        'CC0-1.0',
     ];
 
-    /** @return array{issue:int,title:string,summary:string,published_at:string,author:string,content:string,cover:?string,cover_alt:?string,source_label:?string,source_url:?string,preferred_slug:?string,media_copyright:?string,media_license:?string,media_credit:?string} */
+    private const PUBLIC_MEDIA_LICENSES = [
+        'CC-BY-4.0',
+        'CC-BY-SA-4.0',
+        'CC0-1.0',
+    ];
+
+    private const ATTRIBUTION_MEDIA_LICENSES = [
+        'CC-BY-4.0',
+        'CC-BY-SA-4.0',
+    ];
+
+    /** @return array{issue:int,title:string,summary:string,published_at:string,author:string,content:string,cover:?string,cover_alt:?string,source_label:?string,source_url:?string,preferred_slug:?string,media_copyright:?string,media_license:?string,media_source_url:?string,media_credit:?string} */
     public function parse(int $issueNumber, string $title, string $body): array
     {
         $title = trim($title);
@@ -44,8 +58,10 @@ final class NewsIssueContract
         $sourceUrl = $this->optional($sections, 'URL da fonte');
         $mediaCopyright = $this->optional($sections, 'Detentor dos direitos das imagens');
         $mediaLicense = $this->optional($sections, 'Licença/permissão das imagens');
+        $mediaSourceUrl = $this->optional($sections, 'Fonte das imagens');
         $mediaCredit = $this->optional($sections, 'Crédito das imagens');
-        $mediaAuthorization = $this->optional($sections, 'Autorização para publicar as imagens');
+        $mediaAuthorization = $this->optional($sections, 'Declaração sobre as imagens')
+            ?? $this->optional($sections, 'Autorização para publicar as imagens');
         $preferredSlug = null;
 
         if (preg_match('/<!--\s*e-cidade-slug:([a-z0-9]+(?:-[a-z0-9]+)*)\s*-->/', $body, $match) === 1) {
@@ -74,8 +90,26 @@ final class NewsIssueContract
             }
 
             if ($mediaAuthorization === null || ! str_contains(strtolower($mediaAuthorization), '[x]')) {
-                throw new InvalidArgumentException('Confirme que possui autorização para permitir a publicação das imagens.');
+                throw new InvalidArgumentException('Confirme que verificou a origem e a licença/permissão das imagens.');
             }
+
+            if (
+                in_array($mediaLicense, self::PUBLIC_MEDIA_LICENSES, true)
+                && $mediaSourceUrl === null
+            ) {
+                throw new InvalidArgumentException('Informe a URL de origem das imagens quando usar uma licença pública.');
+            }
+
+            if (
+                in_array($mediaLicense, self::ATTRIBUTION_MEDIA_LICENSES, true)
+                && $mediaCredit === null
+            ) {
+                throw new InvalidArgumentException('Informe o crédito das imagens para a licença selecionada.');
+            }
+        }
+
+        if ($mediaSourceUrl !== null && filter_var($mediaSourceUrl, FILTER_VALIDATE_URL) === false) {
+            throw new InvalidArgumentException('A URL de origem das imagens é inválida.');
         }
 
         if (($sourceLabel === null) !== ($sourceUrl === null)) {
@@ -100,6 +134,7 @@ final class NewsIssueContract
             'preferred_slug' => $preferredSlug,
             'media_copyright' => $mediaCopyright,
             'media_license' => $mediaLicense,
+            'media_source_url' => $mediaSourceUrl,
             'media_credit' => $mediaCredit,
         ];
     }
