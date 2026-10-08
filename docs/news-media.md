@@ -101,3 +101,22 @@ A regularização histórica deve ser rastreável em PR específico.
 Substituir a capa reutiliza o caminho `cover.<ext>` e atualiza o arquivo quando o conteúdo muda.
 
 Imagens inline antigas não são apagadas automaticamente quando deixam de ser referenciadas. Isso é intencional para preservar histórico. Limpeza de órfãos deve ser uma operação separada, auditável e baseada em referências conhecidas, nunca uma exclusão automática durante a sincronização.
+
+
+## Auditoria de mídia
+
+A manutenção de mídia usa `php scripts/audit-news-media.php`.
+
+O comando é deliberadamente não destrutivo. Ele produz um inventário com:
+
+- mídia referenciada por posts;
+- mídia órfã, isto é, presente no repositório mas sem referência nos posts atuais;
+- nova mídia editorial sem sidecar REUSE.
+
+Arquivos órfãos são apenas reportados. A exclusão deve acontecer em Pull Request específico, após revisão de histórico e referências, para que a trilha de auditoria seja preservada.
+
+### Acervo migrado
+
+O acervo em `source/assets/images/migrated/**` não deve mais ser marcado como AGPL por conveniência. Enquanto copyright/licença individual não forem verificados, esses arquivos usam `LicenseRef-eCidade-Historical-Media`, que registra explicitamente o estado de direitos desconhecido sem conceder uma licença inexistente.
+
+Quando um arquivo histórico for regularizado, a metadata genérica deve ser substituída por metadata específica e verificável.

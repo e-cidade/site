@@ -1,0 +1,17 @@
+Historical e-Cidade media status
+
+Files carrying this LicenseRef were migrated from the historical e-Cidade
+website to preserve the published record and continuity of the community site.
+
+Their original copyright holder, source, or reusable public license has not
+yet been verified sufficiently to assign a standard SPDX license with
+confidence.
+
+This LicenseRef is a rights-status marker, not a relicensing grant. Inclusion
+in this repository does not imply that the media is licensed under the AGPL
+software license and does not grant downstream recipients any rights beyond
+those provided by the actual rights holder, applicable law, or a separately
+verified license or permission.
+
+When the origin and rights of a file are verified, its metadata should be
+replaced with the concrete copyright holder and SPDX license or permission.
