@@ -96,11 +96,11 @@ final class NewsIssueSynchronizer
 
     private function withoutRevisionTimestamp(string $content): string
     {
-        if (! str_starts_with($content, "---\\n")) {
+        if (! str_starts_with($content, "---\n")) {
             return $content;
         }
 
-        $frontMatterEnd = strpos($content, "\\n---\\n", 4);
+        $frontMatterEnd = strpos($content, "\n---\n", 4);
         if ($frontMatterEnd === false) {
             return $content;
         }
