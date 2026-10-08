@@ -22,6 +22,7 @@ final class GitHubIssueNewsSource
         string $issueUrl,
         ?string $existingSlug = null,
         ?string $updatedAt = null,
+        ?string $originalPublishedAt = null,
     ): NewsEntry {
         $data = $this->contract->parse($issueNumber, $title, $body);
         $slug = $existingSlug !== null && trim($existingSlug) !== ''
@@ -35,7 +36,7 @@ final class GitHubIssueNewsSource
             title: $data['title'],
             slug: $slug,
             description: $data['summary'],
-            publishedAt: $data['published_at'],
+            publishedAt: $originalPublishedAt ?? $data['published_at'],
             updatedAt: $updatedAt,
             author: $data['author'],
             category: 'Notícias',
