@@ -17,8 +17,42 @@ require $autoload;
 
 $root = dirname(__DIR__);
 $result = (new NewsMediaAudit())->audit($root);
+$format = $argv[1] ?? 'json';
 
-fwrite(STDOUT, json_encode($result, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR) . "\n");
+if ($format === '--markdown') {
+    fwrite(STDOUT, "| Mídia | Estado | Referências | Fonte editorial |\n");
+    fwrite(STDOUT, "| --- | --- | --- | --- |\n");
+
+    foreach ($result['media'] as $item) {
+        $references = array_map(
+            static fn(array $reference): string => $reference['post'],
+            $item['references'],
+        );
+        $sources = array_values(array_unique(array_filter(array_map(
+            static fn(array $reference): ?string => $reference['source_url'],
+            $item['references'],
+        ))));
+
+        fwrite(
+            STDOUT,
+            sprintf(
+                "| `%s` | %s | %s | %s |\n",
+                ltrim($item['public_path'], '/'),
+                $item['status'],
+                $references === [] ? '—' : implode('<br>', $references),
+                $sources === [] ? '—' : implode('<br>', $sources),
+            ),
+        );
+    }
+} else {
+    fwrite(
+        STDOUT,
+        json_encode(
+            $result,
+            JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR,
+        ) . "\n",
+    );
+}
 
 if ($result['missing_sidecar'] !== []) {
     exit(1);
