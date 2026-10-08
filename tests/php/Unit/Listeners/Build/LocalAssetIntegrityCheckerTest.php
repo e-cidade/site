@@ -66,6 +66,43 @@ final class LocalAssetIntegrityCheckerTest extends TestCase
         );
     }
 
+    public function testTreatsAbsolutePreviewUrlAsLocalAndReportsMissingAsset(): void
+    {
+        $this->write(
+            'noticia/index.html',
+            '<img src="https://site.example/pr-preview/pr-104/assets/images/news/1/missing.png">',
+        );
+
+        $errors = (new LocalAssetIntegrityChecker())->check(
+            $this->directory,
+            'https://site.example/pr-preview/pr-104',
+        );
+
+        self::assertCount(1, $errors);
+        self::assertSame(
+            'https://site.example/pr-preview/pr-104/assets/images/news/1/missing.png',
+            $errors[0]['url'],
+        );
+        self::assertSame('local target does not exist', $errors[0]['reason']);
+    }
+
+    public function testAcceptsAbsolutePreviewUrlWhenLocalAssetExists(): void
+    {
+        $this->write('assets/images/news/1/cover.png', 'png');
+        $this->write(
+            'noticia/index.html',
+            '<img src="https://site.example/pr-preview/pr-104/assets/images/news/1/cover.png">',
+        );
+
+        self::assertSame(
+            [],
+            (new LocalAssetIntegrityChecker())->check(
+                $this->directory,
+                'https://site.example/pr-preview/pr-104',
+            ),
+        );
+    }
+
     public function testRejectsRootAbsoluteAssetInsidePreview(): void
     {
         $this->write('assets/images/news/1/cover.png', 'png');
