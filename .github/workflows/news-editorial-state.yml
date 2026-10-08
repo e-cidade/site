@@ -26,6 +26,6 @@ jobs:
       - name: Apply editorial review event
         env:
           GH_TOKEN: ${{ github.token }}
-          EDITORIAL_REVIEWER: vitormattos
+          EDITORIAL_REVIEWER: ${{ vars.EDITORIAL_REVIEWER || 'vitormattos' }}
           EDITORIAL_PREVIEW_BASE_URL: https://site-ecidade.librecode.coop/pr-preview
         run: php scripts/editorial/review.php "$GITHUB_EVENT_PATH"
