@@ -45,6 +45,21 @@ final class NewsMediaLocalizerTest extends TestCase
         self::assertCount(2, glob($this->mediaDirectory . '/321/*.png') ?: []);
     }
 
+    public function testLocalizesCoverPastedByGitHubAsHtmlImage(): void
+    {
+        $fetcher = new FakeNewsMediaFetcher();
+        $localizer = new NewsMediaLocalizer($this->mediaDirectory, '/assets/images/news', $fetcher);
+        $url = 'https://github.com/user-attachments/assets/3e3c7715-cdd3-4a41-b02e-7d3d8af095d4';
+
+        $localized = $localizer->localize($this->entry(
+            cover: '<img width="200" height="200" alt="Image" src="' . $url . '" />',
+            body: 'Texto.',
+        ));
+
+        self::assertSame('/assets/images/news/321/cover.png', $localized->cover);
+        self::assertSame(1, $fetcher->calls[$url] ?? 0);
+    }
+
     public function testPreservesAlreadyVersionedHistoricalCover(): void
     {
         $fetcher = new FakeNewsMediaFetcher();
