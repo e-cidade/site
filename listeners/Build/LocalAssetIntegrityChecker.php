@@ -21,6 +21,7 @@ final class LocalAssetIntegrityChecker
     {
         $errors = [];
         $basePath = $this->basePath($expectedBaseUrl);
+        $baseOrigin = $this->baseOrigin($expectedBaseUrl);
 
         foreach ($this->htmlFiles($buildDirectory) as $htmlPath) {
             $html = file_get_contents($htmlPath);
@@ -29,7 +30,13 @@ final class LocalAssetIntegrityChecker
             }
 
             foreach ($this->references($html) as $url) {
-                $resolved = $this->resolve($url, $htmlPath, $buildDirectory, $basePath);
+                $resolved = $this->resolve(
+                    $url,
+                    $htmlPath,
+                    $buildDirectory,
+                    $basePath,
+                    $baseOrigin,
+                );
                 if ($resolved === null) {
                     continue;
                 }
@@ -119,6 +126,7 @@ final class LocalAssetIntegrityChecker
         string $htmlPath,
         string $buildDirectory,
         string $basePath,
+        string $baseOrigin,
     ): ?array {
         if (
             str_starts_with($url, '#')
@@ -137,7 +145,9 @@ final class LocalAssetIntegrityChecker
                 return null;
             }
 
-            return null;
+            if ($baseOrigin === '' || ! str_starts_with($url, $baseOrigin . '/')) {
+                return null;
+            }
         }
 
         $path = parse_url($url, PHP_URL_PATH);
@@ -191,6 +201,24 @@ final class LocalAssetIntegrityChecker
         }
 
         return false;
+    }
+
+    private function baseOrigin(?string $expectedBaseUrl): string
+    {
+        if ($expectedBaseUrl === null || trim($expectedBaseUrl) === '') {
+            return '';
+        }
+
+        $scheme = parse_url($expectedBaseUrl, PHP_URL_SCHEME);
+        $host = parse_url($expectedBaseUrl, PHP_URL_HOST);
+        $port = parse_url($expectedBaseUrl, PHP_URL_PORT);
+
+        if (! is_string($scheme) || ! is_string($host) || $scheme === '' || $host === '') {
+            return '';
+        }
+
+        return strtolower($scheme) . '://' . strtolower($host)
+            . (is_int($port) ? ':' . $port : '');
     }
 
     private function basePath(?string $expectedBaseUrl): string
