@@ -50,7 +50,7 @@ final class EditorialLabels
     public static function stateLabels(): array
     {
         return array_map(
-            static fn (EditorialState $state): string => $state->label(),
+            static fn(EditorialState $state): string => $state->label(),
             EditorialState::cases(),
         );
     }
