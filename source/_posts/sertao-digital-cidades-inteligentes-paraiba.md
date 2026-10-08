@@ -12,6 +12,8 @@ github_issue: 95
 editor_url: "https://github.com/e-cidade/site/issues/95"
 cover_image: /assets/images/migrated/sertao-digital.png
 cover_alt: Divulgação do projeto Sertão Digital
+source_url: https://artecult.com/sertao-digital-impulsiona-modelo-de-cidades-inteligentes-na-paraiba/
+source_label: ArteCult
 ---
 <!--
 SPDX-FileCopyrightText: 2026 e-Cidade community

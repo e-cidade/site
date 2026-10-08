@@ -12,6 +12,8 @@ github_issue: 91
 editor_url: "https://github.com/e-cidade/site/issues/91"
 cover_image: /assets/images/migrated/governanca-academia.png
 cover_alt: Ilustração sobre governança participativa do e-Cidade
+source_url: https://artecult.com/e-cidade-amplia-governanca-e-passa-a-contar-com-representantes-da-academia-no-comite-gestor/
+source_label: ArteCult
 ---
 <!--
 SPDX-FileCopyrightText: 2026 e-Cidade community
