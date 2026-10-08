@@ -82,7 +82,7 @@ final class EditorialSyncServiceTest extends TestCase
         $gateway->workspacePath = $this->postsDirectory . '/workspace';
         $service = new EditorialSyncService(
             $gateway,
-            new NewsIssueSynchronizer($this->postsDirectory),
+            new TestEditorialContentSynchronizer(),
             new EditorialLifecycle($gateway),
         );
 
