@@ -10,6 +10,7 @@ namespace Tests\Unit\Listeners\Editorial;
 use App\Listeners\Editorial\EditorialGateway;
 use App\Listeners\Editorial\EditorialPullRequest;
 use App\Listeners\Editorial\EditorialState;
+use App\Listeners\Editorial\EditorialWorkspace;
 
 final class FakeEditorialGateway implements EditorialGateway
 {
@@ -39,6 +40,12 @@ final class FakeEditorialGateway implements EditorialGateway
     public ?EditorialPullRequest $commitPullRequest = null;
     public bool $prepared = false;
     public bool $createdPullRequest = false;
+    public string $workspacePath;
+
+    public function __construct()
+    {
+        $this->workspacePath = sys_get_temp_dir() . '/ecidade-fake-editorial-workspace-' . bin2hex(random_bytes(5));
+    }
 
     public function issuePayload(int $issueNumber): array
     {
@@ -67,14 +74,16 @@ final class FakeEditorialGateway implements EditorialGateway
         return $this->pullRequest;
     }
 
-    public function prepareEditorialBranch(string $branch): void
+    public function prepareEditorialBranch(string $branch): EditorialWorkspace
     {
         $this->prepared = true;
+
+        return new EditorialWorkspace($branch, $this->workspacePath, null, false);
     }
 
-    public function commitAndPushEditorialChanges(string $branch, int $issueNumber): void
+    public function commitAndPushEditorialChanges(EditorialWorkspace $workspace, int $issueNumber): void
     {
-        $this->commits[] = ['branch' => $branch, 'issue' => $issueNumber];
+        $this->commits[] = ['branch' => $workspace->branch, 'issue' => $issueNumber];
     }
 
     public function createDraftPullRequest(string $branch, int $issueNumber): EditorialPullRequest

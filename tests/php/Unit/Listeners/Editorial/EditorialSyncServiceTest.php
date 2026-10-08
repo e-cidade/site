@@ -10,7 +10,6 @@ namespace Tests\Unit\Listeners\Editorial;
 use App\Listeners\Editorial\EditorialLifecycle;
 use App\Listeners\Editorial\EditorialState;
 use App\Listeners\Editorial\EditorialSyncService;
-use App\Listeners\Editorial\NewsIssueSynchronizer;
 use PHPUnit\Framework\TestCase;
 
 final class EditorialSyncServiceTest extends TestCase
@@ -28,18 +27,34 @@ final class EditorialSyncServiceTest extends TestCase
             return;
         }
 
-        foreach (glob($this->postsDirectory . '/*') ?: [] as $path) {
-            unlink($path);
+        $this->removeDirectory($this->postsDirectory);
+    }
+
+    private function removeDirectory(string $directory): void
+    {
+        if (! is_dir($directory)) {
+            return;
         }
-        rmdir($this->postsDirectory);
+
+        foreach (array_diff(scandir($directory) ?: [], ['.', '..']) as $entry) {
+            $path = $directory . '/' . $entry;
+            if (is_dir($path)) {
+                $this->removeDirectory($path);
+            } else {
+                unlink($path);
+            }
+        }
+
+        rmdir($directory);
     }
 
     public function testValidIssueCreatesSnapshotPullRequestAndDraftStatus(): void
     {
         $gateway = new FakeEditorialGateway();
+        $gateway->workspacePath = $this->postsDirectory . '/workspace';
         $service = new EditorialSyncService(
             $gateway,
-            new NewsIssueSynchronizer($this->postsDirectory),
+            new TestEditorialContentSynchronizer(),
             new EditorialLifecycle($gateway),
         );
 
@@ -64,9 +79,10 @@ final class EditorialSyncServiceTest extends TestCase
     public function testInvalidIssueReportsInvalidStateWithoutCommit(): void
     {
         $gateway = new FakeEditorialGateway();
+        $gateway->workspacePath = $this->postsDirectory . '/workspace';
         $service = new EditorialSyncService(
             $gateway,
-            new NewsIssueSynchronizer($this->postsDirectory),
+            new TestEditorialContentSynchronizer(),
             new EditorialLifecycle($gateway),
         );
 

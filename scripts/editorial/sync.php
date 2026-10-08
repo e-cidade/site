@@ -9,8 +9,7 @@ use App\Listeners\Editorial\EditorialIssueEventHandler;
 use App\Listeners\Editorial\EditorialLifecycle;
 use App\Listeners\Editorial\EditorialSyncService;
 use App\Listeners\Editorial\GhEditorialGateway;
-use App\Listeners\Editorial\NewsIssueSynchronizer;
-use App\Listeners\Editorial\NewsMediaLocalizer;
+use App\Listeners\Editorial\FilesystemEditorialContentSynchronizer;
 use App\Listeners\Editorial\PublishedNewsLocator;
 
 $root = require __DIR__ . '/bootstrap.php';
@@ -22,13 +21,11 @@ if ($repository === '') {
 
 $gateway = new GhEditorialGateway($repository, $root);
 $lifecycle = new EditorialLifecycle($gateway);
-$synchronizer = new NewsIssueSynchronizer(
-    postsDirectory: $root . '/source/_posts',
-    mediaLocalizer: new NewsMediaLocalizer(
-        $root . '/source/assets/images/news',
-    ),
+$service = new EditorialSyncService(
+    $gateway,
+    new FilesystemEditorialContentSynchronizer(),
+    $lifecycle,
 );
-$service = new EditorialSyncService($gateway, $synchronizer, $lifecycle);
 $handler = new EditorialIssueEventHandler(
     $gateway,
     $service,
