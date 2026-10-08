@@ -44,13 +44,13 @@ final class NewsEditorialContractRegressionTest extends TestCase
     public function testRejectsMediaWithoutAuthorizationConfirmation(): void
     {
         $body = str_replace(
-            '- [x] Confirmo que tenho autorização para enviar e permitir a publicação das imagens informadas nesta notícia.',
-            '- [ ] Confirmo que tenho autorização para enviar e permitir a publicação das imagens informadas nesta notícia.',
+            '- [x] Confirmo que verifiquei a origem e que a licença/permissão informada permite ao projeto publicar estas imagens.',
+            '- [ ] Confirmo que verifiquei a origem e que a licença/permissão informada permite ao projeto publicar estas imagens.',
             $this->fixture(),
         );
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Confirme que possui autorização para permitir a publicação das imagens.');
+        $this->expectExceptionMessage('Confirme que verificou a origem e a licença/permissão das imagens.');
 
         (new NewsIssueContract())->parse(321, 'Notícia', $body);
     }
