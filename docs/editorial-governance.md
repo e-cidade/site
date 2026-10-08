@@ -75,4 +75,4 @@ Depois de configurar a proteção de branch:
 6. confirme que a aprovação fica stale/inválida;
 7. aprove novamente e faça merge.
 
-A configuração do ruleset/branch protection é uma propriedade administrativa do repositório e não é versionada neste código.
+A configuração do ruleset/branch protection é uma propriedade administrativa do repositório e não é versionada neste código. O [checklist de preparação operacional](editorial-release-readiness.md) registra a configuração e a validação que devem ser feitas no GitHub; sem elas a política declarativa não equivale a uma regra de merge aplicada.
