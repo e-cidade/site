@@ -67,6 +67,38 @@ final class NewsIssueSynchronizerTest extends TestCase
         self::assertStringContainsString('title: "Título alterado após revisão"', $content);
     }
 
+    public function testRevisionPreservesSlugAndOriginalDateWhileRecordingUpdatedAt(): void
+    {
+        $body = (string) file_get_contents(__DIR__ . '/../../../Fixtures/Editorial/valid-news-issue.md');
+        $synchronizer = new NewsIssueSynchronizer($this->postsDirectory);
+
+        $first = $synchronizer->synchronize(
+            321,
+            'Título original',
+            $body,
+            'https://github.com/e-cidade/site/issues/321',
+            '2026-10-07T12:00:00Z',
+        );
+        $second = $synchronizer->synchronize(
+            321,
+            'Título revisado',
+            $body,
+            'https://github.com/e-cidade/site/issues/321',
+            '2026-10-08T15:30:00Z',
+        );
+
+        self::assertSame($first['slug'], $second['slug']);
+        self::assertSame($first['path'], $second['path']);
+
+        $content = (string) file_get_contents($second['path']);
+        self::assertStringContainsString('date: 2026-10-07', $content);
+        self::assertStringContainsString(
+            'updated_at: "2026-10-08T15:30:00Z"',
+            $content,
+        );
+        self::assertStringContainsString('github_issue: 321', $content);
+    }
+
     /** @return array{changed:bool,created:bool,path:string,slug:string} */
     private function synchronize(string $title): array
     {

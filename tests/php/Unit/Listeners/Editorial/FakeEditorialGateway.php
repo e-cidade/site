@@ -105,11 +105,15 @@ final class FakeEditorialGateway implements EditorialGateway
     public function closePullRequest(int $pullRequestNumber, string $comment): void
     {
         $this->closedPullRequests[] = $pullRequestNumber;
+        if ($this->pullRequest?->number === $pullRequestNumber) {
+            $this->pullRequest = null;
+        }
     }
 
     public function deleteBranch(string $branch): void
     {
         $this->deletedBranches[] = $branch;
+        $this->branchExists = false;
     }
 
     public function requestReviewer(int $pullRequestNumber, string $reviewer): void
