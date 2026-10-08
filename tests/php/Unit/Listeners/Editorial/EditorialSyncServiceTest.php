@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Listeners\Editorial;
 
 use App\Listeners\Editorial\EditorialLifecycle;
+use App\Listeners\Editorial\EditorialPullRequest;
 use App\Listeners\Editorial\EditorialState;
 use App\Listeners\Editorial\EditorialSyncService;
 use PHPUnit\Framework\TestCase;
@@ -74,6 +75,7 @@ final class EditorialSyncServiceTest extends TestCase
         self::assertTrue($gateway->createdPullRequest);
         self::assertSame(EditorialState::Draft, $gateway->states[0]['state']);
         self::assertStringContainsString('/pull/999', $gateway->statuses[0]['body']);
+        self::assertStringNotContainsString('Prévia:', $gateway->statuses[0]['body']);
     }
 
     public function testInvalidIssueReportsInvalidStateWithoutCommit(): void
@@ -194,6 +196,40 @@ final class EditorialSyncServiceTest extends TestCase
         self::assertSame($originalSnapshot, file_get_contents($posts[0]));
         self::assertSame(EditorialState::Invalid, $gateway->states[1]['state']);
         self::assertStringContainsString('AAAA-MM-DD', $gateway->statuses[1]['body']);
+    }
+
+    public function testSynchronizingAnExistingReviewDoesNotDowngradeItOrAdvertiseUnbuiltPreview(): void
+    {
+        $gateway = new FakeEditorialGateway();
+        $gateway->workspacePath = $this->postsDirectory . '/workspace';
+        $gateway->branchExists = true;
+        $gateway->pullRequest = new EditorialPullRequest(
+            999,
+            'https://github.com/e-cidade/site/pull/999',
+            'content/news-321',
+            false,
+        );
+
+        $service = new EditorialSyncService(
+            $gateway,
+            new TestEditorialContentSynchronizer(),
+            new EditorialLifecycle($gateway),
+        );
+
+        $result = $service->synchronize(
+            321,
+            'Notícia em revisão',
+            $this->validBody(),
+            'https://github.com/e-cidade/site/issues/321',
+            '2026-10-08T00:00:00Z',
+            ['editorial/news'],
+        );
+
+        self::assertTrue($result['valid']);
+        self::assertSame($gateway->pullRequest, $result['pull_request']);
+        self::assertFalse($gateway->createdPullRequest);
+        self::assertSame(EditorialState::Review, $gateway->states[0]['state']);
+        self::assertStringNotContainsString('Prévia:', $gateway->statuses[0]['body']);
     }
 
     private function validBody(): string
