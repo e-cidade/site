@@ -15,6 +15,7 @@ final class GhEditorialGateway implements EditorialGateway
         private readonly string $repository,
         private readonly string $workingDirectory,
         private readonly ProcessRunner $runner = new NativeProcessRunner(),
+        private readonly ?string $workspaceRoot = null,
     ) {}
 
     public function issuePayload(int $issueNumber): array
@@ -102,10 +103,7 @@ final class GhEditorialGateway implements EditorialGateway
 
     public function branchExists(string $branch): bool
     {
-        return $this->runner->run(
-            ['git', 'ls-remote', '--exit-code', '--heads', 'origin', $branch],
-            $this->workingDirectory,
-        )->successful();
+        return $this->remoteBranchSha($branch) !== null;
     }
 
     public function findPullRequest(string $branch, string $state = 'open'): ?EditorialPullRequest
@@ -132,28 +130,97 @@ final class GhEditorialGateway implements EditorialGateway
         );
     }
 
-    public function prepareEditorialBranch(string $branch): void
+    public function prepareEditorialBranch(string $branch): EditorialWorkspace
     {
-        $this->mustRun(['git', 'config', 'user.name', 'github-actions[bot]']);
-        $this->mustRun(['git', 'config', 'user.email', '41898282+github-actions[bot]@users.noreply.github.com']);
+        $remoteSha = $this->remoteBranchSha($branch);
+        $fetch = ['git', 'fetch', 'origin', 'main'];
+        if ($remoteSha !== null) {
+            $fetch[] = $branch;
+        }
+        $this->mustRun($fetch);
 
-        if ($this->branchExists($branch)) {
-            $this->mustRun(['git', 'fetch', 'origin', 'main', $branch]);
-            $this->mustRun(['git', 'checkout', '-B', $branch, 'origin/' . $branch]);
-            $this->mustRun(['git', 'rebase', 'origin/main']);
+        $mainSha = trim($this->mustRun(['git', 'rev-parse', 'origin/main'])->stdout);
+        $path = $this->workspacePath($branch);
+        $this->cleanupWorkspace($path);
 
-            return;
+        if ($remoteSha === null) {
+            $this->mustRun([
+                'git', 'worktree', 'add', '--force', '-B', $branch, $path, 'origin/main',
+            ]);
+
+            return new EditorialWorkspace($branch, $path, null, false);
         }
 
-        $this->mustRun(['git', 'fetch', 'origin', 'main']);
-        $this->mustRun(['git', 'checkout', '-B', $branch, 'origin/main']);
+        $mergeBase = trim($this->mustRun([
+            'git', 'merge-base', 'origin/main', 'origin/' . $branch,
+        ])->stdout);
+
+        if ($mergeBase === $mainSha) {
+            $this->mustRun([
+                'git', 'worktree', 'add', '--force', '-B', $branch, $path, 'origin/' . $branch,
+            ]);
+
+            return new EditorialWorkspace($branch, $path, $remoteSha, false);
+        }
+
+        $diff = $this->mustRun([
+            'git', 'diff', '--name-status',
+            'origin/main...origin/' . $branch,
+            '--',
+            'source/_posts',
+            'source/assets/images/news',
+            'LICENSES',
+        ])->stdout;
+
+        $this->mustRun([
+            'git', 'worktree', 'add', '--force', '-B', $branch, $path, 'origin/main',
+        ]);
+
+        foreach ($this->editorialChanges($diff) as $change) {
+            if ($change['status'] === 'D') {
+                $this->runner->run(
+                    ['git', '-C', $path, 'rm', '--ignore-unmatch', '--', $change['path']],
+                    $this->workingDirectory,
+                );
+                continue;
+            }
+
+            $this->mustRun([
+                'git', '-C', $path,
+                'restore', '--source=origin/' . $branch,
+                '--', $change['path'],
+            ]);
+        }
+
+        return new EditorialWorkspace($branch, $path, $remoteSha, true);
     }
 
-    public function commitAndPushEditorialChanges(string $branch, int $issueNumber): void
+    public function commitAndPushEditorialChanges(EditorialWorkspace $workspace, int $issueNumber): void
     {
-        $this->mustRun(['git', 'add', 'source/_posts', 'source/assets/images/news', 'LICENSES']);
-        $this->mustRun(['git', 'commit', '--signoff', '-m', 'content: sync news issue #' . $issueNumber]);
-        $this->mustRun(['git', 'push', '--force-with-lease', '-u', 'origin', $branch]);
+        $path = $workspace->path;
+        $this->mustRun(['git', '-C', $path, 'config', 'user.name', 'github-actions[bot]']);
+        $this->mustRun([
+            'git', '-C', $path, 'config', 'user.email',
+            '41898282+github-actions[bot]@users.noreply.github.com',
+        ]);
+        $this->mustRun([
+            'git', '-C', $path, 'add',
+            'source/_posts', 'source/assets/images/news', 'LICENSES',
+        ]);
+        $this->mustRun([
+            'git', '-C', $path, 'commit', '--signoff',
+            '-m', 'content: sync news issue #' . $issueNumber,
+        ]);
+
+        $push = ['git', '-C', $path, 'push'];
+        if ($workspace->remoteSha !== null) {
+            $push[] = '--force-with-lease=refs/heads/' . $workspace->branch . ':' . $workspace->remoteSha;
+        }
+        $push[] = '-u';
+        $push[] = 'origin';
+        $push[] = $workspace->branch;
+
+        $this->mustRun($push);
     }
 
     public function createDraftPullRequest(string $branch, int $issueNumber): EditorialPullRequest
@@ -237,6 +304,77 @@ final class GhEditorialGateway implements EditorialGateway
         ]);
     }
 
+    private function remoteBranchSha(string $branch): ?string
+    {
+        $result = $this->runner->run(
+            ['git', 'ls-remote', '--heads', 'origin', $branch],
+            $this->workingDirectory,
+        );
+
+        if (! $result->successful() || trim($result->stdout) === '') {
+            return null;
+        }
+
+        $parts = preg_split('/\s+/', trim($result->stdout));
+
+        return is_array($parts) && isset($parts[0]) ? $parts[0] : null;
+    }
+
+    private function workspacePath(string $branch): string
+    {
+        $root = rtrim($this->workspaceRoot ?? sys_get_temp_dir(), '/');
+
+        return $root . '/e-cidade-editorial-' . substr(hash('sha256', $branch), 0, 12);
+    }
+
+    private function cleanupWorkspace(string $path): void
+    {
+        $this->runner->run(
+            ['git', 'worktree', 'remove', '--force', $path],
+            $this->workingDirectory,
+        );
+        $this->runner->run(
+            ['git', 'worktree', 'prune'],
+            $this->workingDirectory,
+        );
+    }
+
+    /**
+     * @return list<array{status:string,path:string}>
+     */
+    private function editorialChanges(string $diff): array
+    {
+        $changes = [];
+        foreach (preg_split('/\R/', trim($diff)) ?: [] as $line) {
+            if ($line === '') {
+                continue;
+            }
+
+            $parts = explode("\t", $line);
+            if (count($parts) < 2) {
+                continue;
+            }
+
+            $status = substr($parts[0], 0, 1);
+            $path = $parts[count($parts) - 1];
+            if (! $this->isEditorialPath($path)) {
+                throw new RuntimeException('Unexpected non-editorial path in editorial branch: ' . $path);
+            }
+
+            $changes[] = ['status' => $status, 'path' => $path];
+        }
+
+        return $changes;
+    }
+
+    private function isEditorialPath(string $path): bool
+    {
+        return str_starts_with($path, 'source/_posts/')
+            || str_starts_with($path, 'source/assets/images/news/')
+            || str_starts_with($path, 'LICENSES/');
+    }
+
+    /** @param list<string> $command */
     private function mustRun(array $command): ProcessResult
     {
         $result = $this->runner->run($command, $this->workingDirectory);
