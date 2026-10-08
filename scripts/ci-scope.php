@@ -55,7 +55,7 @@ if ($exitCode !== 0) {
 
 $paths = array_values(array_filter(
     preg_split('/\R/', trim(is_string($stdout) ? $stdout : '')) ?: [],
-    static fn (string $path): bool => $path !== '',
+    static fn(string $path): bool => $path !== '',
 ));
 
 $editorialOnly = (new PullRequestChangeClassifier())->isEditorialOnly($paths);
