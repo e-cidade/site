@@ -149,6 +149,8 @@ Reabrir uma Issue publicada representa uma nova revisão da mesma notícia.
 
 A identidade continua sendo o número da Issue. O synchronizer preserva o slug existente por padrão, registra `updated_at` e gera novo ciclo de revisão antes de substituir a versão publicada.
 
+A `Data da notícia` é a data editorial original, **não** um agendamento ou o horário do deploy. Depois da primeira publicação, uma revisão mantém a data do Markdown já publicado mesmo se o formulário da Issue trouxer outra data; `updated_at` registra a edição posterior. Antes da primeira publicação, correções na data editorial continuam permitidas. Se o snapshot de uma notícia já publicada não for localizado, o sincronizador interrompe a revisão em vez de criar um novo slug ou perder a data original. Uma mudança intencional e excepcional da data histórica exige revisão explícita do conteúdo versionado.
+
 ## Automação e credenciais
 
 A arquitetura suporta uma GitHub App dedicada. Ela é necessária para que atualizações feitas pela automação possam iniciar CI/preview sem a intervenção `Approve workflows to run`.
